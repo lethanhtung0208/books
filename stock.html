@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Historical Stock Data</title>
+</head>
+<body>
+    <h1>Historical Stock Prices for Japanese Stocks</h1>
+    <form id="stockForm">
+        <label for="stockSymbol">Enter Stock Symbol (e.g., 7203.T for Toyota):</label>
+        <input type="text" id="stockSymbol" name="stockSymbol" required>
+        <button type="button" onclick="getHistoricalData()">Get Historical Data</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        function getHistoricalData() {
+            const apiKey = 'YOUR_API_KEY_HERE';
+            const symbol = document.getElementById('stockSymbol').value;
+            const url = `https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY&symbol=${symbol}&apikey=${apiKey}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const timeSeries = data['Monthly Time Series'];
+                    let output = '<h2>Historical Prices</h2>';
+                    output += '<ul>';
+                    for (let key in timeSeries) {
+                        const date = key;
+                        const closePrice = timeSeries[key]['4. close'];
+                        output += `<li>Date: ${date}, Close Price: ${closePrice}</li>`;
+                    }
+                    output += '</ul>';
+                    document.getElementById('result').innerHTML = output;
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    document.getElementById('result').innerHTML = `<p>Error fetching data. Please try again.</p>`;
+                });
+        }
+    </script>
+</body>
+</html>
