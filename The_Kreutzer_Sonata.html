@@ -49,15 +49,11 @@ document.addEventListener('DOMContentLoaded', function() {
     window.scrollTo(0, savedPosition); // Scroll to saved position on page load
     updateCurrentPosition(savedPosition); // Update the displayed position
   }
-
-  var positionDisplay = document.createElement('div');
-  positionDisplay.id = 'currentPosition';
-  positionDisplay.innerText = 'Current Position: 0 pixels';
-  document.body.appendChild(positionDisplay);
 });
 </script>
 </head>
 <body>
+<div id="currentPosition">Current Position: 0 pixels</div>
 <input type="number" id="positionInput" placeholder="Enter position in pixels" />
 <button onclick="jumpToPosition(document.getElementById('positionInput').value)">Jump to Position</button>
 <p>The Project Gutenberg eBook of The Kreutzer Sonata and Other Stories<button onclick="toggleVietnamese('vie1')">tv</button><span id='vie1' class='vietnamese'>﻿Sách điện tử Project Gutenberg của Bản Sonata Kreutzer và những câu chuyện khác</span></p>
