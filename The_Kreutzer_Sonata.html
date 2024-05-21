@@ -9,6 +9,7 @@
   .vietnamese { display: none; background-color: #FFF1DC; }
   button { margin-left: 8px; font-size: 20px; }
   p { margin-top: 4px; margin-bottom: 4px; }
+  #currentPosition { position: fixed; top: 10px; left: 10px; background-color: #FFF; padding: 10px; border: 1px solid #000; z-index: 1000; }
 </style>
 <script>
 function toggleVietnamese(id) {
@@ -23,17 +24,36 @@ function toggleVietnamese(id) {
 function jumpToPosition(pixels) {
   window.scrollTo(0, pixels);
   localStorage.setItem('scrollPosition', pixels); // Save position to LocalStorage
+  updateCurrentPosition(pixels); // Update the displayed position
+}
+
+function saveScrollPosition(position) {
+  localStorage.setItem('scrollPosition', position);
+}
+
+function updateCurrentPosition(position) {
+  document.getElementById('currentPosition').innerText = 'Current Position: ' + position + ' pixels';
 }
 
 window.addEventListener('beforeunload', function() {
-  localStorage.setItem('scrollPosition', window.scrollY); // Save current scroll position before unloading the page
+  saveScrollPosition(window.scrollY); // Save current scroll position before unloading the page
+});
+
+window.addEventListener('scroll', function() {
+  updateCurrentPosition(window.scrollY); // Update the displayed position on scroll
 });
 
 document.addEventListener('DOMContentLoaded', function() {
   var savedPosition = localStorage.getItem('scrollPosition');
   if (savedPosition) {
     window.scrollTo(0, savedPosition); // Scroll to saved position on page load
+    updateCurrentPosition(savedPosition); // Update the displayed position
   }
+
+  var positionDisplay = document.createElement('div');
+  positionDisplay.id = 'currentPosition';
+  positionDisplay.innerText = 'Current Position: 0 pixels';
+  document.body.appendChild(positionDisplay);
 });
 </script>
 </head>
