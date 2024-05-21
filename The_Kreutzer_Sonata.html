@@ -9,7 +9,7 @@
   .vietnamese { display: none; background-color: #FFF1DC; }
   button { margin-left: 8px; font-size: 20px; }
   p { margin-top: 4px; margin-bottom: 4px; }
-  #currentPosition { position: fixed; top: 2px; right: 2px; background-color: #FFF; padding: 2px; border: 1px solid #000; z-index: 1000; font-size: 12px; }
+  #currentPosition { position: fixed; top: 2px; right: 2px; padding: 2px; border: 1px solid #000; z-index: 1000; font-size: 12px; }
 </style>
 <script>
 function toggleVietnamese(id) {
@@ -32,7 +32,7 @@ function saveScrollPosition(position) {
 }
 
 function updateCurrentPosition(position) {
-  document.getElementById('currentPosition').innerText = 'Current Position: ' + position + ' pixels';
+  document.getElementById('currentPosition').innerText = '' + position + '';
 }
 
 window.addEventListener('beforeunload', function() {
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </head>
 <body>
-<div id="currentPosition">Current Position: 0 pixels</div>
+<div id="currentPosition">0</div>
 <input type="number" id="positionInput" placeholder="Enter position in pixels" />
 <button onclick="jumpToPosition(document.getElementById('positionInput').value)">Jump to Position</button>
 <p>The Project Gutenberg eBook of The Kreutzer Sonata and Other Stories<button onclick="toggleVietnamese('vie1')">tv</button><span id='vie1' class='vietnamese'>﻿Sách điện tử Project Gutenberg của Bản Sonata Kreutzer và những câu chuyện khác</span></p>
