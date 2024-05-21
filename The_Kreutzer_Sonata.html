@@ -20,19 +20,26 @@ function toggleVietnamese(id) {
   }
 }
 
-// Save and restore scroll position
-window.onbeforeunload = function() {
-  localStorage.setItem("scrollPosition", window.scrollY);
-};
+function jumpToPosition(pixels) {
+  window.scrollTo(0, pixels);
+  localStorage.setItem('scrollPosition', pixels); // Save position to LocalStorage
+}
 
-window.onload = function() {
-  if (localStorage.getItem("scrollPosition")) {
-    window.scrollTo(0, parseInt(localStorage.getItem("scrollPosition")));
+window.addEventListener('beforeunload', function() {
+  localStorage.setItem('scrollPosition', window.scrollY); // Save current scroll position before unloading the page
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  var savedPosition = localStorage.getItem('scrollPosition');
+  if (savedPosition) {
+    window.scrollTo(0, savedPosition); // Scroll to saved position on page load
   }
-};
+});
 </script>
 </head>
 <body>
+<input type="number" id="positionInput" placeholder="Enter position in pixels" />
+<button onclick="jumpToPosition(document.getElementById('positionInput').value)">Jump to Position</button>
 <p>The Project Gutenberg eBook of The Kreutzer Sonata and Other Stories<button onclick="toggleVietnamese('vie1')">tv</button><span id='vie1' class='vietnamese'>﻿Sách điện tử Project Gutenberg của Bản Sonata Kreutzer và những câu chuyện khác</span></p>
 <p>This ebook is for the use of anyone anywhere in the United States and most other parts of the world at no cost and with almost no restrictions whatsoever. You may copy it, give it away or re-use it under the terms of the Project Gutenberg License included with this ebook or online at www.gutenberg.org. If you are not located in the United States, you will have to check the laws of the country where you are located before using this eBook.<button onclick="toggleVietnamese('vie2')">tv</button><span id='vie2' class='vietnamese'>Sách điện tử này dành cho bất kỳ ai ở Hoa Kỳ và hầu hết các nơi khác trên thế giới sử dụng miễn phí và hầu như không có bất kỳ hạn chế nào. Bạn có thể sao chép, tặng hoặc sử dụng lại theo các điều khoản của Giấy phép Project Gutenberg đi kèm với cuốn sách điện tử này hoặc trực tuyến tại www.gutenberg.org. Nếu bạn không sống ở Hoa Kỳ, bạn sẽ phải kiểm tra luật pháp của quốc gia nơi bạn sống trước khi sử dụng Sách điện tử này.</span></p>
 <p>Title: The Kreutzer Sonata and Other Stories<button onclick="toggleVietnamese('vie3')">tv</button><span id='vie3' class='vietnamese'>Tiêu đề: Bản Sonata Kreutzer và những câu chuyện khác</span></p>
