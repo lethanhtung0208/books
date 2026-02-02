@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Reverse-First Breakout Rules (Box + Pullback)</title>
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --card:#111826;
+      --card2:#0f1623;
+      --text:#e8eef6;
+      --muted:#a9b6c7;
+      --line:#223044;
+      --good:#2dd4bf;
+      --bad:#fb7185;
+      --warn:#fbbf24;
+      --pill:#172235;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color:var(--text);
+      background: radial-gradient(1200px 800px at 15% 10%, rgba(45,212,191,.14), transparent 60%),
+                  radial-gradient(900px 700px at 85% 20%, rgba(251,113,133,.12), transparent 55%),
+                  var(--bg);
+      line-height:1.55;
+    }
+    header{
+      max-width:1100px;
+      margin: 28px auto 12px;
+      padding: 0 16px;
+    }
+    h1{
+      margin:0 0 6px;
+      font-size: 22px;
+      letter-spacing:.2px;
+    }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .wrap{
+      max-width:1100px;
+      margin: 16px auto 60px;
+      padding: 0 16px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+    }
+    @media (max-width: 980px){
+      .wrap{grid-template-columns:1fr}
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.03), transparent 40%),
+                  var(--card);
+      border:1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card .hd{
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      background: rgba(255,255,255,.02);
+    }
+    .card .hd h2{
+      margin:0;
+      font-size: 15px;
+      letter-spacing:.2px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--pill);
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-size: 12px;
+      white-space:nowrap;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background: var(--good);
+      box-shadow: 0 0 0 4px rgba(45,212,191,.12);
+      flex:0 0 auto;
+    }
+
+    .body{
+      padding: 14px 16px 16px;
+    }
+
+    .step{
+      padding: 12px 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.02);
+      margin: 10px 0;
+    }
+    .step:first-child{margin-top:0}
+    .kicker{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 6px;
+    }
+    .tag{
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.2);
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .step h3{
+      margin:0;
+      font-size: 14px;
+    }
+    .step p{
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    ul{
+      margin: 8px 0 0 18px;
+      padding:0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    li{margin: 4px 0}
+    .allow, .deny{
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.18);
+    }
+    .allow strong{color: var(--good)}
+    .deny strong{color: var(--bad)}
+    .allow{border-left: 4px solid rgba(45,212,191,.8)}
+    .deny{border-left: 4px solid rgba(251,113,133,.85)}
+
+    /* Sidebar */
+    .grid{
+      display:grid;
+      gap:16px;
+    }
+    .mini{
+      font-size:13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .checklist{
+      display:grid;
+      gap:10px;
+      margin-top: 8px;
+    }
+    .item{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+    }
+    .box{
+      width:18px;height:18px;border-radius:4px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.2);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex:0 0 auto;
+      margin-top:2px;
+      cursor:pointer;
+    }
+    .box svg{opacity:.9}
+    .item b{
+      color: var(--text);
+      font-size: 13px;
+    }
+    .item span{
+      display:block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .note{
+      padding: 12px 12px;
+      border-radius: 14px;
+      border:1px dashed rgba(255,255,255,.18);
+      background: rgba(251,191,36,.08);
+      color: var(--text);
+    }
+    .note b{color: var(--warn)}
+    .footer{
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 10px;
+    }
+
+    /* Small interactive highlighting */
+    .hl-good{ outline: 2px solid rgba(45,212,191,.35); box-shadow: 0 0 0 6px rgba(45,212,191,.08); }
+    .hl-bad{ outline: 2px solid rgba(251,113,133,.35); box-shadow: 0 0 0 6px rgba(251,113,133,.08); }
+    .btnrow{
+      display:flex; flex-wrap:wrap; gap:8px;
+      margin-top: 10px;
+    }
+    button{
+      appearance:none;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 12px;
+      cursor:pointer;
+      font-size: 13px;
+    }
+    button:hover{background: rgba(255,255,255,.04)}
+    button:active{transform: translateY(1px)}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Reverse-First Breakout Rules (Box + Pullback + Hold)</h1>
+    <p class="sub">A simple, strict checklist for trading only after a breakout pullback “behaves”.</p>
+  </header>
+
+  <main class="wrap">
+    <!-- Main rules -->
+    <section class="card">
+      <div class="hd">
+        <h2>Rules (Step-by-Step)</h2>
+        <div class="pill"><span class="dot"></span>Allowed only after 3 “permissions”</div>
+      </div>
+      <div class="body">
+
+        <div class="step" id="s0">
+          <div class="kicker">
+            <h3>Step 0 — You are NOT allowed to trade yet</h3>
+            <span class="tag">Time gate</span>
+          </div>
+          <p><b>From 9:00 to 9:10 → NO trades.</b></p>
+          <p>Reason: opening noise. (You don’t need to understand why; just follow it.)</p>
+        </div>
+
+        <div class="step" id="s1">
+          <div class="kicker">
+            <h3>Step 1 — Define the “box” (range) you’re watching</h3>
+            <span class="tag">Range</span>
+          </div>
+          <p>Pick one box (range) to trade. Example method:</p>
+          <ul>
+            <li>Use the first 10 minutes: mark the <b>high</b> and <b>low</b> from 9:00–9:10 → this becomes your box.</li>
+          </ul>
+          <p>From now on you only care about: <b>Top of box (range high)</b> and <b>Bottom of box (range low)</b>.</p>
+        </div>
+
+        <div class="step" id="s2">
+          <div class="kicker">
+            <h3>Step 2 — A breakout happens (price goes outside the box)</h3>
+            <span class="tag">Breakout</span>
+          </div>
+          <p>Two cases:</p>
+          <ul>
+            <li>Price goes <b>above</b> the top of the box</li>
+            <li>Price goes <b>below</b> the bottom of the box</li>
+          </ul>
+          <p><b>You still do nothing immediately.</b></p>
+        </div>
+
+        <div class="step" id="s3">
+          <div class="kicker">
+            <h3>Step 3 — “Reverse-first” requirement (allowed condition #1)</h3>
+            <span class="tag">Permission #1</span>
+          </div>
+          <p>After the breakout, you wait for a small move back toward the box.</p>
+
+          <div class="allow">
+            <strong>Allowed</strong>
+            <div class="mini">Price breaks out, then pulls back toward the breakout level (toward the box edge).</div>
+          </div>
+
+          <div class="deny">
+            <strong>Not allowed</strong>
+            <div class="mini">Price breaks out and keeps running away with no pullback.</div>
+          </div>
+
+          <p style="margin-top:10px;"><b>✅ Permission #1:</b> Breakout → then a pullback toward the level must happen</p>
+        </div>
+
+        <div class="step" id="s4">
+          <div class="kicker">
+            <h3>Step 4 — “Tight retest band” requirement (allowed condition #2)</h3>
+            <span class="tag">Permission #2</span>
+          </div>
+          <p>When price pulls back, it must stay close to the breakout level.</p>
+
+          <div class="allow">
+            <strong>Allowed</strong>
+            <div class="mini">Price pulls back and stays near the box edge (does NOT go deep back into the box).</div>
+          </div>
+
+          <div class="deny">
+            <strong>Not allowed</strong>
+            <div class="mini">Price pulls back and goes deep inside the box → usually a failed breakout.</div>
+          </div>
+
+          <p style="margin-top:10px;"><b>✅ Permission #2:</b> Pullback stays close to the edge (not deep inside)</p>
+        </div>
+
+        <div class="step" id="s5">
+          <div class="kicker">
+            <h3>Step 5 — “Hold” requirement (allowed condition #3)</h3>
+            <span class="tag">Permission #3</span>
+          </div>
+          <p>You need to see price stops at the edge and turns back in breakout direction.</p>
+
+          <ul>
+            <li><b>Upside breakout:</b> pullback toward top edge → stops going down → starts moving up again</li>
+            <li><b>Downside breakout:</b> pullback toward bottom edge → stops going up → starts moving down again</li>
+          </ul>
+
+          <p style="margin-top:10px;"><b>✅ Permission #3:</b> Pullback stops at the edge and turns back in breakout direction</p>
+        </div>
+
+        <div class="step" id="s6">
+          <div class="kicker">
+            <h3>Step 6 — Entry trigger (this is when you’re allowed to trade)</h3>
+            <span class="tag">Entry</span>
+          </div>
+          <p>You are allowed to trade only when all 3 permissions happened:</p>
+          <ul>
+            <li>Breakout happened</li>
+            <li>Pullback happened (reverse-first)</li>
+            <li>Pullback held near the edge and turned back</li>
+          </ul>
+          <div class="note" style="margin-top:10px;">
+            <b>Practical entry trigger</b><br/>
+            Enter when price starts moving again in breakout direction after the hold.<br/>
+            You do <b>not</b> enter on the first breakout candle. You enter only after the pullback + hold.
+          </div>
+        </div>
+
+        <div class="step" id="s7">
+          <div class="kicker">
+            <h3>Step 7 — When you are NOT allowed (hard disqualifiers)</h3>
+            <span class="tag">Disqualifiers</span>
+          </div>
+
+          <div class="deny" id="dA">
+            <strong>A) Failed breakout → immediate ban (cooldown starts)</strong>
+            <div class="mini" style="margin-top:6px;">
+              If price breaks out then returns back inside the box → failed breakout.<br/>
+              ✅ Action: NO trades for X minutes/bars (cooldown).
+            </div>
+          </div>
+
+          <div class="deny" id="dB">
+            <strong>B) No pullback</strong>
+            <div class="mini" style="margin-top:6px;">
+              If breakout runs away with no pullback → skip it (not allowed).
+            </div>
+          </div>
+
+          <div class="deny" id="dC">
+            <strong>C) Too late</strong>
+            <div class="mini" style="margin-top:6px;">
+              After ~9:35, don’t start new trades (you won’t have time).
+            </div>
+          </div>
+
+        </div>
+
+        <div class="btnrow">
+          <button type="button" data-jump="#s0">Jump: Step 0</button>
+          <button type="button" data-jump="#s3">Jump: Permissions</button>
+          <button type="button" data-jump="#s7">Jump: Disqualifiers</button>
+          <button type="button" id="btnClear">Clear highlights</button>
+        </div>
+
+        <div class="footer">Tip: Print this page or keep it open next to your chart.</div>
+      </div>
+    </section>
+
+    <!-- Sidebar checklist -->
+    <aside class="grid">
+      <section class="card">
+        <div class="hd">
+          <h2>A tiny checklist (use this live)</h2>
+          <div class="pill"><span class="dot" style="background:var(--warn); box-shadow:0 0 0 4px rgba(251,191,36,.12)"></span>All YES = allowed</div>
+        </div>
+        <div class="body">
+          <p class="mini">You are allowed to trade only if you can answer YES to all of these:</p>
+
+          <div class="checklist" id="checklist">
+            <div class="item" data-rel="#s2">
+              <div class="box" role="button" tabindex="0" aria-label="toggle">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <b>Did price break out of the box?</b>
+                <span>(yes/no)</span>
+              </div>
+            </div>
+
+            <div class="item" data-rel="#s3">
+              <div class="box" role="button" tabindex="0" aria-label="toggle">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <b>Did it pull back toward the edge?</b>
+                <span>(yes/no)</span>
+              </div>
+            </div>
+
+            <div class="item" data-rel="#s4">
+              <div class="box" role="button" tabindex="0" aria-label="toggle">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <b>Did it stay close to the edge (not deep inside)?</b>
+                <span>(yes/no)</span>
+              </div>
+            </div>
+
+            <div class="item" data-rel="#s5">
+              <div class="box" role="button" tabindex="0" aria-label="toggle">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <b>Did it turn back in breakout direction?</b>
+                <span>(yes/no)</span>
+              </div>
+            </div>
+
+            <div class="item" data-rel="#s7">
+              <div class="box" role="button" tabindex="0" aria-label="toggle">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <b>Are we not in cooldown?</b>
+                <span>(yes/no)</span>
+              </div>
+            </div>
+
+            <div class="item" data-rel="#s0">
+              <div class="box" role="button" tabindex="0" aria-label="toggle">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                  <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div>
+                <b>Is it before 9:35?</b>
+                <span>(yes/no)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="note" style="margin-top:12px;">
+            ✅ If all are <b>YES</b> → allowed<br/>
+            ❌ If any <b>NO</b> → not allowed
+          </div>
+
+          <p class="footer">Click checklist items to highlight the related step on the left.</p>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <script>
+    // Simple UX: click checklist items to toggle highlight on related step
+    const items = document.querySelectorAll('.item');
+    const clearBtn = document.getElementById('btnClear');
+
+    function toggleHighlight(stepSel) {
+      const el = document.querySelector(stepSel);
+      if (!el) return;
+      const isOn = el.classList.contains('hl-good') || el.classList.contains('hl-bad');
+      el.classList.remove('hl-good', 'hl-bad');
+      if (!isOn) el.classList.add('hl-good');
+      el.scrollIntoView({behavior:'smooth', block:'center'});
+    }
+
+    items.forEach(it => {
+      const stepSel = it.getAttribute('data-rel');
+      const box = it.querySelector('.box');
+
+      function onToggle(){
+        // highlight related step
+        toggleHighlight(stepSel);
+
+        // visually toggle the checkbox
+        const checked = it.getAttribute('data-checked') === '1';
+        it.setAttribute('data-checked', checked ? '0' : '1');
+        box.style.borderColor = checked ? 'var(--line)' : 'rgba(45,212,191,.6)';
+        box.style.background = checked ? 'rgba(0,0,0,.2)' : 'rgba(45,212,191,.12)';
+      }
+
+      it.addEventListener('click', onToggle);
+      it.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle(); }
+      });
+    });
+
+    // Jump buttons
+    document.querySelectorAll('button[data-jump]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sel = btn.getAttribute('data-jump');
+        const el = document.querySelector(sel);
+        if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+
+    // Clear highlights
+    clearBtn.addEventListener('click', () => {
+      document.querySelectorAll('.hl-good,.hl-bad').forEach(el => el.classList.remove('hl-good','hl-bad'));
+    });
+  </script>
+</body>
+</html>
