@@ -1,0 +1,1660 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Trading Rules — Range + Trend (EN/VI/JP)</title>
+
+  <!-- ===== Global shell (tabs) ===== -->
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --card:#111826;
+      --text:#e8eef6;
+      --muted:#a9b6c7;
+      --line:#223044;
+      --pill:#172235;
+      --good:#2dd4bf;
+      --warn:#fbbf24;
+      --bad:#fb7185;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 15% 10%, rgba(45,212,191,.14), transparent 60%),
+        radial-gradient(900px 700px at 85% 20%, rgba(251,113,133,.12), transparent 55%),
+        radial-gradient(900px 650px at 80% 80%, rgba(251,191,36,.10), transparent 55%),
+        var(--bg);
+      line-height:1.55;
+    }
+
+    /* Sticky switcher */
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(11,15,20,.72);
+      border-bottom: 1px solid rgba(34,48,68,.8);
+    }
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding: 10px 16px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .brand{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width: 220px;
+    }
+    .brand b{font-size:14px; letter-spacing:.2px}
+    .brand span{font-size:12px; color:var(--muted)}
+    .tabs{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+      align-items:center;
+    }
+    .tabbtn, .langbtn{
+      appearance:none;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-size: 13px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+    }
+    .tabbtn:hover, .langbtn:hover{ background: rgba(255,255,255,.04); }
+    .tabbtn[aria-selected="true"], .langbtn[aria-selected="true"]{
+      border-color: rgba(45,212,191,.55);
+      box-shadow: 0 0 0 4px rgba(45,212,191,.08);
+      background: rgba(45,212,191,.06);
+    }
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background: var(--good);
+      box-shadow: 0 0 0 4px rgba(45,212,191,.12);
+      flex:0 0 auto;
+    }
+    .dot.warn{
+      background: var(--warn);
+      box-shadow: 0 0 0 4px rgba(251,191,36,.12);
+    }
+    .sep{
+      width:1px;
+      height:26px;
+      background: rgba(34,48,68,.9);
+      margin:0 4px;
+    }
+
+    /* App visibility */
+    .app{ display:none; }
+    .app.active{ display:block; }
+
+    /* Language visibility */
+    .lang{ display:none; }
+    .lang.active{ display:block; }
+  </style>
+
+  <!-- ===== Shared page styles (scoped per app) ===== -->
+  <style>
+    /* Common layout */
+    .app header{
+      max-width:1100px;
+      margin: 28px auto 12px;
+      padding: 0 16px;
+    }
+    .app h1{margin:0 0 6px; font-size:22px; letter-spacing:.2px;}
+    .app .sub{margin:0; color:var(--muted); font-size:14px;}
+
+    .app .wrap{
+      max-width:1100px;
+      margin: 16px auto 60px;
+      padding: 0 16px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:16px;
+    }
+    @media (max-width: 980px){ .app .wrap{grid-template-columns:1fr} }
+
+    .app .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.03), transparent 40%), var(--card);
+      border:1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .app .hd{
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      background: rgba(255,255,255,.02);
+    }
+    .app .hd h2{margin:0; font-size:15px; letter-spacing:.2px;}
+    .app .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 6px 10px;
+      border-radius:999px;
+      background: var(--pill);
+      border:1px solid var(--line);
+      color: var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .app .body{padding:14px 16px 16px;}
+
+    .app .step{
+      padding: 12px 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.02);
+      margin: 10px 0;
+    }
+    .app .step:first-child{margin-top:0}
+    .app .kicker{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 6px;
+    }
+    .app .tag{
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius:999px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.2);
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .app .step h3{margin:0; font-size:14px;}
+    .app .step p{margin:6px 0 0; color: var(--muted); font-size:14px;}
+    .app ul{margin:8px 0 0 18px; padding:0; color: var(--muted); font-size:14px;}
+    .app li{margin:4px 0}
+
+    .app .allow,.app .deny,.app .note{
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+    }
+    .app .allow{border-left:4px solid rgba(45,212,191,.8)}
+    .app .deny{border-left:4px solid rgba(251,113,133,.85)}
+    .app .allow strong{color:var(--good)}
+    .app .deny strong{color:var(--bad)}
+    .app .note{
+      border:1px dashed rgba(255,255,255,.18);
+      background: rgba(251,191,36,.08);
+      color: var(--text);
+    }
+    .app .note b{color: var(--warn)}
+    .app .mini{font-size:13px; color: var(--muted); margin:0;}
+
+    .app .grid{display:grid; gap:16px;}
+    .app .checklist{display:grid; gap:10px; margin-top:8px;}
+    .app .item{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding: 10px 10px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      cursor:pointer;
+      user-select:none;
+    }
+    .app .box{
+      width:18px;height:18px;border-radius:4px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.2);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex:0 0 auto;
+      margin-top:2px;
+    }
+    .app .box svg{opacity:.9}
+    .app .item b{color: var(--text); font-size:13px;}
+    .app .item span{display:block; font-size:13px; color: var(--muted); margin-top:2px;}
+
+    .app .btnrow{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;}
+    .app button.ui{
+      appearance:none;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 12px;
+      cursor:pointer;
+      font-size: 13px;
+    }
+    .app button.ui:hover{background: rgba(255,255,255,.04)}
+    .app button.ui:active{transform: translateY(1px)}
+
+    .app .footer{color: var(--muted); font-size:12px; margin-top:10px;}
+
+    /* Highlights (range uses hl-good/hl-bad, trend uses hl) */
+    #rangeApp .hl-good{ outline: 2px solid rgba(45,212,191,.35); box-shadow: 0 0 0 6px rgba(45,212,191,.08); }
+    #rangeApp .hl-bad{ outline: 2px solid rgba(251,113,133,.35); box-shadow: 0 0 0 6px rgba(251,113,133,.08); }
+    #trendApp .hl{ outline: 2px solid rgba(45,212,191,.35); box-shadow: 0 0 0 6px rgba(45,212,191,.08); }
+  </style>
+</head>
+
+<body>
+  <!-- Switcher -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <b id="brandTitle">Trading Rules</b>
+        <span id="brandSub">Switch strategy + language</span>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Strategy and language switch">
+        <!-- Strategy -->
+        <button class="tabbtn" role="tab" aria-selected="true" data-target="range">
+          <span class="dot"></span><span data-i18n="range">Range</span>
+        </button>
+        <button class="tabbtn" role="tab" aria-selected="false" data-target="trend">
+          <span class="dot warn"></span><span data-i18n="trend">Trend</span>
+        </button>
+
+        <div class="sep" aria-hidden="true"></div>
+
+        <!-- Language -->
+        <button class="langbtn" aria-selected="true" data-lang="en">EN</button>
+        <button class="langbtn" aria-selected="false" data-lang="vi">VI</button>
+        <button class="langbtn" aria-selected="false" data-lang="ja">JP</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       RANGE APP (Reverse-first breakout)
+  ========================================================== -->
+  <div id="rangeApp" class="app active" data-app="range">
+
+    <!-- ===== EN ===== -->
+    <div class="lang active" data-lang="en">
+      <header>
+        <h1>Reverse-First Breakout Rules (Box + Pullback + Hold)</h1>
+        <p class="sub">A simple, strict checklist for trading only after a breakout pullback “behaves”.</p>
+      </header>
+
+      <main class="wrap">
+        <section class="card">
+          <div class="hd">
+            <h2>Rules (Step-by-Step)</h2>
+            <div class="pill"><span class="dot"></span>Allowed only after 3 “permissions”</div>
+          </div>
+          <div class="body">
+
+            <div class="step" id="range-s0">
+              <div class="kicker">
+                <h3>Step 0 — You are NOT allowed to trade yet</h3>
+                <span class="tag">Time gate</span>
+              </div>
+              <p><b>From 9:00 to 9:10 → NO trades.</b></p>
+              <p>Reason: opening noise. (You don’t need to understand why; just follow it.)</p>
+            </div>
+
+            <div class="step" id="range-s1">
+              <div class="kicker">
+                <h3>Step 1 — Define the “box” (range) you’re watching</h3>
+                <span class="tag">Range</span>
+              </div>
+              <p>Pick one box (range) to trade. Example method:</p>
+              <ul>
+                <li>Use the first 10 minutes: mark the <b>high</b> and <b>low</b> from 9:00–9:10 → this becomes your box.</li>
+              </ul>
+              <p>From now on you only care about: <b>Top of box (range high)</b> and <b>Bottom of box (range low)</b>.</p>
+            </div>
+
+            <div class="step" id="range-s2">
+              <div class="kicker">
+                <h3>Step 2 — A breakout happens (price goes outside the box)</h3>
+                <span class="tag">Breakout</span>
+              </div>
+              <p>Two cases:</p>
+              <ul>
+                <li>Price goes <b>above</b> the top of the box</li>
+                <li>Price goes <b>below</b> the bottom of the box</li>
+              </ul>
+              <p><b>You still do nothing immediately.</b></p>
+            </div>
+
+            <div class="step" id="range-s3">
+              <div class="kicker">
+                <h3>Step 3 — “Reverse-first” requirement (allowed condition #1)</h3>
+                <span class="tag">Permission #1</span>
+              </div>
+              <p>After the breakout, you wait for a small move back toward the box.</p>
+
+              <div class="allow">
+                <strong>Allowed</strong>
+                <div class="mini">Price breaks out, then pulls back toward the breakout level (toward the box edge).</div>
+              </div>
+
+              <div class="deny">
+                <strong>Not allowed</strong>
+                <div class="mini">Price breaks out and keeps running away with no pullback.</div>
+              </div>
+
+              <p style="margin-top:10px;"><b>✅ Permission #1:</b> Breakout → then a pullback toward the level must happen</p>
+            </div>
+
+            <div class="step" id="range-s4">
+              <div class="kicker">
+                <h3>Step 4 — “Tight retest band” requirement (allowed condition #2)</h3>
+                <span class="tag">Permission #2</span>
+              </div>
+              <p>When price pulls back, it must stay close to the breakout level.</p>
+
+              <div class="allow">
+                <strong>Allowed</strong>
+                <div class="mini">Price pulls back and stays near the box edge (does NOT go deep back into the box).</div>
+              </div>
+
+              <div class="deny">
+                <strong>Not allowed</strong>
+                <div class="mini">Price pulls back and goes deep inside the box → usually a failed breakout.</div>
+              </div>
+
+              <p style="margin-top:10px;"><b>✅ Permission #2:</b> Pullback stays close to the edge (not deep inside)</p>
+            </div>
+
+            <div class="step" id="range-s5">
+              <div class="kicker">
+                <h3>Step 5 — “Hold” requirement (allowed condition #3)</h3>
+                <span class="tag">Permission #3</span>
+              </div>
+              <p>You need to see price stops at the edge and turns back in breakout direction.</p>
+
+              <ul>
+                <li><b>Upside breakout:</b> pullback toward top edge → stops going down → starts moving up again</li>
+                <li><b>Downside breakout:</b> pullback toward bottom edge → stops going up → starts moving down again</li>
+              </ul>
+
+              <p style="margin-top:10px;"><b>✅ Permission #3:</b> Pullback stops at the edge and turns back in breakout direction</p>
+            </div>
+
+            <div class="step" id="range-s6">
+              <div class="kicker">
+                <h3>Step 6 — Entry trigger (this is when you’re allowed to trade)</h3>
+                <span class="tag">Entry</span>
+              </div>
+              <p>You are allowed to trade only when all 3 permissions happened:</p>
+              <ul>
+                <li>Breakout happened</li>
+                <li>Pullback happened (reverse-first)</li>
+                <li>Pullback held near the edge and turned back</li>
+              </ul>
+              <div class="note" style="margin-top:10px;">
+                <b>Practical entry trigger</b><br/>
+                Enter when price starts moving again in breakout direction after the hold.<br/>
+                You do <b>not</b> enter on the first breakout candle. You enter only after the pullback + hold.
+              </div>
+            </div>
+
+            <div class="step" id="range-s7">
+              <div class="kicker">
+                <h3>Step 7 — When you are NOT allowed (hard disqualifiers)</h3>
+                <span class="tag">Disqualifiers</span>
+              </div>
+
+              <div class="deny" id="range-dA">
+                <strong>A) Failed breakout → immediate ban (cooldown starts)</strong>
+                <div class="mini" style="margin-top:6px;">
+                  If price breaks out then returns back inside the box → failed breakout.<br/>
+                  ✅ Action: NO trades for X minutes/bars (cooldown).
+                </div>
+              </div>
+
+              <div class="deny" id="range-dB">
+                <strong>B) No pullback</strong>
+                <div class="mini" style="margin-top:6px;">
+                  If breakout runs away with no pullback → skip it (not allowed).
+                </div>
+              </div>
+
+              <div class="deny" id="range-dC">
+                <strong>C) Too late</strong>
+                <div class="mini" style="margin-top:6px;">
+                  After ~9:35, don’t start new trades (you won’t have time).
+                </div>
+              </div>
+            </div>
+
+            <div class="btnrow">
+              <button class="ui" type="button" data-jump="#range-s0">Jump: Step 0</button>
+              <button class="ui" type="button" data-jump="#range-s3">Jump: Permissions</button>
+              <button class="ui" type="button" data-jump="#range-s7">Jump: Disqualifiers</button>
+              <button class="ui" type="button" id="range-btnClear-en">Clear highlights</button>
+            </div>
+
+            <div class="footer">Tip: Keep it open next to your chart.</div>
+          </div>
+        </section>
+
+        <aside class="grid">
+          <section class="card">
+            <div class="hd">
+              <h2>A tiny checklist (use this live)</h2>
+              <div class="pill"><span class="dot" style="background:var(--warn); box-shadow:0 0 0 4px rgba(251,191,36,.12)"></span>All YES = allowed</div>
+            </div>
+            <div class="body">
+              <p class="mini">You are allowed to trade only if you can answer YES to all of these:</p>
+
+              <div class="checklist" id="range-checklist-en">
+                <div class="item" data-rel="#range-s2">
+                  <div class="box" role="button" tabindex="0" aria-label="toggle">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                      <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <b>Did price break out of the box?</b>
+                    <span>(yes/no)</span>
+                  </div>
+                </div>
+
+                <div class="item" data-rel="#range-s3">
+                  <div class="box" role="button" tabindex="0" aria-label="toggle">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                      <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <b>Did it pull back toward the edge?</b>
+                    <span>(yes/no)</span>
+                  </div>
+                </div>
+
+                <div class="item" data-rel="#range-s4">
+                  <div class="box" role="button" tabindex="0" aria-label="toggle">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                      <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <b>Did it stay close to the edge (not deep inside)?</b>
+                    <span>(yes/no)</span>
+                  </div>
+                </div>
+
+                <div class="item" data-rel="#range-s5">
+                  <div class="box" role="button" tabindex="0" aria-label="toggle">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                      <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <b>Did it turn back in breakout direction?</b>
+                    <span>(yes/no)</span>
+                  </div>
+                </div>
+
+                <div class="item" data-rel="#range-s7">
+                  <div class="box" role="button" tabindex="0" aria-label="toggle">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                      <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <b>Are we not in cooldown?</b>
+                    <span>(yes/no)</span>
+                  </div>
+                </div>
+
+                <div class="item" data-rel="#range-s0">
+                  <div class="box" role="button" tabindex="0" aria-label="toggle">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                      <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <b>Is it before 9:35?</b>
+                    <span>(yes/no)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="note" style="margin-top:12px;">
+                ✅ If all are <b>YES</b> → allowed<br/>
+                ❌ If any <b>NO</b> → not allowed
+              </div>
+
+              <p class="footer">Click checklist items to highlight the related step on the left.</p>
+            </div>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <!-- ===== VI ===== -->
+    <div class="lang" data-lang="vi">
+      <header>
+        <h1>Quy tắc Breakout “Reverse-First” (Box + Pullback + Giữ)</h1>
+        <p class="sub">Checklist đơn giản nhưng nghiêm: chỉ vào lệnh khi pullback sau breakout “đi đúng kiểu”.</p>
+      </header>
+
+      <main class="wrap">
+        <section class="card">
+          <div class="hd">
+            <h2>Quy tắc (từng bước)</h2>
+            <div class="pill"><span class="dot"></span>Chỉ được trade sau 3 “giấy phép”</div>
+          </div>
+          <div class="body">
+
+            <div class="step" id="range-vi-s0">
+              <div class="kicker">
+                <h3>Bước 0 — CHƯA được trade</h3>
+                <span class="tag">Chặn thời gian</span>
+              </div>
+              <p><b>Từ 9:00 đến 9:10 → KHÔNG trade.</b></p>
+              <p>Lý do: nhiễu mở cửa. (Không cần hiểu, chỉ cần làm đúng.)</p>
+            </div>
+
+            <div class="step" id="range-vi-s1">
+              <div class="kicker">
+                <h3>Bước 1 — Xác định “box” (range) bạn theo dõi</h3>
+                <span class="tag">Range</span>
+              </div>
+              <p>Chọn 1 box để trade. Ví dụ:</p>
+              <ul>
+                <li>Dùng 10 phút đầu: đánh dấu <b>đỉnh</b> và <b>đáy</b> từ 9:00–9:10 → đó là box.</li>
+              </ul>
+              <p>Từ đây chỉ quan tâm: <b>đỉnh box</b> và <b>đáy box</b>.</p>
+            </div>
+
+            <div class="step" id="range-vi-s2">
+              <div class="kicker">
+                <h3>Bước 2 — Breakout xảy ra (giá ra khỏi box)</h3>
+                <span class="tag">Breakout</span>
+              </div>
+              <p>Hai trường hợp:</p>
+              <ul>
+                <li>Giá đi <b>lên trên</b> đỉnh box</li>
+                <li>Giá đi <b>xuống dưới</b> đáy box</li>
+              </ul>
+              <p><b>Vẫn chưa vào lệnh ngay.</b></p>
+            </div>
+
+            <div class="step" id="range-vi-s3">
+              <div class="kicker">
+                <h3>Bước 3 — Điều kiện “Reverse-first” (giấy phép #1)</h3>
+                <span class="tag">Giấy phép #1</span>
+              </div>
+              <p>Sau breakout, chờ một nhịp giá quay lại gần box (pullback).</p>
+
+              <div class="allow">
+                <strong>Được</strong>
+                <div class="mini">Breakout → rồi kéo về kiểm tra lại vùng biên (edge) của box.</div>
+              </div>
+
+              <div class="deny">
+                <strong>Không được</strong>
+                <div class="mini">Breakout xong chạy thẳng, không có pullback.</div>
+              </div>
+
+              <p style="margin-top:10px;"><b>✅ Giấy phép #1:</b> Phải có pullback quay về gần level</p>
+            </div>
+
+            <div class="step" id="range-vi-s4">
+              <div class="kicker">
+                <h3>Bước 4 — “Retest band hẹp” (giấy phép #2)</h3>
+                <span class="tag">Giấy phép #2</span>
+              </div>
+              <p>Khi pullback, giá phải giữ gần level breakout, không chui sâu vào box.</p>
+
+              <div class="allow">
+                <strong>Được</strong>
+                <div class="mini">Pullback nông, giữ sát mép box (edge).</div>
+              </div>
+
+              <div class="deny">
+                <strong>Không được</strong>
+                <div class="mini">Pullback sâu vào trong box → thường là breakout fail.</div>
+              </div>
+
+              <p style="margin-top:10px;"><b>✅ Giấy phép #2:</b> Pullback giữ sát mép (không vào sâu)</p>
+            </div>
+
+            <div class="step" id="range-vi-s5">
+              <div class="kicker">
+                <h3>Bước 5 — “Giữ/đỡ” rồi quay lại hướng breakout (giấy phép #3)</h3>
+                <span class="tag">Giấy phép #3</span>
+              </div>
+              <p>Cần thấy giá dừng ở mép rồi quay lại theo hướng breakout.</p>
+
+              <ul>
+                <li><b>Break lên:</b> kéo về mép trên → ngừng giảm → bắt đầu tăng lại</li>
+                <li><b>Break xuống:</b> kéo về mép dưới → ngừng tăng → bắt đầu giảm lại</li>
+              </ul>
+
+              <p style="margin-top:10px;"><b>✅ Giấy phép #3:</b> Pullback dừng ở mép và quay lại hướng breakout</p>
+            </div>
+
+            <div class="step" id="range-vi-s6">
+              <div class="kicker">
+                <h3>Bước 6 — Trigger vào lệnh (lúc này mới được trade)</h3>
+                <span class="tag">Vào lệnh</span>
+              </div>
+              <p>Chỉ được vào khi đủ 3 giấy phép:</p>
+              <ul>
+                <li>Đã breakout</li>
+                <li>Đã có pullback (reverse-first)</li>
+                <li>Pullback giữ sát mép và quay lại</li>
+              </ul>
+              <div class="note" style="margin-top:10px;">
+                <b>Trigger thực tế</b><br/>
+                Vào khi giá bắt đầu chạy lại theo hướng breakout sau khi “giữ”.<br/>
+                <b>Không</b> vào ở cây nến breakout đầu tiên.
+              </div>
+            </div>
+
+            <div class="step" id="range-vi-s7">
+              <div class="kicker">
+                <h3>Bước 7 — Khi KHÔNG được trade (loại ngay)</h3>
+                <span class="tag">Loại</span>
+              </div>
+
+              <div class="deny" id="range-vi-dA">
+                <strong>A) Breakout fail → cấm ngay (bắt đầu cooldown)</strong>
+                <div class="mini" style="margin-top:6px;">
+                  Break ra ngoài rồi quay lại vào trong box → fail.<br/>
+                  ✅ Hành động: KHÔNG trade X phút/X bar (cooldown).
+                </div>
+              </div>
+
+              <div class="deny" id="range-vi-dB">
+                <strong>B) Không có pullback</strong>
+                <div class="mini" style="margin-top:6px;">
+                  Chạy thẳng không retest → bỏ.
+                </div>
+              </div>
+
+              <div class="deny" id="range-vi-dC">
+                <strong>C) Quá muộn</strong>
+                <div class="mini" style="margin-top:6px;">
+                  Sau ~9:35 không mở lệnh mới (thiếu thời gian).
+                </div>
+              </div>
+            </div>
+
+            <div class="btnrow">
+              <button class="ui" type="button" data-jump="#range-vi-s0">Tới: Bước 0</button>
+              <button class="ui" type="button" data-jump="#range-vi-s3">Tới: Giấy phép</button>
+              <button class="ui" type="button" data-jump="#range-vi-s7">Tới: Loại</button>
+              <button class="ui" type="button" id="range-btnClear-vi">Xóa highlight</button>
+            </div>
+
+            <div class="footer">Gợi ý: mở cạnh chart để check nhanh.</div>
+          </div>
+        </section>
+
+        <aside class="grid">
+          <section class="card">
+            <div class="hd">
+              <h2>Checklist nhanh (dùng khi trade)</h2>
+              <div class="pill"><span class="dot" style="background:var(--warn); box-shadow:0 0 0 4px rgba(251,191,36,.12)"></span>Tất cả YES = được</div>
+            </div>
+            <div class="body">
+              <p class="mini">Chỉ được trade nếu trả lời YES cho tất cả:</p>
+
+              <div class="checklist" id="range-checklist-vi">
+                <div class="item" data-rel="#range-vi-s2"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Giá đã breakout khỏi box?</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#range-vi-s3"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Đã pullback về gần mép?</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#range-vi-s4"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Giữ sát mép (không vào sâu)?</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#range-vi-s5"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Đã quay lại theo hướng breakout?</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#range-vi-s7"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Không đang cooldown?</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#range-vi-s0"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Trước 9:35?</b><span>(yes/no)</span></div></div>
+              </div>
+
+              <div class="note" style="margin-top:12px;">
+                ✅ Tất cả <b>YES</b> → được trade<br/>
+                ❌ Chỉ cần 1 <b>NO</b> → không trade
+              </div>
+
+              <p class="footer">Bấm checklist để highlight bước tương ứng.</p>
+            </div>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <!-- ===== JA ===== -->
+    <div class="lang" data-lang="ja">
+      <header>
+        <h1>リバースファースト・ブレイクアウト規則（ボックス＋押し戻し＋保持）</h1>
+        <p class="sub">ブレイク後の押し戻しが「正しい形」になるまで、絶対に入らないための厳格チェックリスト。</p>
+      </header>
+
+      <main class="wrap">
+        <section class="card">
+          <div class="hd">
+            <h2>ルール（手順）</h2>
+            <div class="pill"><span class="dot"></span>3つの「許可」が揃うまで禁止</div>
+          </div>
+          <div class="body">
+
+            <div class="step" id="range-ja-s0">
+              <div class="kicker">
+                <h3>Step 0 — まだ取引してはいけない</h3>
+                <span class="tag">時間ゲート</span>
+              </div>
+              <p><b>9:00〜9:10 → 取引禁止。</b></p>
+              <p>理由：寄り付きのノイズ。（理解不要。従うだけ。）</p>
+            </div>
+
+            <div class="step" id="range-ja-s1">
+              <div class="kicker">
+                <h3>Step 1 — 見る「ボックス（レンジ）」を決める</h3>
+                <span class="tag">レンジ</span>
+              </div>
+              <p>取引するボックスを1つ決める。例：</p>
+              <ul>
+                <li>最初の10分の<b>高値</b>と<b>安値</b>（9:00–9:10）を引く → それがボックス。</li>
+              </ul>
+              <p>以降、見るのは <b>ボックス上限（高値）</b> と <b>ボックス下限（安値）</b> だけ。</p>
+            </div>
+
+            <div class="step" id="range-ja-s2">
+              <div class="kicker">
+                <h3>Step 2 — ブレイクアウト発生（価格がボックス外へ）</h3>
+                <span class="tag">ブレイク</span>
+              </div>
+              <p>2パターン：</p>
+              <ul>
+                <li>価格がボックス上限を<b>上抜け</b></li>
+                <li>価格がボックス下限を<b>下抜け</b></li>
+              </ul>
+              <p><b>ここではまだ何もしない。</b></p>
+            </div>
+
+            <div class="step" id="range-ja-s3">
+              <div class="kicker">
+                <h3>Step 3 — 「リバースファースト」条件（許可 #1）</h3>
+                <span class="tag">許可 #1</span>
+              </div>
+              <p>ブレイク後、ボックス方向へ少し戻る動き（押し戻し）を待つ。</p>
+
+              <div class="allow">
+                <strong>OK</strong>
+                <div class="mini">ブレイク → その後、レベル（ボックス端）へ押し戻す。</div>
+              </div>
+
+              <div class="deny">
+                <strong>NG</strong>
+                <div class="mini">押し戻し無しでそのまま走り続ける。</div>
+              </div>
+
+              <p style="margin-top:10px;"><b>✅ 許可 #1:</b> ブレイク後、レベルへ戻る押しが必須</p>
+            </div>
+
+            <div class="step" id="range-ja-s4">
+              <div class="kicker">
+                <h3>Step 4 — 「タイトなリテスト帯」条件（許可 #2）</h3>
+                <span class="tag">許可 #2</span>
+              </div>
+              <p>押し戻しはブレイクレベル付近に留まり、ボックス内へ深く戻らないこと。</p>
+
+              <div class="allow">
+                <strong>OK</strong>
+                <div class="mini">ボックス端付近で浅い押し → 近くに留まる。</div>
+              </div>
+
+              <div class="deny">
+                <strong>NG</strong>
+                <div class="mini">ボックス内へ深く戻る → 失敗ブレイクの可能性大。</div>
+              </div>
+
+              <p style="margin-top:10px;"><b>✅ 許可 #2:</b> 端から深く戻らない（浅い押し）</p>
+            </div>
+
+            <div class="step" id="range-ja-s5">
+              <div class="kicker">
+                <h3>Step 5 — 「保持」条件（許可 #3）</h3>
+                <span class="tag">許可 #3</span>
+              </div>
+              <p>端で止まって、再びブレイク方向へ向き直る動きを確認する。</p>
+
+              <ul>
+                <li><b>上抜け:</b> 上端へ押す → 下げ止まる → 再び上へ</li>
+                <li><b>下抜け:</b> 下端へ戻す → 上げ止まる → 再び下へ</li>
+              </ul>
+
+              <p style="margin-top:10px;"><b>✅ 許可 #3:</b> 端で止まり、ブレイク方向へ反転</p>
+            </div>
+
+            <div class="step" id="range-ja-s6">
+              <div class="kicker">
+                <h3>Step 6 — エントリー条件（ここで初めてOK）</h3>
+                <span class="tag">エントリー</span>
+              </div>
+              <p>次の3つが揃ったら取引OK：</p>
+              <ul>
+                <li>ブレイクが起きた</li>
+                <li>押し戻しが起きた（リバースファースト）</li>
+                <li>端で止まり、ブレイク方向へ向き直った</li>
+              </ul>
+              <div class="note" style="margin-top:10px;">
+                <b>実用トリガー</b><br/>
+                「止まり→向き直り」のあと、ブレイク方向へ動き出したところで入る。<br/>
+                最初のブレイク足では入らない（押し戻し＋保持後のみ）。
+              </div>
+            </div>
+
+            <div class="step" id="range-ja-s7">
+              <div class="kicker">
+                <h3>Step 7 — 取引NG（即除外）</h3>
+                <span class="tag">除外</span>
+              </div>
+
+              <div class="deny" id="range-ja-dA">
+                <strong>A) 失敗ブレイク → 即禁止（クールダウン開始）</strong>
+                <div class="mini" style="margin-top:6px;">
+                  ブレイク後にボックス内へ戻る → 失敗。<br/>
+                  ✅ 対応：X分/ X本は取引しない（クールダウン）。
+                </div>
+              </div>
+
+              <div class="deny" id="range-ja-dB">
+                <strong>B) 押し戻し無し</strong>
+                <div class="mini" style="margin-top:6px;">
+                  走り続けてリテスト無し → スキップ。
+                </div>
+              </div>
+
+              <div class="deny" id="range-ja-dC">
+                <strong>C) 遅すぎ</strong>
+                <div class="mini" style="margin-top:6px;">
+                  9:35以降は新規を始めない（時間が足りない）。
+                </div>
+              </div>
+            </div>
+
+            <div class="btnrow">
+              <button class="ui" type="button" data-jump="#range-ja-s0">ジャンプ: Step 0</button>
+              <button class="ui" type="button" data-jump="#range-ja-s3">ジャンプ: 許可</button>
+              <button class="ui" type="button" data-jump="#range-ja-s7">ジャンプ: 除外</button>
+              <button class="ui" type="button" id="range-btnClear-ja">ハイライト解除</button>
+            </div>
+
+            <div class="footer">ヒント：チャート横に常に表示。</div>
+          </div>
+        </section>
+
+        <aside class="grid">
+          <section class="card">
+            <div class="hd">
+              <h2>即席チェック（ライブ用）</h2>
+              <div class="pill"><span class="dot" style="background:var(--warn); box-shadow:0 0 0 4px rgba(251,191,36,.12)"></span>全部YESでOK</div>
+            </div>
+            <div class="body">
+              <p class="mini">次がすべてYESなら取引OK：</p>
+
+              <div class="checklist" id="range-checklist-ja">
+                <div class="item" data-rel="#range-ja-s2"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>ボックスをブレイクした？</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#range-ja-s3"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>端へ押し戻した？</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#range-ja-s4"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>端付近に留まった（深く戻らない）？</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#range-ja-s5"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>ブレイク方向へ向き直った？</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#range-ja-s7"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>クールダウン中ではない？</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#range-ja-s0"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>9:35より前？</b><span>(yes/no)</span></div></div>
+              </div>
+
+              <div class="note" style="margin-top:12px;">
+                ✅ 全部<b>YES</b> → OK<br/>
+                ❌ 1つでも<b>NO</b> → 取引しない
+              </div>
+
+              <p class="footer">クリックで該当ステップをハイライト。</p>
+            </div>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+  </div>
+
+  <!-- =========================================================
+       TREND APP (Trend-day pullback)
+  ========================================================== -->
+  <div id="trendApp" class="app" data-app="trend">
+
+    <!-- ===== EN ===== -->
+    <div class="lang active" data-lang="en">
+      <header>
+        <h1>Trend-Day Pullback Rules (No Chasing)</h1>
+        <p class="sub">Trade “trend rules” only after trend is proven, then enter on pullback + turn (confirmation).</p>
+      </header>
+
+      <main class="wrap">
+        <section class="card">
+          <div class="hd">
+            <h2>Rules (Step-by-Step)</h2>
+            <div class="pill"><span class="dot"></span>Only after pullback + stop + turn</div>
+          </div>
+          <div class="body">
+
+            <div class="step" id="trend-s0">
+              <div class="kicker">
+                <h3>Step 0 — You are NOT allowed to trade yet</h3>
+                <span class="tag">Time gate</span>
+              </div>
+              <p><b>9:00–9:05 → NO trades</b> (opening noise)</p>
+              <p>If you want even simpler: <b>no trades until 9:10</b>.</p>
+            </div>
+
+            <div class="step" id="trend-s1">
+              <div class="kicker">
+                <h3>Step 1 — You must prove it’s trending (or treat it as range)</h3>
+                <span class="tag">Trend proof</span>
+              </div>
+              <p>You are allowed to use “trend rules” only if at least <b>2 of these</b> are true:</p>
+              <div class="allow">
+                <strong>✅ Trend proof checks (pick 2)</strong>
+                <ul>
+                  <li>Higher highs <b>and</b> higher lows (uptrend) — or lower highs <b>and</b> lower lows (downtrend)</li>
+                  <li>Pullbacks are small and price quickly continues</li>
+                  <li>Price stays <b>outside</b> an important area (example: above the first 10-min range high) instead of falling back inside</li>
+                </ul>
+              </div>
+              <div class="deny">
+                <strong>Not allowed</strong>
+                <div class="mini">If you can’t confidently say “2 are true” → do NOT trade as trend (use range rules or do nothing).</div>
+              </div>
+            </div>
+
+            <div class="step" id="trend-s2">
+              <div class="kicker">
+                <h3>Step 2 — Identify the direction (one direction only)</h3>
+                <span class="tag">Direction</span>
+              </div>
+              <ul>
+                <li><b>Uptrend:</b> only look for buys</li>
+                <li><b>Downtrend:</b> only look for sells</li>
+              </ul>
+              <p>If direction is unclear → <b>no trade</b>.</p>
+            </div>
+
+            <div class="step" id="trend-s3">
+              <div class="kicker">
+                <h3>Step 3 — You are NOT allowed to chase</h3>
+                <span class="tag">No chasing</span>
+              </div>
+              <p>If price is moving fast in the trend direction right now, you do nothing.</p>
+              <div class="note">
+                <b>Your rule:</b><br/>
+                No entry while price is “running.” You only enter after a pause/pullback.
+              </div>
+            </div>
+
+            <div class="step" id="trend-s4">
+              <div class="kicker">
+                <h3>Step 4 — Wait for a pullback (trend-friendly pullback)</h3>
+                <span class="tag">Permission #1</span>
+              </div>
+              <p>Allowed pullback means:</p>
+              <ul>
+                <li>Price moves against the trend a little</li>
+                <li>It does <b>not</b> crash back into the old range / old area</li>
+              </ul>
+
+              <div class="allow">
+                <strong>Allowed</strong>
+                <div class="mini">Small pullback, then it stops</div>
+              </div>
+
+              <div class="deny">
+                <strong>Not allowed</strong>
+                <div class="mini">Deep pullback that breaks structure (example: in uptrend it drops below last swing low)</div>
+              </div>
+
+              <p style="margin-top:10px;"><b>✅ Permission #1:</b> Trend exists + a pullback happens (not too deep)</p>
+            </div>
+
+            <div class="step" id="trend-s5">
+              <div class="kicker">
+                <h3>Step 5 — The pullback must “stop” (crucial)</h3>
+                <span class="tag">Permission #2</span>
+              </div>
+              <p>You are allowed to trade only if the pullback shows stopping:</p>
+              <ul>
+                <li><b>Uptrend (buy):</b> pullback down slows/stops → price starts printing upward movement again</li>
+                <li><b>Downtrend (sell):</b> pullback up slows/stops → price starts printing downward movement again</li>
+              </ul>
+              <div class="deny">
+                <strong>Not allowed</strong>
+                <div class="mini">If pullback does not stop and keeps going → no trade.</div>
+              </div>
+              <p style="margin-top:10px;"><b>✅ Permission #2:</b> Pullback stops and turns back with the trend</p>
+            </div>
+
+            <div class="step" id="trend-s6">
+              <div class="kicker">
+                <h3>Step 6 — Entry trigger (this is when you ARE allowed)</h3>
+                <span class="tag">Entry</span>
+              </div>
+              <p>You enter only after the turn begins.</p>
+              <div class="note">
+                <b>Practical trigger (simple):</b><br/>
+                • Uptrend buy: enter when price makes a <b>new small high</b> after the pullback<br/>
+                • Downtrend sell: enter when price makes a <b>new small low</b> after the pullback
+              </div>
+              <p>You do not enter at the exact bottom/top (that’s guessing). You enter when it starts moving again (confirmation).</p>
+            </div>
+
+            <div class="step" id="trend-s7">
+              <div class="kicker">
+                <h3>Step 7 — Hard “NOT allowed” rules (trend version)</h3>
+                <span class="tag">Disqualifiers</span>
+              </div>
+              <ul>
+                <li>Price returns inside the earlier box (example: back inside the first 10-min range) → trend not proven</li>
+                <li>Pullbacks are deep and messy (structure breaks)</li>
+                <li>You missed the pullback and it’s running again → chasing</li>
+                <li><b>After 9:35, don’t start new trades</b></li>
+              </ul>
+            </div>
+
+            <div class="step" id="trend-s8">
+              <div class="kicker">
+                <h3>Step 8 — Exit rule (simple and safe for beginners)</h3>
+                <span class="tag">Exit</span>
+              </div>
+              <ul>
+                <li>Take profit when you get a clean push in your direction</li>
+                <li>Exit early if price fails to continue after entry (it stalls and starts reversing)</li>
+              </ul>
+              <p>(We can make this more specific later, but don’t overcomplicate now.)</p>
+            </div>
+
+            <div class="btnrow">
+              <button class="ui" type="button" data-jump="#trend-s1">Jump: Trend proof</button>
+              <button class="ui" type="button" data-jump="#trend-s3">Jump: No chasing</button>
+              <button class="ui" type="button" data-jump="#trend-s6">Jump: Entry trigger</button>
+              <button class="ui" type="button" id="trend-btnClear-en">Clear highlights</button>
+            </div>
+
+            <div class="footer">Tip: If trend proof is not obvious, treat it as range day or do nothing.</div>
+          </div>
+        </section>
+
+        <aside class="grid">
+          <section class="card">
+            <div class="hd">
+              <h2>Tiny live checklist (trend day)</h2>
+              <div class="pill"><span class="dot" style="background:var(--warn); box-shadow:0 0 0 4px rgba(251,191,36,.12)"></span>All YES = allowed</div>
+            </div>
+            <div class="body">
+              <p class="mini">You are allowed to trade only if all are <b>YES</b>:</p>
+
+              <div class="checklist" id="trend-checklist-en">
+                <div class="item" data-rel="#trend-s0"><div class="box" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>It’s after 9:05 (or 9:10)</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#trend-s1"><div class="box" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Trend proof: 2 checks true</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#trend-s2"><div class="box" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Direction is clear (only buy or only sell)</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#trend-s3"><div class="box" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>You are NOT chasing (waited for pullback)</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#trend-s4"><div class="box" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Pullback happened and was not deep</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#trend-s5"><div class="box" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Pullback stopped and turned back</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#trend-s7"><div class="box" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>It’s before 9:35</b><span>(yes/no)</span></div></div>
+              </div>
+
+              <div class="note" style="margin-top:12px;">
+                ✅ All YES → allowed<br/>
+                ❌ Any NO → no trade
+              </div>
+
+              <p class="footer">Click any checklist item to highlight the matching step on the left.</p>
+            </div>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <!-- ===== VI ===== -->
+    <div class="lang" data-lang="vi">
+      <header>
+        <h1>Quy tắc Pullback ngày Trend (Không đuổi giá)</h1>
+        <p class="sub">Chỉ trade theo trend khi trend đã “được chứng minh”, rồi vào ở pullback + dừng + quay đầu (xác nhận).</p>
+      </header>
+
+      <main class="wrap">
+        <section class="card">
+          <div class="hd">
+            <h2>Quy tắc (từng bước)</h2>
+            <div class="pill"><span class="dot"></span>Chỉ sau pullback + dừng + quay lại</div>
+          </div>
+          <div class="body">
+
+            <div class="step" id="trend-vi-s0">
+              <div class="kicker">
+                <h3>Bước 0 — CHƯA được trade</h3>
+                <span class="tag">Chặn thời gian</span>
+              </div>
+              <p><b>9:00–9:05 → KHÔNG trade</b> (nhiễu mở cửa)</p>
+              <p>Nếu muốn đơn giản hơn: <b>không trade cho tới 9:10</b>.</p>
+            </div>
+
+            <div class="step" id="trend-vi-s1">
+              <div class="kicker">
+                <h3>Bước 1 — Phải chứng minh là đang trend (không thì coi là range)</h3>
+                <span class="tag">Chứng minh trend</span>
+              </div>
+              <p>Chỉ được dùng “trend rules” nếu có ít nhất <b>2/3</b> điều đúng:</p>
+              <div class="allow">
+                <strong>✅ Check trend (chọn 2)</strong>
+                <ul>
+                  <li>Đỉnh cao dần <b>và</b> đáy cao dần (uptrend) — hoặc đỉnh thấp dần <b>và</b> đáy thấp dần (downtrend)</li>
+                  <li>Pullback nhỏ và giá nhanh chóng tiếp tục theo hướng trend</li>
+                  <li>Giá giữ <b>bên ngoài</b> vùng quan trọng (vd: ở trên đỉnh range 10 phút đầu) thay vì rơi lại vào trong</li>
+                </ul>
+              </div>
+              <div class="deny">
+                <strong>Không được</strong>
+                <div class="mini">Nếu không tự tin “2 cái đúng” → đừng trade theo trend (dùng range rules hoặc đứng ngoài).</div>
+              </div>
+            </div>
+
+            <div class="step" id="trend-vi-s2">
+              <div class="kicker">
+                <h3>Bước 2 — Xác định hướng (chỉ 1 hướng)</h3>
+                <span class="tag">Hướng</span>
+              </div>
+              <ul>
+                <li><b>Uptrend:</b> chỉ tìm lệnh mua</li>
+                <li><b>Downtrend:</b> chỉ tìm lệnh bán</li>
+              </ul>
+              <p>Nếu không rõ hướng → <b>không trade</b>.</p>
+            </div>
+
+            <div class="step" id="trend-vi-s3">
+              <div class="kicker">
+                <h3>Bước 3 — KHÔNG được đuổi giá</h3>
+                <span class="tag">Không chase</span>
+              </div>
+              <p>Nếu giá đang chạy mạnh theo trend ngay lúc này → đứng ngoài.</p>
+              <div class="note">
+                <b>Luật của bạn:</b><br/>
+                Không vào khi giá đang “chạy”. Chỉ vào sau khi có pause/pullback.
+              </div>
+            </div>
+
+            <div class="step" id="trend-vi-s4">
+              <div class="kicker">
+                <h3>Bước 4 — Chờ pullback “đẹp” (phù hợp trend)</h3>
+                <span class="tag">Giấy phép #1</span>
+              </div>
+              <p>Pullback được phép nghĩa là:</p>
+              <ul>
+                <li>Giá đi ngược trend một chút</li>
+                <li><b>Không</b> rơi mạnh về lại vùng range cũ / vùng cũ</li>
+              </ul>
+
+              <div class="allow">
+                <strong>Được</strong>
+                <div class="mini">Pullback nhỏ rồi dừng</div>
+              </div>
+
+              <div class="deny">
+                <strong>Không được</strong>
+                <div class="mini">Pullback sâu phá cấu trúc (vd uptrend mà rơi dưới đáy swing trước)</div>
+              </div>
+
+              <p style="margin-top:10px;"><b>✅ Giấy phép #1:</b> Có trend + có pullback (không quá sâu)</p>
+            </div>
+
+            <div class="step" id="trend-vi-s5">
+              <div class="kicker">
+                <h3>Bước 5 — Pullback phải “dừng” (cực quan trọng)</h3>
+                <span class="tag">Giấy phép #2</span>
+              </div>
+              <p>Chỉ được trade nếu pullback cho thấy dấu hiệu dừng:</p>
+              <ul>
+                <li><b>Uptrend (mua):</b> pullback xuống chậm/dừng → bắt đầu in nhịp tăng lại</li>
+                <li><b>Downtrend (bán):</b> pullback lên chậm/dừng → bắt đầu in nhịp giảm lại</li>
+              </ul>
+              <div class="deny">
+                <strong>Không được</strong>
+                <div class="mini">Nếu chưa dừng mà còn kéo tiếp → không trade.</div>
+              </div>
+              <p style="margin-top:10px;"><b>✅ Giấy phép #2:</b> Pullback dừng và quay lại theo trend</p>
+            </div>
+
+            <div class="step" id="trend-vi-s6">
+              <div class="kicker">
+                <h3>Bước 6 — Trigger vào lệnh (lúc này mới được)</h3>
+                <span class="tag">Vào lệnh</span>
+              </div>
+              <p>Chỉ vào sau khi bắt đầu quay lại.</p>
+              <div class="note">
+                <b>Trigger thực tế (đơn giản):</b><br/>
+                • Uptrend mua: vào khi giá tạo <b>đỉnh nhỏ mới</b> sau pullback<br/>
+                • Downtrend bán: vào khi giá tạo <b>đáy nhỏ mới</b> sau pullback
+              </div>
+              <p>Không đoán đáy/đỉnh. Vào khi nó bắt đầu chạy lại (xác nhận).</p>
+            </div>
+
+            <div class="step" id="trend-vi-s7">
+              <div class="kicker">
+                <h3>Bước 7 — Quy tắc KHÔNG được (phiên bản trend)</h3>
+                <span class="tag">Loại</span>
+              </div>
+              <ul>
+                <li>Giá quay lại vào trong box trước đó (vd range 10 phút đầu) → trend chưa được chứng minh</li>
+                <li>Pullback sâu và rối (phá cấu trúc)</li>
+                <li>Bỏ lỡ pullback và giá chạy lại → chase</li>
+                <li><b>Sau 9:35 không mở lệnh mới</b></li>
+              </ul>
+            </div>
+
+            <div class="step" id="trend-vi-s8">
+              <div class="kicker">
+                <h3>Bước 8 — Thoát lệnh (đơn giản, an toàn cho newbie)</h3>
+                <span class="tag">Thoát</span>
+              </div>
+              <ul>
+                <li>Chốt lời khi có một nhịp đẩy sạch theo hướng bạn</li>
+                <li>Thoát sớm nếu sau khi vào lệnh giá không tiếp tục (đứng và đảo chiều)</li>
+              </ul>
+              <p>(Sau này có thể chi tiết hơn, nhưng đừng phức tạp hóa bây giờ.)</p>
+            </div>
+
+            <div class="btnrow">
+              <button class="ui" type="button" data-jump="#trend-vi-s1">Tới: Chứng minh trend</button>
+              <button class="ui" type="button" data-jump="#trend-vi-s3">Tới: Không chase</button>
+              <button class="ui" type="button" data-jump="#trend-vi-s6">Tới: Trigger</button>
+              <button class="ui" type="button" id="trend-btnClear-vi">Xóa highlight</button>
+            </div>
+
+            <div class="footer">Gợi ý: nếu không rõ trend, coi như range hoặc đứng ngoài.</div>
+          </div>
+        </section>
+
+        <aside class="grid">
+          <section class="card">
+            <div class="hd">
+              <h2>Checklist nhanh (trend day)</h2>
+              <div class="pill"><span class="dot" style="background:var(--warn); box-shadow:0 0 0 4px rgba(251,191,36,.12)"></span>Tất cả YES = được</div>
+            </div>
+            <div class="body">
+              <p class="mini">Chỉ được trade nếu tất cả đều <b>YES</b>:</p>
+
+              <div class="checklist" id="trend-checklist-vi">
+                <div class="item" data-rel="#trend-vi-s0"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Đã sau 9:05 (hoặc 9:10)</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#trend-vi-s1"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Trend proof: 2 check đúng</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#trend-vi-s2"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Hướng rõ (chỉ buy hoặc chỉ sell)</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#trend-vi-s3"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Không chase (đã chờ pullback)</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#trend-vi-s4"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Pullback xảy ra và không sâu</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#trend-vi-s5"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Pullback dừng và quay lại</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#trend-vi-s7"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Trước 9:35</b><span>(yes/no)</span></div></div>
+              </div>
+
+              <div class="note" style="margin-top:12px;">
+                ✅ All YES → được<br/>
+                ❌ Any NO → không trade
+              </div>
+
+              <p class="footer">Bấm checklist để highlight bước tương ứng.</p>
+            </div>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <!-- ===== JA ===== -->
+    <div class="lang" data-lang="ja">
+      <header>
+        <h1>トレンドデイ押し目ルール（追いかけ禁止）</h1>
+        <p class="sub">トレンドが「証明」されてからのみ。押し目＋止まり＋向き直りで入る（確認）。</p>
+      </header>
+
+      <main class="wrap">
+        <section class="card">
+          <div class="hd">
+            <h2>ルール（手順）</h2>
+            <div class="pill"><span class="dot"></span>押し目＋止まり＋反転後のみ</div>
+          </div>
+          <div class="body">
+
+            <div class="step" id="trend-ja-s0">
+              <div class="kicker">
+                <h3>Step 0 — まだ取引してはいけない</h3>
+                <span class="tag">時間ゲート</span>
+              </div>
+              <p><b>9:00–9:05 → 取引禁止</b>（寄りのノイズ）</p>
+              <p>さらに簡単にするなら：<b>9:10まで取引しない</b>。</p>
+            </div>
+
+            <div class="step" id="trend-ja-s1">
+              <div class="kicker">
+                <h3>Step 1 — トレンドを証明する（無理ならレンジ扱い）</h3>
+                <span class="tag">トレンド証明</span>
+              </div>
+              <p>少なくとも<b>2つ</b>が当てはまる時だけ「トレンドルール」を使う：</p>
+              <div class="allow">
+                <strong>✅ トレンド証明（2つ選ぶ）</strong>
+                <ul>
+                  <li>上昇：高値切上げ<b>かつ</b>安値切上げ／下降：高値切下げ<b>かつ</b>安値切下げ</li>
+                  <li>押しが浅く、すぐにトレンド方向へ再開する</li>
+                  <li>重要な領域の<b>外側</b>に留まる（例：最初の10分レンジ上限の上に居続ける）</li>
+                </ul>
+              </div>
+              <div class="deny">
+                <strong>NG</strong>
+                <div class="mini">「2つ当てはまる」と自信を持てないなら、トレンドとして取引しない（レンジルール or ノートレ）。</div>
+              </div>
+            </div>
+
+            <div class="step" id="trend-ja-s2">
+              <div class="kicker">
+                <h3>Step 2 — 方向を決める（片方向のみ）</h3>
+                <span class="tag">方向</span>
+              </div>
+              <ul>
+                <li><b>上昇:</b> 買いだけを見る</li>
+                <li><b>下降:</b> 売りだけを見る</li>
+              </ul>
+              <p>方向が曖昧なら → <b>取引しない</b>。</p>
+            </div>
+
+            <div class="step" id="trend-ja-s3">
+              <div class="kicker">
+                <h3>Step 3 — 追いかけ禁止</h3>
+                <span class="tag">追いかけNG</span>
+              </div>
+              <p>今まさにトレンド方向へ勢いよく走っているなら、何もしない。</p>
+              <div class="note">
+                <b>あなたのルール:</b><br/>
+                「走っている最中」は入らない。必ず押し目（休憩）を待つ。
+              </div>
+            </div>
+
+            <div class="step" id="trend-ja-s4">
+              <div class="kicker">
+                <h3>Step 4 — 押し目を待つ（トレンドに優しい押し）</h3>
+                <span class="tag">許可 #1</span>
+              </div>
+              <p>OKな押し目：</p>
+              <ul>
+                <li>トレンドに逆らって少し戻る</li>
+                <li>古いレンジ/領域に<b>深く戻らない</b></li>
+              </ul>
+
+              <div class="allow">
+                <strong>OK</strong>
+                <div class="mini">浅い押し → 止まる</div>
+              </div>
+
+              <div class="deny">
+                <strong>NG</strong>
+                <div class="mini">深い押しで構造崩れ（例：上昇なのに直近スイング安値を割る）</div>
+              </div>
+
+              <p style="margin-top:10px;"><b>✅ 許可 #1:</b> トレンド＋押し目（深すぎない）</p>
+            </div>
+
+            <div class="step" id="trend-ja-s5">
+              <div class="kicker">
+                <h3>Step 5 — 押し目が「止まる」こと（重要）</h3>
+                <span class="tag">許可 #2</span>
+              </div>
+              <p>止まりのサインが出た時だけ取引OK：</p>
+              <ul>
+                <li><b>上昇（買い）:</b> 下げが鈍る/止まる → 再び上向きの動き</li>
+                <li><b>下降（売り）:</b> 上げが鈍る/止まる → 再び下向きの動き</li>
+              </ul>
+              <div class="deny">
+                <strong>NG</strong>
+                <div class="mini">止まらずに進むなら取引しない。</div>
+              </div>
+              <p style="margin-top:10px;"><b>✅ 許可 #2:</b> 押しが止まり、トレンド方向へ向き直る</p>
+            </div>
+
+            <div class="step" id="trend-ja-s6">
+              <div class="kicker">
+                <h3>Step 6 — エントリートリガー（ここでOK）</h3>
+                <span class="tag">エントリー</span>
+              </div>
+              <p>向き直りが始まってから入る。</p>
+              <div class="note">
+                <b>実用トリガー（簡単）:</b><br/>
+                ・上昇買い：押し後に<b>小さな高値更新</b>で入る<br/>
+                ・下降売り：戻り後に<b>小さな安値更新</b>で入る
+              </div>
+              <p>底/天井当ては「当てずっぽう」。動き出してから（確認）入る。</p>
+            </div>
+
+            <div class="step" id="trend-ja-s7">
+              <div class="kicker">
+                <h3>Step 7 — 取引NG（トレンド版）</h3>
+                <span class="tag">除外</span>
+              </div>
+              <ul>
+                <li>先のボックス内に戻る（例：最初の10分レンジ内）→ トレンド未証明</li>
+                <li>押しが深くて汚い（構造崩れ）</li>
+                <li>押しを逃して再び走っている → 追いかけ</li>
+                <li><b>9:35以降は新規開始しない</b></li>
+              </ul>
+            </div>
+
+            <div class="step" id="trend-ja-s8">
+              <div class="kicker">
+                <h3>Step 8 — 利確/撤退ルール（シンプル）</h3>
+                <span class="tag">エグジット</span>
+              </div>
+              <ul>
+                <li>きれいな推進（押し目後の伸び）が出たら利確</li>
+                <li>エントリー後に伸びず失速→ 早めに撤退（反転し始めたら）</li>
+              </ul>
+              <p>（後で具体化できるが、今は複雑にしない。）</p>
+            </div>
+
+            <div class="btnrow">
+              <button class="ui" type="button" data-jump="#trend-ja-s1">ジャンプ: 証明</button>
+              <button class="ui" type="button" data-jump="#trend-ja-s3">ジャンプ: 追いかけNG</button>
+              <button class="ui" type="button" data-jump="#trend-ja-s6">ジャンプ: トリガー</button>
+              <button class="ui" type="button" id="trend-btnClear-ja">ハイライト解除</button>
+            </div>
+
+            <div class="footer">ヒント：証明が曖昧ならレンジ扱いかノートレ。</div>
+          </div>
+        </section>
+
+        <aside class="grid">
+          <section class="card">
+            <div class="hd">
+              <h2>即席チェック（トレンドデイ）</h2>
+              <div class="pill"><span class="dot" style="background:var(--warn); box-shadow:0 0 0 4px rgba(251,191,36,.12)"></span>全部YESでOK</div>
+            </div>
+            <div class="body">
+              <p class="mini">すべて<b>YES</b>なら取引OK：</p>
+
+              <div class="checklist" id="trend-checklist-ja">
+                <div class="item" data-rel="#trend-ja-s0"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>9:05（または9:10）以降</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#trend-ja-s1"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>トレンド証明：2つOK</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#trend-ja-s2"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>方向が明確（買いor売りのみ）</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#trend-ja-s3"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>追いかけていない（押し待ち）</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#trend-ja-s4"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>押し目があり深すぎない</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#trend-ja-s5"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>押しが止まり向き直り</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#trend-ja-s7"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>9:35より前</b><span>(yes/no)</span></div></div>
+              </div>
+
+              <div class="note" style="margin-top:12px;">
+                ✅ 全部YES → OK<br/>
+                ❌ どれかNO → 取引しない
+              </div>
+
+              <p class="footer">クリックで該当ステップをハイライト。</p>
+            </div>
+          </section>
+        </aside>
+      </main>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       JS: per-app checklist logic + global switchers
+  ========================================================== -->
+  <script>
+    // ---------- helpers ----------
+    function qs(root, sel){ return (root || document).querySelector(sel); }
+    function qsa(root, sel){ return Array.from((root || document).querySelectorAll(sel)); }
+
+    // ---------- RANGE behavior (per language block) ----------
+    function initRange(langKey){
+      const app = document.getElementById('rangeApp');
+      const block = qs(app, `.lang[data-lang="${langKey}"]`);
+      if (!block) return;
+
+      const items = qsa(block, '.item');
+      const clearBtn = qs(block, `#range-btnClear-${langKey}`);
+
+      function toggleHighlight(stepSel) {
+        const el = qs(block, stepSel);
+        if (!el) return;
+        const isOn = el.classList.contains('hl-good') || el.classList.contains('hl-bad');
+        el.classList.remove('hl-good', 'hl-bad');
+        if (!isOn) el.classList.add('hl-good');
+        el.scrollIntoView({behavior:'smooth', block:'center'});
+      }
+
+      items.forEach(it => {
+        const stepSel = it.getAttribute('data-rel');
+        const box = qs(it, '.box');
+
+        it.addEventListener('click', () => {
+          toggleHighlight(stepSel);
+
+          const checked = it.getAttribute('data-checked') === '1';
+          it.setAttribute('data-checked', checked ? '0' : '1');
+          if (box){
+            box.style.borderColor = checked ? 'var(--line)' : 'rgba(45,212,191,.6)';
+            box.style.background   = checked ? 'rgba(0,0,0,.2)' : 'rgba(45,212,191,.12)';
+          }
+        });
+
+        it.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); it.click(); }
+        });
+      });
+
+      qsa(block, 'button[data-jump]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const sel = btn.getAttribute('data-jump');
+          const el = qs(block, sel);
+          if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+        });
+      });
+
+      if (clearBtn){
+        clearBtn.addEventListener('click', () => {
+          qsa(block, '.hl-good,.hl-bad').forEach(el => el.classList.remove('hl-good','hl-bad'));
+        });
+      }
+    }
+
+    // ---------- TREND behavior (per language block) ----------
+    function initTrend(langKey){
+      const app = document.getElementById('trendApp');
+      const block = qs(app, `.lang[data-lang="${langKey}"]`);
+      if (!block) return;
+
+      const items = qsa(block, '.item');
+      const clearBtn = qs(block, `#trend-btnClear-${langKey}`);
+
+      function toggleHighlight(stepSel) {
+        const el = qs(block, stepSel);
+        if (!el) return;
+        el.classList.toggle('hl');
+        el.scrollIntoView({behavior:'smooth', block:'center'});
+      }
+
+      items.forEach(it => {
+        const stepSel = it.getAttribute('data-rel');
+        const box = qs(it, '.box');
+
+        it.addEventListener('click', () => {
+          toggleHighlight(stepSel);
+
+          const checked = it.getAttribute('data-checked') === '1';
+          it.setAttribute('data-checked', checked ? '0' : '1');
+          if (box){
+            box.style.borderColor = checked ? 'var(--line)' : 'rgba(45,212,191,.6)';
+            box.style.background   = checked ? 'rgba(0,0,0,.2)' : 'rgba(45,212,191,.12)';
+          }
+        });
+      });
+
+      qsa(block, 'button[data-jump]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const sel = btn.getAttribute('data-jump');
+          const el = qs(block, sel);
+          if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+        });
+      });
+
+      if (clearBtn){
+        clearBtn.addEventListener('click', () => {
+          qsa(block, '.hl').forEach(el => el.classList.remove('hl'));
+        });
+      }
+    }
+
+    // ---------- init once ----------
+    ['en','vi','ja'].forEach(k => { initRange(k); initTrend(k); });
+
+    // ---------- global switcher ----------
+    const tabBtns  = qsa(document, '.tabbtn');
+    const langBtns = qsa(document, '.langbtn');
+    const apps     = qsa(document, '.app');
+
+    function showStrategy(which){
+      apps.forEach(a => a.classList.toggle('active', a.getAttribute('data-app') === which));
+      tabBtns.forEach(b => b.setAttribute('aria-selected', b.getAttribute('data-target') === which ? 'true' : 'false'));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      localStorage.setItem('rules_strategy', which);
+    }
+
+    function showLang(lang){
+      qsa(document, '.lang').forEach(el => el.classList.toggle('active', el.getAttribute('data-lang') === lang));
+      langBtns.forEach(b => b.setAttribute('aria-selected', b.getAttribute('data-lang') === lang ? 'true' : 'false'));
+      localStorage.setItem('rules_lang', lang);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    tabBtns.forEach(b => b.addEventListener('click', () => showStrategy(b.getAttribute('data-target'))));
+    langBtns.forEach(b => b.addEventListener('click', () => showLang(b.getAttribute('data-lang'))));
+
+    // restore
+    const savedStrat = localStorage.getItem('rules_strategy');
+    const savedLang  = localStorage.getItem('rules_lang');
+    if (savedStrat === 'range' || savedStrat === 'trend') showStrategy(savedStrat);
+    if (savedLang === 'en' || savedLang === 'vi' || savedLang === 'ja') showLang(savedLang);
+  </script>
+</body>
+</html>
