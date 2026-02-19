@@ -847,52 +847,52 @@
       </main>
     </div>
 
-    <!-- ===================== JP ===================== -->
+    <!-- ===================== JP (Rewritten) ===================== -->
     <div class="lang-ja" data-lang="ja">
       <header>
         <h1>レンジタブ — リバースファースト・ブレイクアウト（ボラティリティ基準）</h1>
-        <p class="sub">「マスター」セクションはここでも読む。だが、このタブにある実行手順はレンジモードのみ。</p>
+        <p class="sub">ここでも「共通（マスター）」パートを読みます。ですが、このタブの実行手順は<strong>レンジモード専用</strong>です。</p>
       </header>
 
       <main class="wrap">
         <section class="card">
           <div class="hd">
             <h2>ルール（手順）</h2>
-            <div class="pill"><span class="dot"></span>構造 → 押し → 確認</div>
+            <div class="pill"><span class="dot"></span>構造 → 押し戻し → 確認</div>
           </div>
           <div class="body">
 
             <div class="section-title" id="r-ja-sec1">
               <b>SECTION 1 — マーケットに触れる前</b>
-              <span>時間ゲート＋資金防衛</span>
+              <span>時間ルール＋資金保護</span>
             </div>
 
             <div class="step" id="r-ja-s0">
               <div class="kicker">
                 <h3>Step 0 — まだ取引してはいけない</h3>
-                <span class="tag">時間ゲート</span>
+                <span class="tag">時間ルール</span>
               </div>
 
-              <p><b>9:00〜9:10 → 取引禁止。</b></p>
+              <p><b>9:00〜9:10 → 取引しない。</b></p>
 
-              <p>寄り付きオークションに勝てると思うな。</p>
-              <p>反応するな。</p>
-              <p>構造を待て。</p>
+              <p>寄り付きの荒れを「読み切れる」と思わない。</p>
+              <p>反射で動かない。</p>
+              <p>まず構造（形）ができるのを待つ。</p>
 
-              <p style="margin-top:12px;"><b>9:45以降 → 新規取引なし。</b></p>
-              <p>このシステムは「午前の構造化された勢い」専用。後場ノイズ用ではない。</p>
+              <p style="margin-top:12px;"><b>9:45以降 → 新規取引はしない。</b></p>
+              <p>このシステムは「午前の勢い」を狙うためのもの。後半のノイズは対象外。</p>
 
               <div class="deny">
                 <strong>日次ストップ</strong>
                 <p class="mini">午前で<b>2回負けたら</b>：</p>
                 <p class="mini" style="margin-top:6px;"><b>→ その日は終了。</b></p>
                 <p class="mini">システムが壊れたからではない。</p>
-                <p class="mini">あなたの優位性は確率であり、感情ではない。</p>
+                <p class="mini">優位性は「確率」で、感情ではない。</p>
               </div>
             </div>
 
             <div class="section-title" id="r-ja-sec2">
-              <b>SECTION 2 — 今日の“遊び場”を定義</b>
+              <b>SECTION 2 — 今日の土俵を決める</b>
               <span>オープニングボックス＋ボラティリティ基準</span>
             </div>
 
@@ -903,48 +903,48 @@
               </div>
 
               <p><b>9:10になったら：</b></p>
-              <p>次をマーキング：</p>
+              <p>次を記録する：</p>
               <ul class="bul">
                 <li>9:00–9:10 の最高値</li>
                 <li>9:00–9:10 の最安値</li>
               </ul>
 
-              <p style="margin-top:10px;">これがボックス。</p>
+              <p style="margin-top:10px;">これが「ボックス」です。</p>
 
-              <p>以降、判断基準は：</p>
+              <p>以降の判断はすべて、ここに紐づける：</p>
               <ul class="bul">
                 <li>ボックス上限</li>
                 <li>ボックス下限</li>
               </ul>
 
-              <p>ボックスは参照構造。</p>
+              <p>ボックスは、今日の基準となる「参照構造」です。</p>
             </div>
 
             <div class="step" id="r-ja-s2">
               <div class="kicker">
-                <h3>Step 2 — 今日の“エネルギー”を測る</h3>
+                <h3>Step 2 — 今日の“勢い”を数値化する</h3>
                 <span class="tag">ボラ</span>
               </div>
 
-              <p>ボックスの総レンジを取る。</p>
-              <p>5で割る。</p>
-              <p><b>これが今日のボラティリティ基準。</b></p>
+              <p>ボックスの総レンジ（上限−下限）を取る。</p>
+              <p>それを<strong>5で割る</strong>。</p>
+              <p><b>この値を「今日のボラティリティ基準」とする。</b></p>
 
-              <p>この数値で判断する：</p>
+              <p>以降、この数値で判断する：</p>
               <ul class="bul">
                 <li>ブレイクの強さ</li>
-                <li>押しの深さ</li>
-                <li>伸びすぎ</li>
-                <li>ストップ幅</li>
+                <li>押し戻し（逆行）の深さ</li>
+                <li>伸びすぎ（オーバーエクステンション）</li>
+                <li>必要ストップ幅</li>
                 <li>継続の強さ</li>
               </ul>
 
               <div class="deny">
-                <strong>ノートレ条件</strong>
+                <strong>ノートレフィルター</strong>
                 <p class="mini">オープニングボックスが <b>140未満</b>なら：</p>
-                <p class="mini" style="margin-top:6px;"><b>→ 午前に拡張がない。</b></p>
+                <p class="mini" style="margin-top:6px;"><b>→ 午前の拡張が起きにくい。</b></p>
                 <p class="mini"><b>→ 今日は取引しない。</b></p>
-                <p class="mini" style="margin-top:6px;">静かな寄り付き＝低確率ブレイク環境。</p>
+                <p class="mini" style="margin-top:6px;">静かな寄り付き＝ブレイクの期待値が低い。</p>
               </div>
             </div>
 
@@ -959,10 +959,10 @@
                 <span class="tag">モード</span>
               </div>
 
-              <p><b>必ず選べ：</b></p>
-              <p>今日はレンジ午前か、<br/>トレンド午前か。</p>
+              <p><b>必ず選ぶ：</b></p>
+              <p>今日は「レンジ午前」か、<br/>「トレンド午前」か。</p>
 
-              <p><b>両方を同時に取引してはいけない。</b></p>
+              <p><b>同じ午前で、両方の考え方を同時にやらない。</b></p>
 
               <div class="step" style="margin-top:12px;">
                 <div class="kicker">
@@ -972,19 +972,19 @@
 
                 <p>よく出る特徴：</p>
                 <ul class="bul">
-                  <li>ボックス内の回転</li>
-                  <li>中央へ何度も戻る</li>
-                  <li>ボックス外の拡張がボラティリティ基準の<b>50%</b>程度を超えにくい</li>
-                  <li>ブレイクがすぐ失速する</li>
-                  <li>方向が簡単に反転する</li>
+                  <li>ボックス内で回転（行ったり来たり）</li>
+                  <li>何度も中央へ戻る</li>
+                  <li>ボックス外の拡張が、ボラ基準の<b>50%</b>前後を超えにくい</li>
+                  <li>ブレイクが早く失速しやすい</li>
+                  <li>方向が簡単にひっくり返る</li>
                 </ul>
 
-                <p style="margin-top:10px;"><b>この挙動が支配的 → レンジモード。</b></p>
+                <p style="margin-top:10px;"><b>この挙動が優勢なら → レンジモード。</b></p>
 
                 <div class="note" style="margin-top:10px;">
-                  <b>権威</b><br/>
-                  レンジモードではボックス端が権威。<br/>
-                  市場が「保持できる」と証明すべき線。
+                  <b>判断基準（最優先）</b><br/>
+                  レンジモードでは「ボックス端」が最優先の判断基準。<br/>
+                  市場は“そこを保てる”ことを証明しなければならない。
                 </div>
               </div>
 
@@ -996,33 +996,33 @@
 
                 <p>よく出る特徴：</p>
                 <ul class="bul">
-                  <li>ボックス外へ明確に拡張する</li>
-                  <li>ボラティリティ基準の<b>50%</b>超の推進が出て、すぐ崩れて戻らない</li>
-                  <li>押しが制御され、<b>60%</b>を超えにくい</li>
-                  <li>方向性のある構造が形成される</li>
+                  <li>ボックスの外へ明確に拡張する</li>
+                  <li>ボラ基準の<b>50%</b>超の推進が出て、すぐにはボックスへ戻らない</li>
+                  <li>押し戻しが制御され、ボラ基準の<b>60%</b>前後を超えにくい</li>
+                  <li>方向性のある構造（高値・安値の連続）が見える</li>
                 </ul>
 
-                <p style="margin-top:10px;"><b>この挙動が支配的 → トレンドモード。</b></p>
+                <p style="margin-top:10px;"><b>この挙動が優勢なら → トレンドモード。</b></p>
 
                 <div class="note" style="margin-top:10px;">
-                  <b>権威</b><br/>
-                  トレンドモードではボックスではなく、構造が権威になる。
+                  <b>判断基準（最優先）</b><br/>
+                  トレンドモードでは、ボックスよりも「構造」が最優先の判断基準になる。
                 </div>
               </div>
 
               <div class="deny">
-                <strong>不明確ルール</strong>
+                <strong>迷ったときのルール</strong>
                 <p class="mini">迷うなら → 枚数を落とすか、見送る。</p>
-                <p class="mini">曖昧な構造は低品質トレードを生む。</p>
+                <p class="mini">曖昧な相場は、低品質なトレードを生む。</p>
               </div>
 
-              <p style="margin-top:10px;">落ち着いて決めろ。</p>
-              <p>無理に当てに行くな。</p>
+              <p style="margin-top:10px;">落ち着いて決める。</p>
+              <p>無理に「当て」にいかない。</p>
             </div>
 
             <div class="section-title" id="r-ja-secR">
               <b>RANGE MODE（レンジモード）</b>
-              <span>リバースファースト実行手順</span>
+              <span>リバースファースト・ブレイクアウト実行手順</span>
             </div>
 
             <div class="step" id="r-ja-r1">
@@ -1031,33 +1031,33 @@
                 <span class="tag">R1</span>
               </div>
 
-              <p>2パターン：</p>
+              <p>パターンは2つ：</p>
               <ul class="bul">
                 <li>ボックス上抜けでクローズ</li>
                 <li>ボックス下抜けでクローズ</li>
               </ul>
 
-              <p><b>それだけでは足りない。</b></p>
+              <p><b>ただし、それだけではエントリーしない。</b></p>
             </div>
 
             <div class="step" id="r-ja-r2">
               <div class="kicker">
-                <h3>Step R2 — ブレイクは“意味がある”必要</h3>
+                <h3>Step R2 — “意味のある”ブレイクだけを扱う</h3>
                 <span class="tag">R2</span>
               </div>
 
               <div class="allow">
                 <strong>OK</strong>
-                <p class="mini">クローズがボックスを<b>20%</b>以上（ボラティリティ基準）上回る/下回る。</p>
-                <p class="mini">＝コミットメント。</p>
+                <p class="mini">クローズがボックス端から、ボラ基準の<b>20%</b>以上離れている。</p>
+                <p class="mini">＝市場のコミット（本気度）が見える。</p>
               </div>
 
               <div class="deny">
                 <strong>NG</strong>
                 <ul class="bul">
                   <li>ヒゲだけのブレイク</li>
-                  <li>ボックス外の“微小”クローズ</li>
-                  <li>即フェード</li>
+                  <li>ボックス外に「ちょい出し」程度のクローズ</li>
+                  <li>すぐ戻る（即フェード）</li>
                 </ul>
                 <p class="mini" style="margin-top:8px;">弱いブレイクは罠。</p>
               </div>
@@ -1065,105 +1065,103 @@
 
             <div class="step" id="r-ja-r3">
               <div class="kicker">
-                <h3>Step R3 — リバースファースト（押しが必須）</h3>
+                <h3>Step R3 — リバースファースト（押し戻しが必須）</h3>
                 <span class="tag">R3</span>
               </div>
 
-              <p><b>ブレイク後：</b></p>
-              <p>待つ。</p>
+              <p><b>ブレイクのあと：</b></p>
+              <p>すぐ入らず、待つ。</p>
 
               <div class="allow">
                 <strong>OK</strong>
                 <ul class="bul">
-                  <li>端へ押し戻す</li>
-                  <li>押しがボラティリティ基準の<b>35%</b>以上</li>
+                  <li>価格が端へ押し戻される（リトレース）</li>
+                  <li>押し戻しがボラ基準の<b>35%</b>以上</li>
                 </ul>
-                <p class="mini" style="margin-top:8px;">＝感情的ではない。</p>
+                <p class="mini" style="margin-top:8px;">＝感情の走りではなく、形が整っている。</p>
               </div>
 
               <div class="deny">
                 <strong>NG</strong>
                 <ul class="bul">
-                  <li>押しがない</li>
-                  <li>垂直に走り続ける</li>
+                  <li>押し戻しがない</li>
+                  <li>垂直に走り続ける（押さない）</li>
                 </ul>
               </div>
 
               <div class="note">
                 <b>追いかけ禁止</b><br/>
-                押しがないなら、逃しただけ。<br/>
+                押し戻しがないなら、すでに遅い。<br/>
                 追いかけない。
               </div>
             </div>
 
             <div class="step" id="r-ja-r4">
               <div class="kicker">
-                <h3>Step R4 — タイトなリテスト挙動</h3>
+                <h3>Step R4 — タイトなリテストで“端が効いている”ことを確認</h3>
                 <span class="tag">R4</span>
               </div>
 
-              <p><b>押しの最中：</b></p>
+              <p><b>押し戻し（リトレース）の最中：</b></p>
 
               <div class="allow">
                 <strong>OK</strong>
                 <ul class="bul">
-                  <li>端付近に留まる</li>
-                  <li>ボラティリティ基準の<b>35%</b>程度以内</li>
+                  <li>値動きが端の近くに張り付く</li>
+                  <li>端からのズレが、ボラ基準の<b>35%</b>前後に収まる</li>
                 </ul>
-                <p class="mini" style="margin-top:8px;">＝端が保持されている。</p>
+                <p class="mini" style="margin-top:8px;">＝端がサポレジとして機能している。</p>
               </div>
 
               <div class="deny">
                 <strong>NG</strong>
                 <ul class="bul">
                   <li>ボックス内へ深く戻る</li>
-                  <li>押しが広く不安定になる</li>
+                  <li>押し戻しが広く、ブレる（不安定）</li>
                 </ul>
               </div>
 
               <p style="margin-top:12px;"><b>リセットルール：</b></p>
 
-              <p>端から離れる動きが<br/>
-                ボラティリティ基準の<b>60%</b>程度を超え、<br/>
-                その前に“適切なリテスト”が形成されないなら：</p>
+              <p>「適切なリテスト」ができる前に、<br/>
+                端からの乖離がボラ基準の<b>60%</b>前後を超えたら：</p>
 
               <p style="margin-top:8px;"><b>→ そのブレイク構造は失効。</b></p>
 
-              <p>市場が禁止という意味ではない。</p>
-              <p>その“構造”が溶けたという意味。</p>
+              <p>市場そのものが禁止という意味ではない。</p>
+              <p>その“構造”の優位性が崩れた、という意味。</p>
 
-              <p style="margin-top:12px;"><b>再度取引できるのは、新しい綺麗な構造ができた時だけ：</b></p>
+              <p style="margin-top:12px;"><b>再エントリーは「新しい綺麗な構造」ができたときだけ：</b></p>
               <ul class="bul">
                 <li>新しいスイング</li>
-                <li>新しい制御された押し</li>
-                <li>新しい確認</li>
+                <li>新しい制御された押し戻し</li>
+                <li>新しい確認（再始動）</li>
               </ul>
 
-              <p style="margin-top:10px;"><b>構造は常に綺麗であること。</b></p>
+              <p style="margin-top:10px;"><b>構造が汚れたら、無理に触らない。</b></p>
             </div>
 
             <div class="step" id="r-ja-r5">
               <div class="kicker">
-                <h3>Step R5 — 保持して向き直る（最終許可）</h3>
+                <h3>Step R5 — 保って、向き直る（最終許可）</h3>
                 <span class="tag">R5</span>
               </div>
 
-              <p>必要な確認：</p>
+              <p>次が見えたらOK：</p>
               <ul class="bul">
-                <li>押しが鈍る</li>
-                <li>（ロング）売り圧が消える</li>
-                <li>（ショート）買い圧が消える</li>
+                <li>押し戻しが鈍る</li>
+                <li>（ロング）売り圧が弱まる</li>
+                <li>（ショート）買い圧が弱まる</li>
                 <li>小さな反転が始まる</li>
               </ul>
 
-              <p style="margin-top:10px;"><b>エントリーは次のみ：</b></p>
-              <p>ブレイク方向へ<br/>
-                ボラティリティ基準の<b>25%</b>程度の再始動が出た時。</p>
+              <p style="margin-top:10px;"><b>エントリーは「確認」後のみ：</b></p>
+              <p>ブレイク方向へ、ボラ基準の<b>25%</b>前後の再始動が出たとき。</p>
 
               <div class="note">
-                <b>本質</b><br/>
+                <b>この手法の芯</b><br/>
                 端で入らない。<br/>
-                確認で入る。
+                「確認」で入る。
               </div>
             </div>
 
@@ -1173,17 +1171,17 @@
                 <span class="tag">R6</span>
               </div>
 
-              <p>適切な押しができる前に、<br/>
-                価格がボラティリティ基準の<b>110%</b>程度を超えて伸びたなら：</p>
+              <p>適切な押し戻しができる前に、<br/>
+                価格がボラ基準の<b>110%</b>前後を超えて伸びたら：</p>
 
-              <p style="margin-top:8px;"><b>→ そのトレードは捨てる。</b></p>
+              <p style="margin-top:8px;"><b>→ そのトレードは見送る。</b></p>
 
-              <p>その動きはすでにエネルギーを放出している。</p>
+              <p>その動きは、すでにエネルギーを放出しきっている。</p>
 
               <div class="note">
                 <b>追いかけない</b><br/>
                 拡張を追わない。<br/>
-                新しい構造を待つ。
+                次の構造を待つ。
               </div>
             </div>
 
@@ -1198,7 +1196,7 @@
 
               <p style="margin-top:10px;"><b>対応：</b></p>
               <ul class="bul">
-                <li>ブレイク系取引を<b>12分</b>禁止</li>
+                <li>ブレイク系は<b>12分</b>触らない</li>
               </ul>
 
               <p style="margin-top:12px;">すぐ反対側をブレイクするなら：</p>
@@ -1206,10 +1204,10 @@
 
               <p style="margin-top:10px;"><b>対応：</b></p>
               <ul class="bul">
-                <li>ブレイク系取引を<b>6分</b>禁止</li>
+                <li>ブレイク系は<b>6分</b>触らない</li>
               </ul>
 
-              <p style="margin-top:10px;"><b>混沌は冷ます必要がある。</b></p>
+              <p style="margin-top:10px;"><b>まず“熱”が冷めるのを待つ。</b></p>
             </div>
 
             <div class="section-title" id="r-ja-secRisk">
@@ -1227,16 +1225,16 @@
 
               <p style="margin-top:10px;"><b>レンジ：</b></p>
               <ul class="bul">
-                <li>端付近の押しスイングの外側</li>
+                <li>端付近の「押しスイング（戻り）」の外側に置く</li>
               </ul>
 
               <p style="margin-top:10px;"><b>安全バッファ：</b></p>
-              <p>ボラティリティ基準の<b>10%</b>程度</p>
+              <p>ボラ基準の<b>10%</b>前後を上乗せ</p>
 
               <div class="deny">
                 <strong>スキップ条件</strong>
-                <p class="mini">必要ストップが</p>
-                <p class="mini">ボラティリティ基準の<b>60%</b>を超えるなら：</p>
+                <p class="mini">必要ストップ幅が</p>
+                <p class="mini">ボラ基準の<b>60%</b>を超えるなら：</p>
                 <p class="mini" style="margin-top:6px;"><b>→ 構造が広すぎる</b></p>
                 <p class="mini"><b>→ 取引しない</b></p>
               </div>
@@ -1252,27 +1250,27 @@
 
               <p><b>最初の部分利確：</b></p>
               <ul class="bul">
-                <li>利益がボラティリティ基準の<b>50%</b>程度</li>
+                <li>利益がボラ基準の<b>50%</b>前後に到達</li>
               </ul>
-              <p>勢いをロックする。</p>
+              <p>勢いを“確保”する。</p>
 
               <p style="margin-top:10px;"><b>部分利確後：</b></p>
               <ul class="bul">
-                <li>動きが綺麗ならリスクを落とす</li>
+                <li>動きが綺麗なら、リスクを落とす（ストップを詰める等）</li>
               </ul>
 
-              <p style="margin-top:10px;"><b>最終出口：</b></p>
-              <p>構造の後ろにトレイル</p>
+              <p style="margin-top:10px;"><b>最終利確：</b></p>
+              <p>構造の後ろでトレイルする</p>
               <ul class="bul">
-                <li>ロング → 切上げ安値の下</li>
-                <li>ショート → 切下げ高値の上</li>
+                <li>ロング → 切上げ安値（Higher Low）の下</li>
+                <li>ショート → 切下げ高値（Lower High）の上</li>
               </ul>
 
               <p style="margin-top:10px;"><b>即撤退条件：</b></p>
               <ul class="bul">
-                <li>オープニングボックスへ再侵入</li>
-                <li>3分間伸びない（失速）</li>
-                <li>構造が明確に崩れる</li>
+                <li>価格がオープニングボックスに再侵入</li>
+                <li><b>3分</b>動かず失速</li>
+                <li>構造が明確に崩れた</li>
               </ul>
             </div>
 
@@ -1283,37 +1281,37 @@
               </div>
 
               <p><b>（最大3回）</b></p>
-              <p>強さにだけ追加する。</p>
+              <p>追加は「強いときだけ」。</p>
 
               <p style="margin-top:10px;"><b>Entry #1：</b></p>
               <ul class="bul"><li>通常セットアップ</li></ul>
 
               <p style="margin-top:10px;"><b>Entry #2：</b></p>
               <ul class="bul">
-                <li>有利方向へボラティリティ基準の<b>40%</b>程度進んだ後だけ</li>
-                <li>構造が綺麗</li>
+                <li>有利方向へボラ基準の<b>40%</b>前後進んだあと</li>
+                <li>構造が綺麗なまま</li>
               </ul>
 
               <p style="margin-top:10px;"><b>Entry #3：</b></p>
               <ul class="bul">
-                <li>さらに<b>40%</b>進んだ後だけ</li>
-                <li>勢いが強い</li>
+                <li>さらに<b>40%</b>前後進んだあと</li>
+                <li>勢いが強いまま</li>
               </ul>
 
               <div class="deny">
                 <strong>禁止</strong>
                 <ul class="bul">
                   <li>負け玉に追加</li>
-                  <li>押しが<b>60%</b>を超えるのに追加</li>
-                  <li><b>9:45</b>近辺で追加</li>
+                  <li>押し戻しが<b>60%</b>を超えているのに追加</li>
+                  <li><b>9:45</b>付近で追加</li>
                   <li>クールダウン中に追加</li>
                 </ul>
               </div>
 
-              <p style="margin-top:10px;"><b>追加後：</b></p>
+              <p style="margin-top:10px;"><b>追加したら：</b></p>
               <ul class="bul">
-                <li>先玉はリスクを落とす</li>
-                <li>総エクスポージャーを制御</li>
+                <li>先の玉はリスクを落とす</li>
+                <li>合計エクスポージャーを管理する</li>
               </ul>
 
               <p style="margin-top:10px;"><b>最大3回。例外なし。</b></p>
@@ -1321,12 +1319,12 @@
 
             <div class="section-title" id="r-ja-secId">
               <b>FINAL SYSTEM IDENTITY</b>
-              <span>このシステムの“拒否”</span>
+              <span>このシステムが“やらないこと”</span>
             </div>
 
             <div class="step" id="r-ja-id">
               <div class="kicker">
-                <h3>Identity</h3>
+                <h3>Identity（姿勢）</h3>
                 <span class="tag">規律</span>
               </div>
 
@@ -1334,10 +1332,10 @@
               <ul class="bul">
                 <li>待つ</li>
                 <li>構造を要求する</li>
-                <li>押しを要求する</li>
+                <li>押し戻しを要求する</li>
                 <li>確認を要求する</li>
                 <li>感情を遮断する</li>
-                <li>ボラティリティ基準でスケールする</li>
+                <li>ボラ基準で基準値を揃える</li>
                 <li>資金を守る</li>
               </ul>
 
@@ -1354,7 +1352,7 @@
               <button class="ui" type="button" id="r-ja-clear">ハイライト解除</button>
             </div>
 
-            <div class="footer">ヒント：チェック項目をクリックして該当ステップをハイライト。</div>
+            <div class="footer">ヒント：チェック項目をクリックすると該当ステップがハイライトされます。</div>
           </div>
         </section>
 
@@ -1371,9 +1369,9 @@
                 <div class="item" data-rel="#r-ja-s0"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>9:10以降〜9:45前</b><span>(yes/no)</span></div></div>
                 <div class="item" data-rel="#r-ja-s2"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>ボックス≥140</b><span>(yes/no)</span></div></div>
                 <div class="item" data-rel="#r-ja-s3"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>レンジ午前の挙動</b><span>(yes/no)</span></div></div>
-                <div class="item" data-rel="#r-ja-r2"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>意味あるブレイク（≥20%）</b><span>(yes/no)</span></div></div>
-                <div class="item" data-rel="#r-ja-r3"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>押しあり（≥35%）</b><span>(yes/no)</span></div></div>
-                <div class="item" data-rel="#r-ja-r4"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>タイトリテスト（~35%内）</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#r-ja-r2"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>意味のあるブレイク（≥20%）</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#r-ja-r3"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>押し戻しあり（≥35%）</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#r-ja-r4"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>タイトなリテスト（~35%以内）</b><span>(yes/no)</span></div></div>
                 <div class="item" data-rel="#r-ja-r6"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>走りすぎではない（&lt;~110%）</b><span>(yes/no)</span></div></div>
                 <div class="item" data-rel="#r-ja-stop"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>ストップ≤60%</b><span>(yes/no)</span></div></div>
               </div>
@@ -1853,11 +1851,11 @@
       </main>
     </div>
 
-    <!-- ===================== JP ===================== -->
+    <!-- ===================== JP (Rewritten) ===================== -->
     <div class="lang-ja" data-lang="ja">
       <header>
         <h1>トレンドタブ — 押し目＋継続（ボラティリティ基準）</h1>
-        <p class="sub">「マスター」セクションはここでも読む。だが、このタブにある実行手順はトレンドモードのみ。</p>
+        <p class="sub">ここでも「共通（マスター）」パートを読みます。ですが、このタブの実行手順は<strong>トレンドモード専用</strong>です。</p>
       </header>
 
       <main class="wrap">
@@ -1870,35 +1868,35 @@
 
             <div class="section-title" id="t-ja-sec1">
               <b>SECTION 1 — マーケットに触れる前</b>
-              <span>時間ゲート＋資金防衛</span>
+              <span>時間ルール＋資金保護</span>
             </div>
 
             <div class="step" id="t-ja-s0">
               <div class="kicker">
                 <h3>Step 0 — まだ取引してはいけない</h3>
-                <span class="tag">時間ゲート</span>
+                <span class="tag">時間ルール</span>
               </div>
 
-              <p><b>9:00〜9:10 → 取引禁止。</b></p>
+              <p><b>9:00〜9:10 → 取引しない。</b></p>
 
-              <p>寄り付きオークションに勝てると思うな。</p>
-              <p>反応するな。</p>
-              <p>構造を待て。</p>
+              <p>寄り付きの荒れを「読み切れる」と思わない。</p>
+              <p>反射で動かない。</p>
+              <p>まず構造（形）ができるのを待つ。</p>
 
-              <p style="margin-top:12px;"><b>9:45以降 → 新規取引なし。</b></p>
-              <p>このシステムは「午前の構造化された勢い」専用。後場ノイズ用ではない。</p>
+              <p style="margin-top:12px;"><b>9:45以降 → 新規取引はしない。</b></p>
+              <p>このシステムは「午前の勢い」を狙うためのもの。後半のノイズは対象外。</p>
 
               <div class="deny">
                 <strong>日次ストップ</strong>
                 <p class="mini">午前で<b>2回負けたら</b>：</p>
                 <p class="mini" style="margin-top:6px;"><b>→ その日は終了。</b></p>
                 <p class="mini">システムが壊れたからではない。</p>
-                <p class="mini">優位性は確率であり、感情ではない。</p>
+                <p class="mini">優位性は「確率」で、感情ではない。</p>
               </div>
             </div>
 
             <div class="section-title" id="t-ja-sec2">
-              <b>SECTION 2 — 今日の“遊び場”を定義</b>
+              <b>SECTION 2 — 今日の土俵を決める</b>
               <span>オープニングボックス＋ボラティリティ基準</span>
             </div>
 
@@ -1909,48 +1907,48 @@
               </div>
 
               <p><b>9:10になったら：</b></p>
-              <p>次をマーキング：</p>
+              <p>次を記録する：</p>
               <ul class="bul">
                 <li>9:00–9:10 の最高値</li>
                 <li>9:00–9:10 の最安値</li>
               </ul>
 
-              <p style="margin-top:10px;">これがボックス。</p>
+              <p style="margin-top:10px;">これが「ボックス」です。</p>
 
-              <p>以降、判断基準は：</p>
+              <p>以降の判断はすべて、ここに紐づける：</p>
               <ul class="bul">
                 <li>ボックス上限</li>
                 <li>ボックス下限</li>
               </ul>
 
-              <p>ボックスは参照構造。</p>
+              <p>ボックスは、今日の基準となる「参照構造」です。</p>
             </div>
 
             <div class="step" id="t-ja-s2">
               <div class="kicker">
-                <h3>Step 2 — 今日の“エネルギー”を測る</h3>
+                <h3>Step 2 — 今日の“勢い”を数値化する</h3>
                 <span class="tag">ボラ</span>
               </div>
 
-              <p>ボックスの総レンジを取る。</p>
-              <p>5で割る。</p>
-              <p><b>これが今日のボラティリティ基準。</b></p>
+              <p>ボックスの総レンジ（上限−下限）を取る。</p>
+              <p>それを<strong>5で割る</strong>。</p>
+              <p><b>この値を「今日のボラティリティ基準」とする。</b></p>
 
-              <p>この数値で判断する：</p>
+              <p>以降、この数値で判断する：</p>
               <ul class="bul">
                 <li>ブレイクの強さ</li>
                 <li>押しの深さ</li>
                 <li>伸びすぎ</li>
-                <li>ストップ幅</li>
+                <li>必要ストップ幅</li>
                 <li>継続の強さ</li>
               </ul>
 
               <div class="deny">
-                <strong>ノートレ条件</strong>
+                <strong>ノートレフィルター</strong>
                 <p class="mini">オープニングボックスが <b>140未満</b>なら：</p>
-                <p class="mini" style="margin-top:6px;"><b>→ 午前に拡張がない。</b></p>
+                <p class="mini" style="margin-top:6px;"><b>→ 午前の拡張が起きにくい。</b></p>
                 <p class="mini"><b>→ 今日は取引しない。</b></p>
-                <p class="mini" style="margin-top:6px;">静かな寄り付き＝低確率ブレイク環境。</p>
+                <p class="mini" style="margin-top:6px;">静かな寄り付き＝ブレイクの期待値が低い。</p>
               </div>
             </div>
 
@@ -1965,10 +1963,10 @@
                 <span class="tag">モード</span>
               </div>
 
-              <p><b>必ず選べ：</b></p>
-              <p>今日はレンジ午前か、<br/>トレンド午前か。</p>
+              <p><b>必ず選ぶ：</b></p>
+              <p>今日は「レンジ午前」か、<br/>「トレンド午前」か。</p>
 
-              <p><b>両方を同時に取引してはいけない。</b></p>
+              <p><b>同じ午前で、両方の考え方を同時にやらない。</b></p>
 
               <div class="step" style="margin-top:12px;">
                 <div class="kicker">
@@ -1978,19 +1976,19 @@
 
                 <p>よく出る特徴：</p>
                 <ul class="bul">
-                  <li>ボックス内の回転</li>
-                  <li>中央へ何度も戻る</li>
-                  <li>ボックス外の拡張がボラティリティ基準の<b>50%</b>程度を超えにくい</li>
-                  <li>ブレイクがすぐ失速する</li>
-                  <li>方向が簡単に反転する</li>
+                  <li>ボックス内で回転（行ったり来たり）</li>
+                  <li>何度も中央へ戻る</li>
+                  <li>ボックス外の拡張が、ボラ基準の<b>50%</b>前後を超えにくい</li>
+                  <li>ブレイクが早く失速しやすい</li>
+                  <li>方向が簡単にひっくり返る</li>
                 </ul>
 
-                <p style="margin-top:10px;"><b>この挙動が支配的 → レンジモード。</b></p>
+                <p style="margin-top:10px;"><b>この挙動が優勢なら → レンジモード。</b></p>
 
                 <div class="note" style="margin-top:10px;">
-                  <b>権威</b><br/>
-                  レンジモードではボックス端が権威。<br/>
-                  市場が「保持できる」と証明すべき線。
+                  <b>判断基準（最優先）</b><br/>
+                  レンジモードでは「ボックス端」が最優先の判断基準。<br/>
+                  市場は“そこを保てる”ことを証明しなければならない。
                 </div>
               </div>
 
@@ -2002,28 +2000,28 @@
 
                 <p>よく出る特徴：</p>
                 <ul class="bul">
-                  <li>ボックス外へ明確に拡張する</li>
-                  <li>ボラティリティ基準の<b>50%</b>超の推進が出て、すぐ崩れて戻らない</li>
-                  <li>押しが制御され、<b>60%</b>を超えにくい</li>
-                  <li>方向性のある構造が形成される</li>
+                  <li>ボックスの外へ明確に拡張する</li>
+                  <li>ボラ基準の<b>50%</b>超の推進が出て、すぐにはボックスへ戻らない</li>
+                  <li>押し戻しが制御され、ボラ基準の<b>60%</b>前後を超えにくい</li>
+                  <li>方向性のある構造（高値・安値の連続）が見える</li>
                 </ul>
 
-                <p style="margin-top:10px;"><b>この挙動が支配的 → トレンドモード。</b></p>
+                <p style="margin-top:10px;"><b>この挙動が優勢なら → トレンドモード。</b></p>
 
                 <div class="note" style="margin-top:10px;">
-                  <b>権威</b><br/>
-                  トレンドモードではボックスではなく、構造が権威になる。
+                  <b>判断基準（最優先）</b><br/>
+                  トレンドモードでは、ボックスよりも「構造」が最優先の判断基準になる。
                 </div>
               </div>
 
               <div class="deny">
-                <strong>不明確ルール</strong>
+                <strong>迷ったときのルール</strong>
                 <p class="mini">迷うなら → 枚数を落とすか、見送る。</p>
-                <p class="mini">曖昧な構造は低品質トレードを生む。</p>
+                <p class="mini">曖昧な相場は、低品質なトレードを生む。</p>
               </div>
 
-              <p style="margin-top:10px;">落ち着いて決めろ。</p>
-              <p>無理に当てに行くな。</p>
+              <p style="margin-top:10px;">落ち着いて決める。</p>
+              <p>無理に「当て」にいかない。</p>
             </div>
 
             <div class="section-title" id="t-ja-secT">
@@ -2033,21 +2031,21 @@
 
             <div class="step" id="t-ja-t1">
               <div class="kicker">
-                <h3>Step T1 — トレンドは証明が必要</h3>
+                <h3>Step T1 — トレンドは“証明”が必要</h3>
                 <span class="tag">T1</span>
               </div>
 
-              <p>次のうち少なくとも<b>2つ</b>が明確な時だけトレンドルールを使う：</p>
+              <p>次のうち少なくとも<b>2つ</b>が<strong>はっきり</strong>しているときだけ、トレンドルールを使う：</p>
               <ul class="bul">
                 <li>高値切上げ＆安値切上げ（または逆）</li>
-                <li>押しが浅く制御されている</li>
+                <li>押しが浅く、制御されている</li>
                 <li>価格がオープニングボックスの外側に留まる</li>
               </ul>
 
               <div class="deny">
                 <strong>NG</strong>
                 <p class="mini">迷うならトレンドとして取引しない。</p>
-                <p class="mini">不明確＝ノートレ。</p>
+                <p class="mini">証明が曖昧＝ノートレ。</p>
               </div>
             </div>
 
@@ -2060,7 +2058,7 @@
               <p><b>上昇 → 買いのみ。</b></p>
               <p><b>下降 → 売りのみ。</b></p>
 
-              <p>逆張りの発想は捨てる。</p>
+              <p>逆張りはしない。</p>
             </div>
 
             <div class="step" id="t-ja-t3">
@@ -2072,18 +2070,18 @@
               <div class="deny">
                 <strong>NG</strong>
                 <ul class="bul">
-                  <li>価格が激しく走っている最中のエントリー</li>
+                  <li>価格が激しく走っている最中に入る</li>
                 </ul>
               </div>
 
               <p style="margin-top:10px;">押しがないまま、<br/>
-                ボラティリティ基準の<b>110%</b>程度を超えて伸びたなら：</p>
+                ボラ基準の<b>110%</b>前後を超えて伸びたら：</p>
 
               <p style="margin-top:8px;"><b>→ 追いかけない。</b></p>
 
               <div class="note">
-                <b>プロのルール</b><br/>
-                プロは、制御が戻ってから入る。
+                <b>プロの原則</b><br/>
+                プロは「制御が戻ってから」入る。
               </div>
             </div>
 
@@ -2098,14 +2096,14 @@
                 <ul class="bul">
                   <li>押しが適度</li>
                   <li>オープニングボックスの外側に留まる</li>
-                  <li>構造が保たれる</li>
+                  <li>構造が保たれている</li>
                 </ul>
               </div>
 
               <div class="deny">
                 <strong>NG</strong>
                 <ul class="bul">
-                  <li>押しがボラティリティ基準の<b>60%</b>程度を超える</li>
+                  <li>押しがボラ基準の<b>60%</b>前後を超える</li>
                   <li>押しがオープニングボックスへ入る</li>
                 </ul>
                 <p class="mini" style="margin-top:8px;">それはトレンドの強さが弱まっているサイン。</p>
@@ -2121,11 +2119,11 @@
               <p>待つもの：</p>
               <ul class="bul">
                 <li>押しが明確に鈍る</li>
-                <li>トレンド方向へ、ボラティリティ基準の<b>25%</b>程度の再始動が出る</li>
+                <li>トレンド方向へ、ボラ基準の<b>25%</b>前後の再始動が出る</li>
               </ul>
 
               <p>当てに行かない。</p>
-              <p><b>確認する。</b></p>
+              <p><b>確認して入る。</b></p>
             </div>
 
             <div class="section-title" id="t-ja-secRisk">
@@ -2143,16 +2141,16 @@
 
               <p style="margin-top:10px;"><b>トレンド：</b></p>
               <ul class="bul">
-                <li>押しのスイング安値/高値の外側</li>
+                <li>押しのスイング安値／高値の外側に置く</li>
               </ul>
 
               <p style="margin-top:10px;"><b>安全バッファ：</b></p>
-              <p>ボラティリティ基準の<b>10%</b>程度</p>
+              <p>ボラ基準の<b>10%</b>前後を上乗せ</p>
 
               <div class="deny">
                 <strong>スキップ条件</strong>
-                <p class="mini">必要ストップが</p>
-                <p class="mini">ボラティリティ基準の<b>60%</b>を超えるなら：</p>
+                <p class="mini">必要ストップ幅が</p>
+                <p class="mini">ボラ基準の<b>60%</b>を超えるなら：</p>
                 <p class="mini" style="margin-top:6px;"><b>→ 構造が広すぎる</b></p>
                 <p class="mini"><b>→ 取引しない</b></p>
               </div>
@@ -2168,27 +2166,27 @@
 
               <p><b>最初の部分利確：</b></p>
               <ul class="bul">
-                <li>利益がボラティリティ基準の<b>50%</b>程度</li>
+                <li>利益がボラ基準の<b>50%</b>前後に到達</li>
               </ul>
-              <p>勢いをロックする。</p>
+              <p>勢いを“確保”する。</p>
 
               <p style="margin-top:10px;"><b>部分利確後：</b></p>
               <ul class="bul">
-                <li>動きが綺麗ならリスクを落とす</li>
+                <li>動きが綺麗なら、リスクを落とす（ストップを詰める等）</li>
               </ul>
 
-              <p style="margin-top:10px;"><b>最終出口：</b></p>
-              <p>構造の後ろにトレイル</p>
+              <p style="margin-top:10px;"><b>最終利確：</b></p>
+              <p>構造の後ろでトレイルする</p>
               <ul class="bul">
-                <li>ロング → 切上げ安値の下</li>
-                <li>ショート → 切下げ高値の上</li>
+                <li>ロング → 切上げ安値（Higher Low）の下</li>
+                <li>ショート → 切下げ高値（Lower High）の上</li>
               </ul>
 
               <p style="margin-top:10px;"><b>即撤退条件：</b></p>
               <ul class="bul">
-                <li>オープニングボックスへ再侵入</li>
-                <li>3分間伸びない（失速）</li>
-                <li>構造が明確に崩れる</li>
+                <li>価格がオープニングボックスに再侵入</li>
+                <li><b>3分</b>動かず失速</li>
+                <li>構造が明確に崩れた</li>
               </ul>
             </div>
 
@@ -2199,37 +2197,37 @@
               </div>
 
               <p><b>（最大3回）</b></p>
-              <p>強さにだけ追加する。</p>
+              <p>追加は「強いときだけ」。</p>
 
               <p style="margin-top:10px;"><b>Entry #1：</b></p>
               <ul class="bul"><li>通常セットアップ</li></ul>
 
               <p style="margin-top:10px;"><b>Entry #2：</b></p>
               <ul class="bul">
-                <li>有利方向へボラティリティ基準の<b>40%</b>程度進んだ後だけ</li>
-                <li>構造が綺麗</li>
+                <li>有利方向へボラ基準の<b>40%</b>前後進んだあと</li>
+                <li>構造が綺麗なまま</li>
               </ul>
 
               <p style="margin-top:10px;"><b>Entry #3：</b></p>
               <ul class="bul">
-                <li>さらに<b>40%</b>進んだ後だけ</li>
-                <li>勢いが強い</li>
+                <li>さらに<b>40%</b>前後進んだあと</li>
+                <li>勢いが強いまま</li>
               </ul>
 
               <div class="deny">
                 <strong>禁止</strong>
                 <ul class="bul">
                   <li>負け玉に追加</li>
-                  <li>押しが<b>60%</b>を超えるのに追加</li>
-                  <li><b>9:45</b>近辺で追加</li>
+                  <li>押しが<b>60%</b>を超えているのに追加</li>
+                  <li><b>9:45</b>付近で追加</li>
                   <li>クールダウン中に追加</li>
                 </ul>
               </div>
 
-              <p style="margin-top:10px;"><b>追加後：</b></p>
+              <p style="margin-top:10px;"><b>追加したら：</b></p>
               <ul class="bul">
-                <li>先玉はリスクを落とす</li>
-                <li>総エクスポージャーを制御</li>
+                <li>先の玉はリスクを落とす</li>
+                <li>合計エクスポージャーを管理する</li>
               </ul>
 
               <p style="margin-top:10px;"><b>最大3回。例外なし。</b></p>
@@ -2237,12 +2235,12 @@
 
             <div class="section-title" id="t-ja-secId">
               <b>FINAL SYSTEM IDENTITY</b>
-              <span>このシステムの“拒否”</span>
+              <span>このシステムが“やらないこと”</span>
             </div>
 
             <div class="step" id="t-ja-id">
               <div class="kicker">
-                <h3>Identity</h3>
+                <h3>Identity（姿勢）</h3>
                 <span class="tag">規律</span>
               </div>
 
@@ -2253,7 +2251,7 @@
                 <li>押しを要求する</li>
                 <li>確認を要求する</li>
                 <li>感情を遮断する</li>
-                <li>ボラティリティ基準でスケールする</li>
+                <li>ボラ基準で基準値を揃える</li>
                 <li>資金を守る</li>
               </ul>
 
@@ -2265,7 +2263,7 @@
 
             <div class="btnrow">
               <button class="ui" type="button" data-jump="#t-ja-sec3">ジャンプ: セクション3</button>
-              <button class="ui" type="button" data-jump="#t-ja-t3">ジャンプ: T3（追いかけ）</button>
+              <button class="ui" type="button" data-jump="#t-ja-t3">ジャンプ: T3（追いかけ禁止）</button>
               <button class="ui" type="button" data-jump="#t-ja-t5">ジャンプ: T5（確認）</button>
               <button class="ui" type="button" id="t-ja-clear">ハイライト解除</button>
             </div>
@@ -2287,7 +2285,7 @@
                 <div class="item" data-rel="#t-ja-s0"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>9:10以降〜9:45前</b><span>(yes/no)</span></div></div>
                 <div class="item" data-rel="#t-ja-s2"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>ボックス≥140</b><span>(yes/no)</span></div></div>
                 <div class="item" data-rel="#t-ja-s3"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>トレンド午前の挙動</b><span>(yes/no)</span></div></div>
-                <div class="item" data-rel="#t-ja-t1"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>トレンド証明（2つOK）</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#t-ja-t1"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>トレンド証明（2項目OK）</b><span>(yes/no)</span></div></div>
                 <div class="item" data-rel="#t-ja-t3"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>追いかけていない（&lt;~110%）</b><span>(yes/no)</span></div></div>
                 <div class="item" data-rel="#t-ja-t4"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>押しが制御（≤~60%＆外側）</b><span>(yes/no)</span></div></div>
                 <div class="item" data-rel="#t-ja-t5"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>確認（~25%再始動）</b><span>(yes/no)</span></div></div>
