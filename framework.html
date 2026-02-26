@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Master Morning Breakout System — Enhanced Volume (EN/JP)</title>
+  <title>MASTER MORNING BREAKOUT SYSTEM — Breakout-Only (EN/JP)</title>
 
   <style>
     :root{
@@ -33,7 +33,7 @@
       line-height:1.65;
     }
 
-    /* Sticky switcher */
+    /* Sticky topbar */
     .topbar{
       position:sticky;
       top:0;
@@ -56,7 +56,7 @@
       display:flex;
       flex-direction:column;
       gap:2px;
-      min-width: 240px;
+      min-width: 260px;
     }
     .brand b{font-size:14px; letter-spacing:.2px}
     .brand span{font-size:12px; color:var(--muted)}
@@ -93,18 +93,12 @@
       box-shadow: 0 0 0 4px rgba(45,212,191,.12);
       flex:0 0 auto;
     }
-    .sep{
-      width:1px;
-      height:26px;
-      background: rgba(34,48,68,.9);
-      margin:0 4px;
-    }
 
     /* Language blocks (JS controls display explicitly) */
     .lang-en{ display:inline; }
     .lang-ja{ display:inline; }
 
-    /* Common layout */
+    /* Layout */
     header{
       max-width:1100px;
       margin: 26px auto 10px;
@@ -225,9 +219,7 @@
       background: rgba(255,255,255,.02);
       cursor:pointer;
       user-select:none;
-      outline:none;
     }
-    .item:focus{ box-shadow: 0 0 0 4px rgba(45,212,191,.10); }
     .box{
       width:18px;height:18px;border-radius:4px;
       border:1px solid var(--line);
@@ -268,1197 +260,1458 @@
     <div class="topbar-inner">
       <div class="brand">
         <b>MASTER MORNING BREAKOUT SYSTEM</b>
-        <span>Structure → Pullback → Confirmation — Enhanced Volume Version</span>
+        <span>Structure → Pullback → Confirmation — Breakout-Only (Enhanced Volume)</span>
       </div>
 
       <div class="tabs" aria-label="Language switch">
         <button class="langbtn" id="btn-en" aria-selected="true" data-lang="en">
-          <span class="dot"></span>EN
+          <span class="dot"></span><span>EN</span>
         </button>
         <button class="langbtn" id="btn-ja" aria-selected="false" data-lang="ja">
-          <span class="dot" style="background:var(--warn); box-shadow:0 0 0 4px rgba(251,191,36,.12)"></span>JP
+          <span class="dot"></span><span>JP</span>
         </button>
       </div>
     </div>
   </div>
 
-  <!-- ===================== EN ===================== -->
-  <div class="lang-en" data-lang="en">
-    <header>
-      <h1>Master Morning Breakout System — Breakout-Only (Enhanced Volume)</h1>
-      <p class="sub">One flow only: qualify the environment → wait for pullback → enter on execution breakout with volume confirmation.</p>
-    </header>
-
-    <main class="wrap">
-      <section class="card">
-        <div class="hd">
-          <h2>Rules (Complete System)</h2>
-          <div class="pill"><span class="dot"></span>Structure → Pullback → Confirmation</div>
-        </div>
-        <div class="body">
-
-          <!-- SECTION 1 -->
-          <div class="section-title" id="en-sec1">
-            <b>SECTION 1 — TIME &amp; CAPITAL RULES</b>
-            <span>Time gate + daily stop (no exceptions)</span>
-          </div>
-
-          <div class="step" id="en-s1-1">
-            <div class="kicker">
-              <h3>1. Time Rule</h3>
-              <span class="tag">Time</span>
-            </div>
-            <ul class="bul">
-              <li><b>9:00–9:10 → No trades</b></li>
-              <li><b>After 9:45 → No new trades</b></li>
-            </ul>
-            <p>You trade structured morning expansion only.</p>
-          </div>
-
-          <div class="step" id="en-s1-2">
-            <div class="kicker">
-              <h3>2. Daily Stop Rule</h3>
-              <span class="tag">Capital</span>
-            </div>
-            <ul class="bul">
-              <li><b>2 losses → Stop trading for the day</b></li>
-            </ul>
-            <p><b>No exceptions.</b> Capital and clarity come first.</p>
-          </div>
-
-          <!-- SECTION 2 -->
-          <div class="section-title" id="en-sec2">
-            <b>SECTION 2 — STRUCTURE SETUP</b>
-            <span>Opening Box + VOL + no-trade filter</span>
-          </div>
-
-          <div class="step" id="en-s2-1">
-            <div class="kicker">
-              <h3>1. Opening Box (at 9:10)</h3>
-              <span class="tag">Structure</span>
-            </div>
-            <p><b>Mark:</b></p>
-            <ul class="bul">
-              <li>High from 9:00–9:10</li>
-              <li>Low from 9:00–9:10</li>
-            </ul>
-            <p>This is today’s reference structure.</p>
-            <p>All decisions are based on this box.</p>
-          </div>
-
-          <div class="step" id="en-s2-2">
-            <div class="kicker">
-              <h3>2. Volatility Reference (VOL)</h3>
-              <span class="tag">VOL</span>
-            </div>
-            <p><b>Opening Box range ÷ 5 = VOL</b></p>
-            <p>VOL defines:</p>
-            <ul class="bul">
-              <li>Breakout strength</li>
-              <li>Pullback depth</li>
-              <li>Stop size</li>
-              <li>Profit targets</li>
-              <li>Overextension</li>
-            </ul>
-            <p>All rules are measured using VOL.</p>
-          </div>
-
-          <div class="step" id="en-s2-3">
-            <div class="kicker">
-              <h3>3. Basic No-Trade Filter</h3>
-              <span class="tag">Filter</span>
-            </div>
-            <div class="deny">
-              <strong>No trading today</strong>
-              <p class="mini">If <b>Opening Box &lt; 140</b>:</p>
-              <p class="mini" style="margin-top:6px;"><b>→ No trading today.</b></p>
-              <p class="mini">Small box = weak expansion potential.</p>
-            </div>
-          </div>
-
-          <!-- SECTION 3 -->
-          <div class="section-title" id="en-sec3">
-            <b>SECTION 3 — ENVIRONMENT FILTER</b>
-            <span>Environment Breakout = qualification only (NOT an entry)</span>
-          </div>
-
-          <div class="step" id="en-s3-0">
-            <div class="kicker">
-              <h3>Purpose</h3>
-              <span class="tag">Qualify</span>
-            </div>
-            <p><b>Environment Breakout = Qualification Only.</b></p>
-            <p>This is <b>NOT</b> your entry.</p>
-            <p>This only answers: <b>“Is continuation possible today?”</b></p>
-            <p>All conditions below must be true.</p>
-          </div>
-
-          <div class="step" id="en-s3-1">
-            <div class="kicker">
-              <h3>1️⃣ Expansion Test</h3>
-              <span class="tag">Env #1</span>
-            </div>
-            <p>Price must move:</p>
-            <p><b>≥ 50% of VOL</b> outside the Opening Box.</p>
-            <p>If it does not expand at least this much:</p>
-            <div class="deny">
-              <strong>Not qualified</strong>
-              <p class="mini"><b>→ No breakout trade.</b></p>
-            </div>
-
-            <div class="note">
-              <b>Volume addition</b><br/>
-              Expansion should occur with <b>stable or increasing volume</b>.<br/>
-              If expansion happens while volume is <b>falling sharply</b>:<br/>
-              <b>→ Do not qualify environment.</b>
-            </div>
-          </div>
-
-          <div class="step" id="en-s3-2">
-            <div class="kicker">
-              <h3>2️⃣ Breakout Close Quality</h3>
-              <span class="tag">Env #2</span>
-            </div>
-            <p>Breakout must:</p>
-            <ul class="bul">
-              <li>Close clearly outside the box</li>
-              <li>Not be wick-only</li>
-              <li>Not immediately reverse</li>
-            </ul>
-            <p><b>Weak close = ignore.</b></p>
-
-            <div class="note">
-              <b>Volume addition</b><br/>
-              Close candle should <b>not</b> be on low volume.<br/>
-              Strong closes with strong volume are preferred.
-            </div>
-          </div>
-
-          <div class="step" id="en-s3-3">
-            <div class="kicker">
-              <h3>3️⃣ Volume on Expansion</h3>
-              <span class="tag">Env #3</span>
-            </div>
-            <p>Breakout candle volume must be:</p>
-            <ul class="bul">
-              <li>Above recent average <b>OR</b></li>
-              <li>Clearly stronger than prior candles</li>
-            </ul>
-            <p><b>Low volume breakout = skip.</b></p>
-            <p>Strong price requires participation.</p>
-
-            <div class="note">
-              <b>Additional volume rule</b><br/>
-              If breakout happens with an <b>extreme volume spike</b> far above recent average,<br/>
-              be cautious of exhaustion.<br/>
-              Wait for a clean pullback before trusting continuation.
-            </div>
-          </div>
-
-          <div class="step" id="en-s3-4">
-            <div class="kicker">
-              <h3>4️⃣ Hold Outside Test</h3>
-              <span class="tag">Env #4</span>
-            </div>
-            <p>After breakout:</p>
-            <p><b>Price must stay outside the box.</b></p>
-            <div class="allow">
-              <strong>Allowed</strong>
-              <ul class="bul">
-                <li>At least one additional push outside</li>
-                <li>No full return inside</li>
-              </ul>
-            </div>
-            <div class="deny">
-              <strong>Not qualified</strong>
-              <p class="mini">If price quickly returns deep inside:</p>
-              <p class="mini"><b>→ Environment unstable → No trade.</b></p>
-            </div>
-
-            <div class="note">
-              <b>Volume addition</b><br/>
-              If price holds outside while volume suddenly collapses to very low levels,<br/>
-              wait for volume stability before moving to pullback phase.
-            </div>
-
-            <p style="margin-top:12px;"><b>If all 4 pass:</b> Environment is qualified. Now wait for pullback.</p>
-          </div>
-
-          <!-- SECTION 4 -->
-          <div class="section-title" id="en-sec4">
-            <b>SECTION 4 — PULLBACK PHASE</b>
-            <span>No entry yet (pullback must appear)</span>
-          </div>
-
-          <div class="step" id="en-s4">
-            <div class="kicker">
-              <h3>Pullback Rules</h3>
-              <span class="tag">Pullback</span>
-            </div>
-            <p><b>(No Entry Yet)</b></p>
-            <p>You must see pullback first.</p>
-
-            <p><b>Pullback rules:</b></p>
-            <ul class="bul">
-              <li>Retrace <b>35%–60%</b> of VOL</li>
-              <li>Stay outside the Opening Box</li>
-              <li>Move slower than breakout</li>
-            </ul>
-
-            <div class="note">
-              <b>Volume during pullback</b><br/>
-              <b>Good:</b> lower than breakout volume, gradually decreasing.<br/>
-              <b>Not allowed:</b> pullback volume equal/higher than breakout volume;<br/>
-              strong opposite candles with high volume.
-            </div>
-
-            <div class="note">
-              <b>Additional volume rule</b><br/>
-              If pullback shows multiple candles where volume increases while price moves against breakout direction,<br/>
-              be stricter on confirmation entry.<br/><br/>
-              If pullback shows very light volume and price barely retraces,<br/>
-              continuation probability increases.
-            </div>
-
-            <div class="deny">
-              <strong>Invalid structure</strong>
-              <p class="mini">If pullback exceeds <b>60% VOL</b> or goes deep inside box:</p>
-              <p class="mini" style="margin-top:6px;"><b>→ Structure invalid → Reset.</b></p>
-            </div>
-          </div>
-
-          <!-- SECTION 5 -->
-          <div class="section-title" id="en-sec5">
-            <b>SECTION 5 — EXECUTION BREAKOUT</b>
-            <span>The entry trigger (different from environment breakout)</span>
-          </div>
-
-          <div class="step" id="en-s5">
-            <div class="kicker">
-              <h3>Entry Trigger</h3>
-              <span class="tag">Execution</span>
-            </div>
-
-            <p><b>This is different from Environment Breakout.</b></p>
-            <ul class="bul">
-              <li>Environment breakout = proves expansion</li>
-              <li>Execution breakout = confirms continuation</li>
-            </ul>
-
-            <p><b>Entry allowed only when:</b></p>
-            <ul class="bul">
-              <li>Price moves <b>≥ 25% of VOL</b> in breakout direction</li>
-              <li>Minor pullback structure is broken</li>
-            </ul>
-
-            <div class="note">
-              <b>Volume rule</b><br/>
-              Resume candle volume must be <b>higher than pullback candles</b> and <b>not low volume</b>.
-            </div>
-
-            <div class="note">
-              <b>Added volume confirmation</b><br/>
-              The execution breakout candle should not close with shrinking volume compared to the prior candle.<br/>
-              Stable or increasing volume is required.
-            </div>
-
-            <div class="deny">
-              <strong>Skip</strong>
-              <p class="mini">If resume move occurs with weak participation:</p>
-              <p class="mini" style="margin-top:6px;"><b>→ Skip trade.</b></p>
-            </div>
-
-            <div class="note">
-              <b>Identity</b><br/>
-              You never enter at the edge.<br/>
-              You enter at confirmation.
-            </div>
-          </div>
-
-          <!-- SECTION 6 -->
-          <div class="section-title" id="en-sec6">
-            <b>SECTION 6 — FAILURE &amp; RESET RULES</b>
-            <span>Cooldown + two-failure improvement</span>
-          </div>
-
-          <div class="step" id="en-s6-1">
-            <div class="kicker">
-              <h3>Failed Breakout</h3>
-              <span class="tag">Reset</span>
-            </div>
-            <p>If price returns inside Opening Box:</p>
-            <p><b>→ Breakout failed.</b></p>
-            <p><b>Action:</b></p>
-            <ul class="bul">
-              <li>No breakout trades for <b>12 minutes</b></li>
-            </ul>
-
-            <div class="note">
-              <b>Volume addition</b><br/>
-              If failure candle has high volume, be stricter on next breakout attempt.<br/>
-              If failure happens on low volume, still respect cooldown, but allow cleaner next setup.
-            </div>
-          </div>
-
-          <div class="step" id="en-s6-2">
-            <div class="kicker">
-              <h3>Two Failure Rule (Improvement)</h3>
-              <span class="tag">Pause</span>
-            </div>
-            <p>If two clean breakout attempts fail:</p>
-            <ul class="bul">
-              <li>Pause for <b>15 minutes</b></li>
-            </ul>
-
-            <div class="note">
-              <b>Additional volume filter</b><br/>
-              If both failures occurred with strong opposite volume,<br/>
-              consider stopping trading early. Market condition likely unstable.
-            </div>
-          </div>
-
-          <!-- SECTION 7 -->
-          <div class="section-title" id="en-sec7">
-            <b>SECTION 7 — OVEREXTENSION RULE</b>
-            <span>No chasing (energy already released)</span>
-          </div>
-
-          <div class="step" id="en-s7">
-            <div class="kicker">
-              <h3>Skip Runaway Moves</h3>
-              <span class="tag">110%</span>
-            </div>
-            <p>If price moves:</p>
-            <p><b>≥ 110% of VOL</b> without forming proper pullback:</p>
-            <p><b>→ Skip trade.</b></p>
-            <p>Energy already released. No chasing.</p>
-
-            <div class="note">
-              <b>Volume addition</b><br/>
-              If overextension occurs with a very high volume spike, expect pullback soon.<br/>
-              Do not assume continuation without reset.
-            </div>
-          </div>
-
-          <!-- SECTION 8 -->
-          <div class="section-title" id="en-sec8">
-            <b>SECTION 8 — STOP RULE</b>
-            <span>VOL-based risk (price rules first)</span>
-          </div>
-
-          <div class="step" id="en-s8">
-            <div class="kicker">
-              <h3>Stop Placement</h3>
-              <span class="tag">Risk</span>
-            </div>
-
-            <p><b>Stop placement:</b></p>
-            <ul class="bul">
-              <li>Below pullback swing (long)</li>
-              <li>Above pullback swing (short)</li>
-            </ul>
-            <p>Add ~<b>10% of VOL</b> buffer.</p>
-
-            <div class="deny">
-              <strong>Skip condition</strong>
-              <p class="mini">If required stop &gt; <b>60% of VOL</b>:</p>
-              <p class="mini" style="margin-top:6px;"><b>→ Structure too wide → Skip trade.</b></p>
-            </div>
-
-            <p style="margin-top:10px;"><b>If structure clearly breaks: exit immediately.</b></p>
-
-            <div class="note">
-              <b>Additional volume note</b><br/>
-              If structure breaks with strong opposite volume, do not wait. Exit instantly.<br/>
-              If structure breaks with low volume, still exit. Price rules first.
-            </div>
-          </div>
-
-          <!-- SECTION 9 -->
-          <div class="section-title" id="en-sec9">
-            <b>SECTION 9 — PROFIT MANAGEMENT</b>
-            <span>Partial, then protect, then trail</span>
-          </div>
-
-          <div class="step" id="en-s9-1">
-            <div class="kicker">
-              <h3>First Partial</h3>
-              <span class="tag">+50%</span>
-            </div>
-            <p>Take partial at:</p>
-            <p><b>≈ 50% of VOL</b> in profit.</p>
-            <p>Lock in momentum.</p>
-
-            <div class="note">
-              <b>Volume addition</b><br/>
-              If price reaches partial target with rising volume, you may trail more loosely.<br/>
-              If price reaches partial target with falling volume, tighten management.
-            </div>
-          </div>
-
-          <div class="step" id="en-s9-2">
-            <div class="kicker">
-              <h3>After Partial</h3>
-              <span class="tag">Protect</span>
-            </div>
-            <ul class="bul">
-              <li>Reduce risk</li>
-              <li>Move stop behind structure</li>
-            </ul>
-          </div>
-
-          <div class="step" id="en-s9-3">
-            <div class="kicker">
-              <h3>Full Exit</h3>
-              <span class="tag">Exit</span>
-            </div>
-            <p>Exit if:</p>
-            <ul class="bul">
-              <li>Price returns inside Opening Box</li>
-              <li>Trade stalls for <b>3 minutes</b></li>
-              <li>Clear opposite expansion appears</li>
-            </ul>
-
-            <div class="note">
-              <b>Volume addition</b><br/>
-              If strong opposite candle appears with strong volume,<br/>
-              protect remaining position immediately.
-            </div>
-          </div>
-
-          <!-- SECTION 10 -->
-          <div class="section-title" id="en-sec10">
-            <b>SECTION 10 — PYRAMID RULE</b>
-            <span>Maximum 3 entries (only on participation)</span>
-          </div>
-
-          <div class="step" id="en-s10">
-            <div class="kicker">
-              <h3>Scaling</h3>
-              <span class="tag">Max 3</span>
-            </div>
-
-            <p><b>Maximum 3 entries.</b></p>
-            <ul class="bul">
-              <li>Entry #1 → Standard setup</li>
-              <li>Entry #2 → After price moves <b>40% VOL</b> in your favor + structure clean + volume supports continuation</li>
-              <li>Entry #3 → After another <b>40% VOL</b> move + momentum strong</li>
-            </ul>
-
-            <div class="note">
-              <b>Additional volume requirement for adding</b><br/>
-              Each add must be supported by at least equal or higher volume compared to prior push.<br/>
-              Never add on low participation.
-            </div>
-
-            <div class="deny">
-              <strong>Never</strong>
-              <ul class="bul">
-                <li>Add to losing trade</li>
-                <li>Add if pullback &gt; 60% VOL</li>
-                <li>Add near 9:45</li>
-                <li>Add during cooldown</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- SECTION 11 -->
-          <div class="section-title" id="en-sec11">
-            <b>SECTION 11 — COMPLETE FLOW SUMMARY</b>
-            <span>The one true flow</span>
-          </div>
-
-          <div class="step" id="en-s11">
-            <div class="kicker">
-              <h3>Flow</h3>
-              <span class="tag">Checklist</span>
-            </div>
-            <ol style="margin:8px 0 0 18px; color:var(--muted); font-size:14px;">
-              <li>Define box</li>
-              <li>Calculate VOL</li>
-              <li>Wait for Environment Breakout</li>
-              <li>Verify expansion + close + volume + hold</li>
-              <li>Wait for controlled pullback</li>
-              <li>Confirm decreasing pullback volume</li>
-              <li>Enter only on Execution Breakout with rising volume</li>
-              <li>Manage risk using VOL and volume behavior</li>
-              <li>Never chase</li>
-              <li>Stop after 2 losses</li>
-            </ol>
-          </div>
-
-          <div class="section-title" id="en-identity">
-            <b>SYSTEM IDENTITY</b>
-            <span>What this system does and refuses to do</span>
-          </div>
-
-          <div class="step" id="en-id">
-            <div class="kicker">
-              <h3>Identity</h3>
-              <span class="tag">Discipline</span>
-            </div>
-            <p>This system:</p>
-            <ul class="bul">
-              <li>Waits for proven expansion</li>
-              <li>Uses volume to confirm participation</li>
-              <li>Demands controlled pullback</li>
-              <li>Requires strong resumption</li>
-              <li>Uses volatility for discipline</li>
-              <li>Protects capital</li>
-              <li>Never chases</li>
-              <li>Stops in unstable environments</li>
-            </ul>
-            <p style="margin-top:10px;"><b>It trades continuation only.</b></p>
-            <p>If price expands but volume does not support it: <b>it does nothing.</b></p>
-            <p>If structure forms but continuation is weak: <b>it does nothing.</b></p>
-            <p><b>Discipline is the edge.</b></p>
-          </div>
-
-          <div class="btnrow">
-            <button class="ui" type="button" data-jump="#en-sec3">Jump: Section 3 (Environment)</button>
-            <button class="ui" type="button" data-jump="#en-sec4">Jump: Section 4 (Pullback)</button>
-            <button class="ui" type="button" data-jump="#en-sec5">Jump: Section 5 (Execution)</button>
-            <button class="ui" type="button" id="en-clear">Clear highlights</button>
-          </div>
-
-          <div class="footer">Tip: Click checklist items to highlight the matching section/step.</div>
-        </div>
-      </section>
-
-      <aside class="grid">
+  <!-- =========================================================
+       SINGLE APP (EN/JP)
+  ========================================================== -->
+  <div id="app">
+
+    <!-- ===================== EN ===================== -->
+    <div class="lang-en" data-lang="en">
+      <header>
+        <h1>MASTER MORNING BREAKOUT SYSTEM</h1>
+        <p class="sub">Structure → Pullback → Confirmation — Breakout-Only Professional Version (Enhanced Volume Version)</p>
+      </header>
+
+      <main class="wrap">
         <section class="card">
           <div class="hd">
-            <h2>Tiny live checklist (EN)</h2>
-            <div class="pill"><span class="dot" style="background:var(--warn); box-shadow:0 0 0 4px rgba(251,191,36,.12)"></span>All YES = allowed</div>
+            <h2>Rules (Step-by-Step)</h2>
+            <div class="pill"><span class="dot"></span>Qualification → Pullback → Confirmation Entry</div>
           </div>
+
           <div class="body">
-            <p class="mini">You are allowed only if all are <b>YES</b>:</p>
 
-            <div class="checklist" id="en-check">
-              <div class="item" tabindex="0" role="button" data-rel="#en-s1-1"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Time gate ok (after 9:10, before 9:45)</b><span>(yes/no)</span></div></div>
-              <div class="item" tabindex="0" role="button" data-rel="#en-s1-2"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Daily stop not hit (less than 2 losses)</b><span>(yes/no)</span></div></div>
-              <div class="item" tabindex="0" role="button" data-rel="#en-s2-3"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Opening Box ≥ 140</b><span>(yes/no)</span></div></div>
-
-              <div class="item" tabindex="0" role="button" data-rel="#en-s3-1"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>ENV: Expansion ≥ 50% VOL + volume stable/up</b><span>(yes/no)</span></div></div>
-              <div class="item" tabindex="0" role="button" data-rel="#en-s3-2"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>ENV: Close quality (no wick-only / no immediate reverse)</b><span>(yes/no)</span></div></div>
-              <div class="item" tabindex="0" role="button" data-rel="#en-s3-3"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>ENV: Breakout volume above avg / stronger than prior</b><span>(yes/no)</span></div></div>
-              <div class="item" tabindex="0" role="button" data-rel="#en-s3-4"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>ENV: Hold outside (no deep return inside)</b><span>(yes/no)</span></div></div>
-
-              <div class="item" tabindex="0" role="button" data-rel="#en-s4"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Pullback ok (35–60% VOL, outside box, volume decreases)</b><span>(yes/no)</span></div></div>
-
-              <div class="item" tabindex="0" role="button" data-rel="#en-s5"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>EXEC: Resume ≥ 25% VOL + resume volume stronger</b><span>(yes/no)</span></div></div>
-
-              <div class="item" tabindex="0" role="button" data-rel="#en-s7"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Not overextended (no ≥110% VOL without pullback)</b><span>(yes/no)</span></div></div>
-
-              <div class="item" tabindex="0" role="button" data-rel="#en-s8"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Stop ≤ 60% VOL (with ~10% buffer)</b><span>(yes/no)</span></div></div>
+            <!-- SECTION 1 -->
+            <div class="section-title" id="sec1">
+              <b>SECTION 1 — TIME &amp; CAPITAL RULES</b>
+              <span>Time rule + daily stop (capital first)</span>
             </div>
 
-            <div class="note" style="margin-top:12px;">
-              <b>Rule</b><br/>
-              ✅ All YES → allowed<br/>
-              ❌ Any NO → no trade
+            <div class="step" id="s1-time">
+              <div class="kicker">
+                <h3>1) Time Rule</h3>
+                <span class="tag">Time</span>
+              </div>
+              <ul class="bul">
+                <li><b>9:00–9:10 → No trades</b></li>
+                <li><b>After 9:45 → No new trades</b></li>
+              </ul>
+              <p>You trade structured morning expansion only.</p>
             </div>
 
-            <p class="footer">Click an item to highlight the matching step.</p>
+            <div class="step" id="s1-stop">
+              <div class="kicker">
+                <h3>2) Daily Stop Rule</h3>
+                <span class="tag">Capital</span>
+              </div>
+              <ul class="bul">
+                <li><b>2 losses → Stop trading for the day</b></li>
+              </ul>
+              <div class="deny">
+                <strong>No exceptions.</strong>
+                <p class="mini">Capital and clarity come first.</p>
+              </div>
+            </div>
+
+            <!-- SECTION 2 -->
+            <div class="section-title" id="sec2">
+              <b>SECTION 2 — STRUCTURE SETUP</b>
+              <span>Opening box + VOL + basic no-trade filter</span>
+            </div>
+
+            <div class="step" id="s2-box">
+              <div class="kicker">
+                <h3>1) Opening Box (at 9:10)</h3>
+                <span class="tag">Box</span>
+              </div>
+              <p><b>Mark:</b></p>
+              <ul class="bul">
+                <li>High from 9:00–9:10</li>
+                <li>Low from 9:00–9:10</li>
+              </ul>
+              <p>This is today’s reference structure.</p>
+              <p>All decisions are based on this box.</p>
+            </div>
+
+            <div class="step" id="s2-vol">
+              <div class="kicker">
+                <h3>2) Volatility Reference (VOL)</h3>
+                <span class="tag">VOL</span>
+              </div>
+              <p><b>Opening Box range ÷ 5 = VOL</b></p>
+              <p>VOL defines:</p>
+              <ul class="bul">
+                <li>Breakout strength</li>
+                <li>Pullback depth</li>
+                <li>Stop size</li>
+                <li>Profit targets</li>
+                <li>Overextension</li>
+              </ul>
+              <p><b>All rules are measured using VOL.</b></p>
+            </div>
+
+            <div class="step" id="s2-filter">
+              <div class="kicker">
+                <h3>3) Basic No-Trade Filter</h3>
+                <span class="tag">Filter</span>
+              </div>
+              <div class="deny">
+                <strong>No trade</strong>
+                <p class="mini">If Opening Box &lt; <b>140</b> → No trading today.</p>
+                <p class="mini">Small box = weak expansion potential.</p>
+              </div>
+            </div>
+
+            <!-- SECTION 3 -->
+            <div class="section-title" id="sec3">
+              <b>SECTION 3 — ENVIRONMENT FILTER</b>
+              <span>Environment Breakout = qualification only (NOT an entry)</span>
+            </div>
+
+            <div class="step" id="s3-intro">
+              <div class="kicker">
+                <h3>Environment Breakout (Qualification Only)</h3>
+                <span class="tag">Qualify</span>
+              </div>
+              <p>This is <b>NOT</b> your entry.</p>
+              <p>This only answers: <b>“Is continuation possible today?”</b></p>
+              <p><b>All conditions below must be true.</b></p>
+            </div>
+
+            <div class="step" id="s3-1">
+              <div class="kicker">
+                <h3>1️⃣ Expansion Test</h3>
+                <span class="tag">≥ 50% VOL</span>
+              </div>
+              <p>Price must move:</p>
+              <p><b>≥ 50% of VOL</b> outside the Opening Box.</p>
+              <div class="deny">
+                <strong>No trade</strong>
+                <p class="mini">If it does not expand at least this much → No breakout trade.</p>
+              </div>
+              <div class="note">
+                <b>Volume</b><br/>
+                Expansion should occur with stable or increasing volume.<br/>
+                If expansion happens while volume is falling sharply → do not qualify environment.
+              </div>
+            </div>
+
+            <div class="step" id="s3-2">
+              <div class="kicker">
+                <h3>2️⃣ Breakout Close Quality</h3>
+                <span class="tag">Close quality</span>
+              </div>
+              <p>Breakout must:</p>
+              <ul class="bul">
+                <li>Close clearly outside the box</li>
+                <li>Not be wick-only</li>
+                <li>Not immediately reverse</li>
+              </ul>
+              <p><b>Weak close = ignore.</b></p>
+              <div class="note">
+                <b>Volume</b><br/>
+                Close candle should not be on low volume.<br/>
+                Strong closes with strong volume are preferred.
+              </div>
+            </div>
+
+            <div class="step" id="s3-3">
+              <div class="kicker">
+                <h3>3️⃣ Volume on Expansion</h3>
+                <span class="tag">Participation</span>
+              </div>
+              <p>Breakout candle volume must be:</p>
+              <ul class="bul">
+                <li>Above recent average <b>OR</b></li>
+                <li>Clearly stronger than prior candles</li>
+              </ul>
+              <div class="deny">
+                <strong>Skip</strong>
+                <p class="mini">Low volume breakout = skip. Strong price requires participation.</p>
+              </div>
+              <div class="note">
+                <b>Extra volume rule</b><br/>
+                If breakout happens with an extreme volume spike far above recent average, be cautious of exhaustion.<br/>
+                Wait for a clean pullback before trusting continuation.
+              </div>
+            </div>
+
+            <div class="step" id="s3-4">
+              <div class="kicker">
+                <h3>4️⃣ Hold Outside Test</h3>
+                <span class="tag">Hold</span>
+              </div>
+              <p>After breakout, price must stay outside the box.</p>
+              <div class="allow">
+                <strong>Allowed</strong>
+                <ul class="bul">
+                  <li>At least one additional push outside</li>
+                  <li>No full return inside</li>
+                </ul>
+              </div>
+              <div class="deny">
+                <strong>No trade</strong>
+                <p class="mini">If price quickly returns deep inside → Environment unstable.</p>
+              </div>
+              <div class="note">
+                <b>Volume</b><br/>
+                If price holds outside while volume suddenly collapses to very low levels, wait for volume stability before moving to pullback phase.
+              </div>
+              <p style="margin-top:10px;"><b>If all 4 pass → Environment is qualified. Now wait for pullback.</b></p>
+            </div>
+
+            <!-- SECTION 4 -->
+            <div class="section-title" id="sec4">
+              <b>SECTION 4 — PULLBACK PHASE</b>
+              <span>No entry yet (you must see pullback first)</span>
+            </div>
+
+            <div class="step" id="s4-rules">
+              <div class="kicker">
+                <h3>Pullback Rules</h3>
+                <span class="tag">35–60%</span>
+              </div>
+              <p><b>No Entry Yet.</b> You must see pullback first.</p>
+              <p><b>Pullback must:</b></p>
+              <ul class="bul">
+                <li>Retrace <b>35%–60%</b> of VOL</li>
+                <li>Stay outside the Opening Box</li>
+                <li>Move slower than the breakout</li>
+              </ul>
+
+              <div class="note">
+                <b>Volume during pullback</b><br/>
+                Good: lower than breakout volume + gradually decreasing.
+              </div>
+
+              <div class="deny">
+                <strong>Not allowed</strong>
+                <ul class="bul">
+                  <li>Pullback volume equal or higher than breakout volume</li>
+                  <li>Strong opposite candles with high volume</li>
+                </ul>
+              </div>
+
+              <div class="note">
+                <b>Extra volume rules</b><br/>
+                If pullback shows multiple candles where volume increases while price moves against breakout direction, be stricter on confirmation entry.<br/>
+                If pullback shows very light volume and price barely retraces, continuation probability increases.
+              </div>
+
+              <div class="deny">
+                <strong>Reset</strong>
+                <p class="mini">If pullback exceeds <b>60% VOL</b> or goes deep inside the box → Structure invalid → Reset.</p>
+              </div>
+            </div>
+
+            <!-- SECTION 5 -->
+            <div class="section-title" id="sec5">
+              <b>SECTION 5 — EXECUTION BREAKOUT</b>
+              <span>The entry trigger (different from environment breakout)</span>
+            </div>
+
+            <div class="step" id="s5-entry">
+              <div class="kicker">
+                <h3>Execution Breakout = Confirmation Entry</h3>
+                <span class="tag">Entry</span>
+              </div>
+
+              <p><b>Environment breakout</b> proves expansion.</p>
+              <p><b>Execution breakout</b> confirms continuation.</p>
+
+              <p style="margin-top:10px;"><b>Entry allowed only when:</b></p>
+              <ul class="bul">
+                <li>Price moves <b>≥ 25% of VOL</b> in breakout direction</li>
+                <li>Minor pullback structure is broken</li>
+              </ul>
+
+              <div class="note">
+                <b>Volume rules</b><br/>
+                Resume candle volume must be higher than pullback candles (not low volume).<br/>
+                Execution breakout candle should not close with shrinking volume vs prior candle — stable or increasing volume is required.
+              </div>
+
+              <div class="deny">
+                <strong>Skip</strong>
+                <p class="mini">If resume move occurs with weak participation → skip trade.</p>
+              </div>
+
+              <div class="note">
+                <b>Identity</b><br/>
+                You never enter at the edge.<br/>
+                You enter at confirmation.
+              </div>
+            </div>
+
+            <!-- SECTION 6 -->
+            <div class="section-title" id="sec6">
+              <b>SECTION 6 — FAILURE &amp; RESET RULES</b>
+              <span>Cooldown + two-failure improvement</span>
+            </div>
+
+            <div class="step" id="s6-fail">
+              <div class="kicker">
+                <h3>Failed Breakout</h3>
+                <span class="tag">Fail</span>
+              </div>
+              <p>If price returns inside Opening Box: <b>breakout failed.</b></p>
+              <p><b>Action:</b></p>
+              <ul class="bul">
+                <li>No breakout trades for <b>12 minutes</b></li>
+              </ul>
+              <div class="note">
+                <b>Volume</b><br/>
+                If failure candle has high volume, be stricter on next breakout attempt.<br/>
+                If failure happens on low volume, still respect cooldown, but allow cleaner next setup.
+              </div>
+            </div>
+
+            <div class="step" id="s6-twofail">
+              <div class="kicker">
+                <h3>Two Failure Rule (Improvement)</h3>
+                <span class="tag">15 min</span>
+              </div>
+              <p>If two clean breakout attempts fail:</p>
+              <ul class="bul">
+                <li>Pause for <b>15 minutes</b></li>
+              </ul>
+              <div class="note">
+                <b>Extra volume filter</b><br/>
+                If both failures occurred with strong opposite volume, consider stopping trading early.<br/>
+                Market condition likely unstable.
+              </div>
+            </div>
+
+            <!-- SECTION 7 -->
+            <div class="section-title" id="sec7">
+              <b>SECTION 7 — OVEREXTENSION RULE</b>
+              <span>No chasing (≥ 110% without proper pullback)</span>
+            </div>
+
+            <div class="step" id="s7-over">
+              <div class="kicker">
+                <h3>Overextension</h3>
+                <span class="tag">≥ 110%</span>
+              </div>
+              <p>If price moves:</p>
+              <p><b>≥ 110% of VOL</b> without forming proper pullback:</p>
+              <div class="deny">
+                <strong>Skip</strong>
+                <p class="mini">Energy already released. No chasing.</p>
+              </div>
+              <div class="note">
+                <b>Volume</b><br/>
+                If overextension occurs with a very high volume spike, expect pullback soon.<br/>
+                Do not assume continuation without reset.
+              </div>
+            </div>
+
+            <!-- SECTION 8 -->
+            <div class="section-title" id="sec8">
+              <b>SECTION 8 — STOP RULE</b>
+              <span>Structure-based stop + VOL buffer</span>
+            </div>
+
+            <div class="step" id="s8-stop">
+              <div class="kicker">
+                <h3>Stop Placement</h3>
+                <span class="tag">Risk</span>
+              </div>
+              <ul class="bul">
+                <li>Long: below pullback swing</li>
+                <li>Short: above pullback swing</li>
+              </ul>
+              <p>Add ~<b>10% of VOL</b> buffer.</p>
+              <div class="deny">
+                <strong>Skip</strong>
+                <p class="mini">If required stop &gt; <b>60% of VOL</b> → Structure too wide → Skip trade.</p>
+              </div>
+              <p style="margin-top:10px;"><b>If structure clearly breaks: exit immediately.</b></p>
+              <div class="note">
+                <b>Volume note</b><br/>
+                If structure breaks with strong opposite volume, do not wait. Exit instantly.<br/>
+                If structure breaks with low volume, still exit. Price rules first.
+              </div>
+            </div>
+
+            <!-- SECTION 9 -->
+            <div class="section-title" id="sec9">
+              <b>SECTION 9 — PROFIT MANAGEMENT</b>
+              <span>Partial + management + exit conditions</span>
+            </div>
+
+            <div class="step" id="s9-partial">
+              <div class="kicker">
+                <h3>First Partial</h3>
+                <span class="tag">≈ 50%</span>
+              </div>
+              <p>Take partial at: <b>≈ 50% of VOL</b> in profit.</p>
+              <p>Lock in momentum.</p>
+              <div class="note">
+                <b>Volume</b><br/>
+                If price reaches partial target with rising volume, you may trail more loosely.<br/>
+                If it reaches partial target with falling volume, tighten management.
+              </div>
+            </div>
+
+            <div class="step" id="s9-after">
+              <div class="kicker">
+                <h3>After Partial</h3>
+                <span class="tag">Reduce</span>
+              </div>
+              <ul class="bul">
+                <li>Reduce risk</li>
+                <li>Move stop behind structure</li>
+              </ul>
+            </div>
+
+            <div class="step" id="s9-exit">
+              <div class="kicker">
+                <h3>Full Exit</h3>
+                <span class="tag">Exit</span>
+              </div>
+              <p>Exit if:</p>
+              <ul class="bul">
+                <li>Price returns inside Opening Box</li>
+                <li>Trade stalls for <b>3 minutes</b></li>
+                <li>Clear opposite expansion appears</li>
+              </ul>
+              <div class="note">
+                <b>Volume</b><br/>
+                If strong opposite candle appears with strong volume, protect remaining position immediately.
+              </div>
+            </div>
+
+            <!-- SECTION 10 -->
+            <div class="section-title" id="sec10">
+              <b>SECTION 10 — PYRAMID RULE</b>
+              <span>Maximum 3 entries (only on strength + volume support)</span>
+            </div>
+
+            <div class="step" id="s10-pyr">
+              <div class="kicker">
+                <h3>Pyramid (Max 3)</h3>
+                <span class="tag">Max 3</span>
+              </div>
+
+              <p><b>Entry #1:</b> Standard setup</p>
+
+              <p style="margin-top:10px;"><b>Entry #2:</b></p>
+              <ul class="bul">
+                <li>After price moves <b>40% VOL</b> in your favor</li>
+                <li>Structure remains clean</li>
+                <li>Volume supports continuation</li>
+              </ul>
+
+              <p style="margin-top:10px;"><b>Entry #3:</b></p>
+              <ul class="bul">
+                <li>After another <b>40% VOL</b> move</li>
+                <li>Momentum remains strong</li>
+              </ul>
+
+              <div class="note">
+                <b>Volume requirement for adding</b><br/>
+                Each add must be supported by at least equal or higher volume compared to prior push.<br/>
+                Never add on low participation.
+              </div>
+
+              <div class="deny">
+                <strong>Never</strong>
+                <ul class="bul">
+                  <li>Add to losing trade</li>
+                  <li>Add if pullback &gt; <b>60% VOL</b></li>
+                  <li>Add near <b>9:45</b></li>
+                  <li>Add during cooldown</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- SECTION 11 (UPDATED) -->
+            <div class="section-title" id="sec11">
+              <b>SECTION 11 — EXHAUSTION REVERSAL MODULE</b>
+              <span>Separate Trade Type — Optional (updated)</span>
+            </div>
+
+            <div class="step" id="s11-intro">
+              <div class="kicker">
+                <h3>Separate trade type (NOT breakout flow)</h3>
+                <span class="tag">Optional</span>
+              </div>
+              <p>This module exists because sometimes you can see exhaustion clearly, but the continuation rules correctly prevent entries.</p>
+              <p><b>This is NOT part of the breakout flow.</b> It is a separate trade type.</p>
+            </div>
+
+            <div class="step" id="s11-a">
+              <div class="kicker">
+                <h3>A) When Exhaustion Trades Are Allowed</h3>
+                <span class="tag">Gate</span>
+              </div>
+              <p>Exhaustion is allowed only when:</p>
+              <ul class="bul">
+                <li>It occurs before ~<b>9:45</b></li>
+                <li>You are not in a forced cooldown from <b>2 losses</b> (daily stop still applies)</li>
+                <li>Price has already met <b>overextension</b> conditions (you are fading “released energy,” not guessing early)</li>
+              </ul>
+            </div>
+
+            <div class="step" id="s11-b">
+              <div class="kicker">
+                <h3>B) Exhaustion Qualification (All Must Be True)</h3>
+                <span class="tag">All 4</span>
+              </div>
+              <ul class="bul">
+                <li><b>Overextension Confirmed:</b> Price reaches <b>≥ 110% of VOL</b> from the breakout level without a proper pullback.</li>
+                <li><b>Climax Participation:</b> Volume shows an extreme spike relative to recent average.</li>
+                <li><b>Failure to Continue:</b> After the spike, price fails to make meaningful new progress in breakout direction.</li>
+                <li><b>Rejection Back Toward Structure:</b> A strong opposite candle appears that closes against breakout direction and reclaims a meaningful portion of the overextension move (guideline: <b>≥ 25% of VOL</b> back from the extreme).</li>
+              </ul>
+              <div class="allow">
+                <strong>If all 4 pass → Exhaustion is qualified.</strong>
+              </div>
+            </div>
+
+            <div class="step" id="s11-c">
+              <div class="kicker">
+                <h3>C) Mode Switch Rule (Clarity Rule)</h3>
+                <span class="tag">No mixing</span>
+              </div>
+              <p>Once exhaustion is qualified:</p>
+              <div class="deny">
+                <strong>Rule</strong>
+                <p class="mini">You do not take continuation breakouts until this exhaustion attempt resolves (win or stop). This prevents mixing edges.</p>
+              </div>
+            </div>
+
+            <div class="step" id="s11-d">
+              <div class="kicker">
+                <h3>D) Exhaustion Entry Trigger</h3>
+                <span class="tag">Confirm</span>
+              </div>
+              <p>Entry is allowed only on confirmation, not guessing.</p>
+
+              <div class="step" style="margin-top:12px;" id="s11-d-short">
+                <div class="kicker">
+                  <h3>🔻 Short Exhaustion (after upward overextension)</h3>
+                  <span class="tag">Short</span>
+                </div>
+                <p>After price expands upward <b>≥ 110% of VOL</b> and qualifies exhaustion:</p>
+                <ul class="bul">
+                  <li>A strong bearish rejection candle must form (closes clearly down from the extreme).</li>
+                </ul>
+                <p><b>Entry is allowed only when:</b></p>
+                <ul class="bul">
+                  <li>Price breaks below the <b>low</b> of that rejection candle, <b>OR</b></li>
+                  <li>A small lower-high forms and price breaks below that lower-high structure.</li>
+                </ul>
+                <div class="note">
+                  <b>Simple</b><br/>
+                  You do NOT sell the top.<br/>
+                  You sell when the market proves it has started moving down.
+                </div>
+              </div>
+
+              <div class="step" id="s11-d-long">
+                <div class="kicker">
+                  <h3>🔺 Long Exhaustion (after downward overextension)</h3>
+                  <span class="tag">Long</span>
+                </div>
+                <p>After price expands downward <b>≥ 110% of VOL</b> and qualifies exhaustion:</p>
+                <ul class="bul">
+                  <li>A strong bullish rejection candle must form (closes clearly up from the extreme).</li>
+                </ul>
+                <p><b>Entry is allowed only when:</b></p>
+                <ul class="bul">
+                  <li>Price breaks above the <b>high</b> of that rejection candle, <b>OR</b></li>
+                  <li>A small higher-low forms and price breaks above that higher-low structure.</li>
+                </ul>
+                <div class="note">
+                  <b>Simple</b><br/>
+                  You do NOT buy the bottom.<br/>
+                  You buy when the market proves it has started moving up.
+                </div>
+              </div>
+
+              <div class="note">
+                <b>Volume confirmation for entry</b><br/>
+                Entry trigger candle should not occur on collapsing volume.<br/>
+                Stable participation is preferred.
+              </div>
+            </div>
+
+            <div class="step" id="s11-e">
+              <div class="kicker">
+                <h3>E) Exhaustion Stop Rule</h3>
+                <span class="tag">Stop</span>
+              </div>
+              <ul class="bul">
+                <li>Short: stop above the exhaustion extreme</li>
+                <li>Long: stop below the exhaustion extreme</li>
+              </ul>
+              <p>Add a small buffer (~<b>10% VOL</b>) if needed.</p>
+              <div class="deny">
+                <strong>Skip</strong>
+                <p class="mini">If the stop required is excessively large or structure is unclear → Skip.</p>
+              </div>
+            </div>
+
+            <div class="step" id="s11-f">
+              <div class="kicker">
+                <h3>F) Exhaustion Targets (Simple &amp; Conservative)</h3>
+                <span class="tag">Targets</span>
+              </div>
+              <p>Take partial at: <b>≈ 50% of VOL</b> in profit.</p>
+              <p><b>Primary target:</b></p>
+              <ul class="bul">
+                <li>Return toward the Opening Box edge, <b>OR</b></li>
+                <li>Major stall occurs after the reversal</li>
+              </ul>
+            </div>
+
+            <div class="step" id="s11-g">
+              <div class="kicker">
+                <h3>G) Exhaustion Failure Rule (One Attempt Only)</h3>
+                <span class="tag">One try</span>
+              </div>
+              <p>If exhaustion attempt fails (stop hit or sharp re-break with strength):</p>
+              <div class="deny">
+                <strong>Rule</strong>
+                <p class="mini">Do not re-enter exhaustion immediately.</p>
+                <p class="mini">Treat it as a warning that continuation may still be dominant.</p>
+              </div>
+            </div>
+
+            <div class="step" id="s11-resume">
+              <div class="kicker">
+                <h3>🔄 Resume Normal System</h3>
+                <span class="tag">Reset</span>
+              </div>
+              <p>After an exhaustion trade completes (win or loss):</p>
+              <div class="deny">
+                <strong>No immediate flipping</strong>
+                <p class="mini">You do NOT immediately switch back to breakout mode.</p>
+              </div>
+              <p>You resume the normal breakout system only when:</p>
+              <ul class="bul">
+                <li>Price structure clearly stabilizes, <b>AND</b></li>
+                <li>Environment rules (Section 3) qualify again from scratch</li>
+              </ul>
+              <p>No emotional switching. The market must rebuild structure before you trade continuation again.</p>
+            </div>
+
+            <!-- SECTION 12 (UPDATED) -->
+            <div class="section-title" id="sec12">
+              <b>SECTION 12 — COMPLETE FLOW SUMMARY</b>
+              <span>Full sequence (with optional Exhaustion Module)</span>
+            </div>
+
+            <div class="step" id="s12-flow">
+              <div class="kicker">
+                <h3>Flow</h3>
+                <span class="tag">Checklist</span>
+              </div>
+              <ol class="bul" style="list-style:decimal; padding-left:18px;">
+                <li style="margin:6px 0;">Define box</li>
+                <li style="margin:6px 0;">Calculate VOL</li>
+                <li style="margin:6px 0;">Wait for Environment Breakout</li>
+                <li style="margin:6px 0;">Verify expansion + close + volume + hold</li>
+                <li style="margin:6px 0;">Wait for controlled pullback</li>
+                <li style="margin:6px 0;">Confirm decreasing pullback volume</li>
+                <li style="margin:6px 0;">Enter only on Execution Breakout with rising volume</li>
+                <li style="margin:6px 0;">Manage risk using VOL and volume behavior</li>
+                <li style="margin:6px 0;">Never chase</li>
+                <li style="margin:6px 0;">Stop after 2 losses</li>
+                <li style="margin:6px 0;"><b>Optional:</b> If overextension + climax + failure + rejection occur → trade Exhaustion Module (separate mode)</li>
+              </ol>
+            </div>
+
+            <div class="step" id="s-id">
+              <div class="kicker">
+                <h3>SYSTEM IDENTITY</h3>
+                <span class="tag">Discipline</span>
+              </div>
+              <p>This system:</p>
+              <ul class="bul">
+                <li>Waits for proven expansion</li>
+                <li>Uses volume to confirm participation</li>
+                <li>Demands controlled pullback</li>
+                <li>Requires strong resumption</li>
+                <li>Uses volatility for discipline</li>
+                <li>Protects capital</li>
+                <li>Never chases</li>
+                <li>Stops in unstable environments</li>
+              </ul>
+              <p style="margin-top:10px;"><b>It trades continuation only</b> — except when the <b>Exhaustion Reversal Module</b> is explicitly qualified and activated.</p>
+              <p style="margin-top:10px;"><b>Discipline is the edge.</b></p>
+            </div>
+
+            <div class="btnrow">
+              <button class="ui" type="button" data-jump="#sec3">Jump: Section 3</button>
+              <button class="ui" type="button" data-jump="#sec11">Jump: Section 11 (Exhaustion)</button>
+              <button class="ui" type="button" data-jump="#sec12">Jump: Section 12 (Flow)</button>
+              <button class="ui" type="button" id="clear">Clear highlights</button>
+            </div>
+
+            <div class="footer">Tip: Click checklist items on the right to highlight the matching section.</div>
           </div>
         </section>
-      </aside>
-    </main>
-  </div>
 
-  <!-- ===================== JP ===================== -->
-  <div class="lang-ja" data-lang="ja">
-    <header>
-      <h1>MASTER モーニング・ブレイクアウト・システム（出来高強化）</h1>
-      <p class="sub">フローは1つだけ：環境を認定 → 押し戻し待ち → 実行ブレイクアウト＋出来高でエントリー。</p>
-    </header>
-
-    <main class="wrap">
-      <section class="card">
-        <div class="hd">
-          <h2>ルール（完全版）</h2>
-          <div class="pill"><span class="dot"></span>構造 → 押し戻し → 確認</div>
-        </div>
-        <div class="body">
-
-          <!-- SECTION 1 -->
-          <div class="section-title" id="ja-sec1">
-            <b>SECTION 1 — 時間と資金のルール</b>
-            <span>時間ゲート＋デイリーストップ（例外なし）</span>
-          </div>
-
-          <div class="step" id="ja-s1-1">
-            <div class="kicker">
-              <h3>1. 時間ルール</h3>
-              <span class="tag">Time</span>
+        <aside class="grid">
+          <section class="card">
+            <div class="hd">
+              <h2>Tiny live checklist</h2>
+              <div class="pill"><span class="dot" style="background:var(--warn); box-shadow:0 0 0 4px rgba(251,191,36,.12)"></span>All YES = allowed</div>
             </div>
-            <ul class="bul">
-              <li><b>9:00–9:10 → 取引禁止</b></li>
-              <li><b>9:45以降 → 新規エントリー禁止</b></li>
-            </ul>
-            <p>取るのは「構造のある朝の拡張」だけ。</p>
-          </div>
+            <div class="body">
+              <p class="mini">Use this as a quick decision gate:</p>
 
-          <div class="step" id="ja-s1-2">
-            <div class="kicker">
-              <h3>2. デイリーストップルール</h3>
-              <span class="tag">Capital</span>
+              <div class="checklist" id="check">
+                <div class="item" data-rel="#s1-time"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>After 9:10 and before ~9:45</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#s2-filter"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Opening Box ≥ 140</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#sec3"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Environment qualified (all 4)</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#sec4"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Pullback 35–60% VOL, outside box</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#sec5"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Execution breakout confirmed (≥25% + volume)</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#sec7"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Not chasing (no ≥110% w/o pullback)</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#sec6"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Not in cooldown / failures respected</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#sec11"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>Optional: Exhaustion qualified (all 4)</b><span>(yes/no)</span></div></div>
+              </div>
+
+              <div class="note" style="margin-top:12px;">
+                <b>Rule</b><br/>
+                ✅ All YES → allowed<br/>
+                ❌ Any NO → no trade
+              </div>
+
+              <p class="footer">Click an item to highlight the related section.</p>
             </div>
-            <ul class="bul">
-              <li><b>2連敗 → その日は終了</b></li>
-            </ul>
-            <p><b>例外なし。</b> 資金と冷静さを最優先。</p>
-          </div>
-
-          <!-- SECTION 2 -->
-          <div class="section-title" id="ja-sec2">
-            <b>SECTION 2 — 構造の準備</b>
-            <span>ボックス＋VOL＋ノートレフィルター</span>
-          </div>
-
-          <div class="step" id="ja-s2-1">
-            <div class="kicker">
-              <h3>1. オープニングボックス（9:10時点）</h3>
-              <span class="tag">Structure</span>
-            </div>
-            <p><b>次を記録する：</b></p>
-            <ul class="bul">
-              <li>9:00–9:10の高値</li>
-              <li>9:00–9:10の安値</li>
-            </ul>
-            <p>これが本日の基準構造。</p>
-            <p>すべての判断はこのボックスを基準に行う。</p>
-          </div>
-
-          <div class="step" id="ja-s2-2">
-            <div class="kicker">
-              <h3>2. ボラティリティ基準（VOL）</h3>
-              <span class="tag">VOL</span>
-            </div>
-            <p><b>オープニングボックスの値幅 ÷ 5 ＝ VOL</b></p>
-            <p>VOLが定義するもの：</p>
-            <ul class="bul">
-              <li>ブレイクアウトの強さ</li>
-              <li>押し戻しの深さ</li>
-              <li>ストップ幅</li>
-              <li>利益目標</li>
-              <li>行き過ぎ判定</li>
-            </ul>
-            <p>すべてのルールはVOLで測定する。</p>
-          </div>
-
-          <div class="step" id="ja-s2-3">
-            <div class="kicker">
-              <h3>3. 基本ノートレードフィルター</h3>
-              <span class="tag">Filter</span>
-            </div>
-            <div class="deny">
-              <strong>本日は取引しない</strong>
-              <p class="mini">オープニングボックス <b>140</b> の場合：</p>
-              <p class="mini" style="margin-top:6px;"><b>→ 本日は取引しない。</b></p>
-              <p class="mini">ボックスが小さい＝拡張エネルギーが弱い。</p>
-            </div>
-          </div>
-
-          <!-- SECTION 3 -->
-          <div class="section-title" id="ja-sec3">
-            <b>SECTION 3 — 環境フィルター</b>
-            <span>環境ブレイクアウト＝資格判定のみ（エントリーではない）</span>
-          </div>
-
-          <div class="step" id="ja-s3-0">
-            <div class="kicker">
-              <h3>目的</h3>
-              <span class="tag">Qualify</span>
-            </div>
-            <p><b>環境ブレイクアウト＝資格判定のみ。</b></p>
-            <p>これはエントリーではない。</p>
-            <p>確認するのはただ一つ：</p>
-            <p><b>「今日は伸び続ける可能性があるか？」</b></p>
-            <p>以下すべて満たす必要がある。</p>
-          </div>
-
-          <div class="step" id="ja-s3-1">
-            <div class="kicker">
-              <h3>1️⃣ 拡張テスト</h3>
-              <span class="tag">Env #1</span>
-            </div>
-            <p>価格がオープニングボックスの外へ：</p>
-            <p><b>≥ VOLの50%</b></p>
-            <p>以上動く必要がある。</p>
-            <p>それ未満の場合：</p>
-            <div class="deny">
-              <strong>環境不合格</strong>
-              <p class="mini"><b>→ ブレイクアウト取引は禁止。</b></p>
-            </div>
-
-            <div class="note">
-              <b>出来高追加条件</b><br/>
-              拡張時の出来高は<b>安定または増加</b>していること。<br/>
-              急激に出来高が減少しながらの拡張は：<br/>
-              <b>→ 環境不合格</b>
-            </div>
-          </div>
-
-          <div class="step" id="ja-s3-2">
-            <div class="kicker">
-              <h3>2️⃣ ブレイクアウト終値の質</h3>
-              <span class="tag">Env #2</span>
-            </div>
-            <p>ブレイクアウトは：</p>
-            <ul class="bul">
-              <li>明確にボックス外で終わる</li>
-              <li>ヒゲのみではない</li>
-              <li>即反転しない</li>
-            </ul>
-            <p><b>弱い終値は無視。</b></p>
-
-            <div class="note">
-              <b>出来高追加条件</b><br/>
-              終値ローソクは<b>低出来高</b>であってはならない。<br/>
-              強い終値＋強い出来高が理想。
-            </div>
-          </div>
-
-          <div class="step" id="ja-s3-3">
-            <div class="kicker">
-              <h3>3️⃣ 拡張時の出来高</h3>
-              <span class="tag">Env #3</span>
-            </div>
-            <p>ブレイクアウト足の出来高は：</p>
-            <ul class="bul">
-              <li>直近平均より上 <b>または</b></li>
-              <li>直前足より明確に強い</li>
-            </ul>
-            <p><b>低出来高ブレイクアウトはスキップ。</b></p>
-            <p>強い価格＝参加者の存在が必要。</p>
-
-            <div class="note">
-              <b>追加ルール</b><br/>
-              極端な出来高急増（平均を大きく超える）の場合、消耗の可能性に注意。<br/>
-              きれいな押し戻しが出るまで待つ。
-            </div>
-          </div>
-
-          <div class="step" id="ja-s3-4">
-            <div class="kicker">
-              <h3>4️⃣ ボックス外維持テスト</h3>
-              <span class="tag">Env #4</span>
-            </div>
-            <p>ブレイク後：</p>
-            <p><b>価格はボックス外に留まること。</b></p>
-
-            <div class="allow">
-              <strong>許容</strong>
-              <ul class="bul">
-                <li>少なくとももう一度外側への押し</li>
-                <li>ボックス内部へ完全復帰しないこと</li>
-              </ul>
-            </div>
-
-            <div class="deny">
-              <strong>環境不安定</strong>
-              <p class="mini">すぐ深く戻る場合：</p>
-              <p class="mini" style="margin-top:6px;"><b>→ 環境不安定 → 取引禁止</b></p>
-            </div>
-
-            <div class="note">
-              <b>出来高追加条件</b><br/>
-              外で維持しているのに出来高が急減している場合、<br/>
-              出来高が安定するまで押し戻し段階へ進まない。
-            </div>
-
-            <p style="margin-top:12px;"><b>4項目すべて合格：</b>環境認定。次は押し戻しを待つ。</p>
-          </div>
-
-          <!-- SECTION 4 -->
-          <div class="section-title" id="ja-sec4">
-            <b>SECTION 4 — 押し戻しフェーズ</b>
-            <span>まだエントリーしない（押し戻し必須）</span>
-          </div>
-
-          <div class="step" id="ja-s4">
-            <div class="kicker">
-              <h3>押し戻し条件</h3>
-              <span class="tag">Pullback</span>
-            </div>
-            <p><b>（まだエントリーしない）</b></p>
-            <p>必ず押し戻しを見る。</p>
-
-            <p><b>押し戻し条件：</b></p>
-            <ul class="bul">
-              <li>VOLの<b>35％～60％</b>戻す</li>
-              <li>オープニングボックス外に留まる</li>
-              <li>ブレイクアウトより遅く動く</li>
-            </ul>
-
-            <div class="note">
-              <b>押し戻し中の出来高</b><br/>
-              <b>良い状態：</b>ブレイクアウト時より少ない、徐々に減少。<br/>
-              <b>不可：</b>ブレイクアウトと同等以上の出来高、強い逆方向ローソク＋高出来高。
-            </div>
-
-            <div class="note">
-              <b>追加ルール</b><br/>
-              価格がブレイク方向と逆へ動く間に出来高が複数足連続で増加する場合、<br/>
-              エントリー確認をより厳しくする。<br/><br/>
-              非常に軽い出来高で浅い戻し：継続確率上昇。
-            </div>
-
-            <div class="deny">
-              <strong>構造無効</strong>
-              <p class="mini">60% VOLを超える、またはボックス深く侵入：</p>
-              <p class="mini" style="margin-top:6px;"><b>→ 構造無効 → リセット。</b></p>
-            </div>
-          </div>
-
-          <!-- SECTION 5 -->
-          <div class="section-title" id="ja-sec5">
-            <b>SECTION 5 — 実行ブレイクアウト</b>
-            <span>エントリートリガー（環境ブレイクアウトとは別）</span>
-          </div>
-
-          <div class="step" id="ja-s5">
-            <div class="kicker">
-              <h3>エントリー条件</h3>
-              <span class="tag">Execution</span>
-            </div>
-
-            <p><b>これは環境ブレイクアウトとは別。</b></p>
-            <ul class="bul">
-              <li>環境ブレイクアウト＝拡張証明</li>
-              <li>実行ブレイクアウト＝継続確認</li>
-            </ul>
-
-            <p><b>エントリー条件：</b></p>
-            <ul class="bul">
-              <li>ブレイク方向へ <b>≥ VOLの25%</b> 動く</li>
-              <li>小さな押し戻し構造を破る</li>
-            </ul>
-
-            <div class="note">
-              <b>出来高条件</b><br/>
-              再開足の出来高は押し戻し足より<b>高い</b>こと。<br/>
-              低出来高は禁止。
-            </div>
-
-            <div class="note">
-              <b>追加条件</b><br/>
-              再開足は前足より出来高が縮小して終わらないこと。<br/>
-              安定または増加が必要。
-            </div>
-
-            <div class="deny">
-              <strong>スキップ</strong>
-              <p class="mini">弱い参加なら：</p>
-              <p class="mini" style="margin-top:6px;"><b>→ スキップ。</b></p>
-            </div>
-
-            <div class="note">
-              <b>この手法の芯</b><br/>
-              端では入らない。<br/>
-              確認で入る。
-            </div>
-          </div>
-
-          <!-- SECTION 6 -->
-          <div class="section-title" id="ja-sec6">
-            <b>SECTION 6 — 失敗とリセット</b>
-            <span>クールダウン＋2回失敗の改良</span>
-          </div>
-
-          <div class="step" id="ja-s6-1">
-            <div class="kicker">
-              <h3>失敗ブレイクアウト</h3>
-              <span class="tag">Reset</span>
-            </div>
-
-            <p>価格がボックス内部へ戻ったら：</p>
-            <p><b>失敗。</b></p>
-
-            <p><b>対応：</b></p>
-            <ul class="bul">
-              <li><b>12分間</b>ブレイクアウト禁止</li>
-            </ul>
-
-            <div class="note">
-              <b>出来高追加</b><br/>
-              失敗足が高出来高なら次の試みはより厳しく。<br/>
-              低出来高失敗でもクールダウンは必ず守る（ただし次のクリーンなセットアップは許容）。
-            </div>
-          </div>
-
-          <div class="step" id="ja-s6-2">
-            <div class="kicker">
-              <h3>2回失敗ルール（改良）</h3>
-              <span class="tag">Pause</span>
-            </div>
-
-            <p>2回連続で明確な失敗：</p>
-            <ul class="bul">
-              <li><b>15分</b>停止</li>
-            </ul>
-
-            <div class="note">
-              <b>追加条件</b><br/>
-              両方とも強い逆出来高なら、早期終了も検討。市場不安定。
-            </div>
-          </div>
-
-          <!-- SECTION 7 -->
-          <div class="section-title" id="ja-sec7">
-            <b>SECTION 7 — 行き過ぎルール</b>
-            <span>追わない（エネルギー放出済み）</span>
-          </div>
-
-          <div class="step" id="ja-s7">
-            <div class="kicker">
-              <h3>走りすぎは捨てる</h3>
-              <span class="tag">110%</span>
-            </div>
-
-            <p>価格が：</p>
-            <p><b>VOLの110%以上</b></p>
-            <p>押し戻しなしで進行：</p>
-            <p><b>→ 取引禁止。</b></p>
-            <p>エネルギーは既に放出済み。追わない。</p>
-
-            <div class="note">
-              <b>追加出来高注意</b><br/>
-              非常に高い出来高スパイクでの行き過ぎは、まもなく押し戻しが来る可能性。<br/>
-              リセットなしで継続を前提にしない。
-            </div>
-          </div>
-
-          <!-- SECTION 8 -->
-          <div class="section-title" id="ja-sec8">
-            <b>SECTION 8 — ストップルール</b>
-            <span>VOLで規律（価格優先）</span>
-          </div>
-
-          <div class="step" id="ja-s8">
-            <div class="kicker">
-              <h3>ストップ位置</h3>
-              <span class="tag">Risk</span>
-            </div>
-
-            <p><b>ストップ位置：</b></p>
-            <ul class="bul">
-              <li>ロング → 押し安値下</li>
-              <li>ショート → 押し高値上</li>
-            </ul>
-
-            <p>＋ VOLの約<b>10％</b>バッファ</p>
-
-            <div class="deny">
-              <strong>取引しない</strong>
-              <p class="mini">必要ストップがVOLの<b>60%以上</b>なら：</p>
-              <p class="mini" style="margin-top:6px;"><b>→ 構造過大 → 取引しない。</b></p>
-            </div>
-
-            <p style="margin-top:10px;"><b>構造明確崩壊：即撤退。</b></p>
-
-            <div class="note">
-              <b>出来高補足</b><br/>
-              強い逆出来高で崩れたら即座に撤退。<br/>
-              低出来高でも撤退。価格優先。
-            </div>
-          </div>
-
-          <!-- SECTION 9 -->
-          <div class="section-title" id="ja-sec9">
-            <b>SECTION 9 — 利益管理</b>
-            <span>部分利確 → 保護 → トレイル</span>
-          </div>
-
-          <div class="step" id="ja-s9-1">
-            <div class="kicker">
-              <h3>第一利確</h3>
-              <span class="tag">+50%</span>
-            </div>
-
-            <p>利益が：</p>
-            <p><b>約VOLの50%</b></p>
-            <p>で一部利確。</p>
-            <p>勢いを固定。</p>
-
-            <div class="note">
-              <b>出来高補足</b><br/>
-              上昇出来高で到達 → 緩め管理可能。<br/>
-              減少出来高で到達 → 管理をタイトに。
-            </div>
-          </div>
-
-          <div class="step" id="ja-s9-2">
-            <div class="kicker">
-              <h3>部分利確後</h3>
-              <span class="tag">Protect</span>
-            </div>
-            <ul class="bul">
-              <li>リスク縮小</li>
-              <li>構造裏へストップ移動</li>
-            </ul>
-          </div>
-
-          <div class="step" id="ja-s9-3">
-            <div class="kicker">
-              <h3>全決済</h3>
-              <span class="tag">Exit</span>
-            </div>
-
-            <p>以下の場合：</p>
-            <ul class="bul">
-              <li>ボックス内部へ戻る</li>
-              <li><b>3分間</b>停滞</li>
-              <li>明確な逆拡張出現</li>
-            </ul>
-
-            <div class="note">
-              <b>出来高補足</b><br/>
-              強い逆方向足＋強い出来高 → 残りポジション即保護。
-            </div>
-          </div>
-
-          <!-- SECTION 10 -->
-          <div class="section-title" id="ja-sec10">
-            <b>SECTION 10 — ピラミッドルール</b>
-            <span>最大3回（参加があるときだけ）</span>
-          </div>
-
-          <div class="step" id="ja-s10">
-            <div class="kicker">
-              <h3>追加（最大3）</h3>
-              <span class="tag">Max 3</span>
-            </div>
-
-            <p><b>最大3エントリー。</b></p>
-            <ul class="bul">
-              <li>エントリー1 → 標準セットアップ</li>
-              <li>エントリー2 → 利益方向へVOLの<b>40%</b>進行 + 構造維持 + 出来高が継続支持</li>
-              <li>エントリー3 → さらに<b>40% VOL</b>進行 + モメンタム強維持</li>
-            </ul>
-
-            <div class="note">
-              <b>追加条件</b><br/>
-              各追加は前回押し以上または同等の出来高であること。<br/>
-              低参加では追加禁止。
-            </div>
-
-            <div class="deny">
-              <strong>絶対禁止</strong>
-              <ul class="bul">
-                <li>負けポジへの追加</li>
-                <li>押し戻し60%超え</li>
-                <li>9:45近辺</li>
-                <li>クールダウン中</li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- SECTION 11 -->
-          <div class="section-title" id="ja-sec11">
-            <b>SECTION 11 — 全体フローまとめ</b>
-            <span>唯一の流れ</span>
-          </div>
-
-          <div class="step" id="ja-s11">
-            <div class="kicker">
-              <h3>フロー</h3>
-              <span class="tag">Checklist</span>
-            </div>
-            <ol style="margin:8px 0 0 18px; color:var(--muted); font-size:14px;">
-              <li>ボックス定義</li>
-              <li>VOL算出</li>
-              <li>環境ブレイクアウト待機</li>
-              <li>拡張＋終値＋出来高＋維持確認</li>
-              <li>制御された押し戻し待機</li>
-              <li>押し中出来高減少確認</li>
-              <li>実行ブレイクアウト＋出来高上昇でエントリー</li>
-              <li>VOLと出来高で管理</li>
-              <li>追わない</li>
-              <li>2敗で終了</li>
-            </ol>
-          </div>
-
-          <div class="section-title" id="ja-identity">
-            <b>システムの本質</b>
-            <span>やること／やらないこと</span>
-          </div>
-
-          <div class="step" id="ja-id">
-            <div class="kicker">
-              <h3>本質</h3>
-              <span class="tag">規律</span>
-            </div>
-
-            <p>このシステムは：</p>
-            <ul class="bul">
-              <li>拡張を証明してから入る</li>
-              <li>出来高で参加を確認する</li>
-              <li>制御された押し戻しを要求する</li>
-              <li>強い再開を必要とする</li>
-              <li>VOLで規律を保つ</li>
-              <li>資金を守る</li>
-              <li>追いかけない</li>
-              <li>不安定環境では停止する</li>
-            </ul>
-
-            <p style="margin-top:10px;"><b>継続のみを取る。</b></p>
-            <p>価格が動いても出来高が伴わなければ：<b>何もしない。</b></p>
-            <p>構造ができても継続が弱ければ：<b>何もしない。</b></p>
-            <p><b>規律こそエッジである。</b></p>
-          </div>
-
-          <div class="btnrow">
-            <button class="ui" type="button" data-jump="#ja-sec3">ジャンプ: セクション3（環境）</button>
-            <button class="ui" type="button" data-jump="#ja-sec4">ジャンプ: セクション4（押し）</button>
-            <button class="ui" type="button" data-jump="#ja-sec5">ジャンプ: セクション5（実行）</button>
-            <button class="ui" type="button" id="ja-clear">ハイライト解除</button>
-          </div>
-
-          <div class="footer">ヒント：チェック項目をクリックすると該当ステップがハイライトされます。</div>
-        </div>
-      </section>
-
-      <aside class="grid">
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <!-- ===================== JP ===================== -->
+    <div class="lang-ja" data-lang="ja">
+      <header>
+        <h1>MASTER モーニング・ブレイクアウト・システム</h1>
+        <p class="sub">Structure → Pullback → Confirmation — ブレイクアウト専用プロフェッショナル版（出来高強化）</p>
+      </header>
+
+      <main class="wrap">
         <section class="card">
           <div class="hd">
-            <h2>即席チェック（JP）</h2>
-            <div class="pill"><span class="dot" style="background:var(--warn); box-shadow:0 0 0 4px rgba(251,191,36,.12)"></span>全部YESでOK</div>
+            <h2>ルール（手順）</h2>
+            <div class="pill"><span class="dot"></span>資格判定 → 押し → 確認エントリー</div>
           </div>
+
           <div class="body">
-            <p class="mini">全部<b>YES</b>なら取引OK：</p>
 
-            <div class="checklist" id="ja-check">
-              <div class="item" tabindex="0" role="button" data-rel="#ja-s1-1"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>時間OK（9:10以降〜9:45前）</b><span>(yes/no)</span></div></div>
-              <div class="item" tabindex="0" role="button" data-rel="#ja-s1-2"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>2連敗していない</b><span>(yes/no)</span></div></div>
-              <div class="item" tabindex="0" role="button" data-rel="#ja-s2-3"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>ボックス≥140</b><span>(yes/no)</span></div></div>
-
-              <div class="item" tabindex="0" role="button" data-rel="#ja-s3-1"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>環境: 拡張≥50%VOL＋出来高安定/増</b><span>(yes/no)</span></div></div>
-              <div class="item" tabindex="0" role="button" data-rel="#ja-s3-2"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>環境: 終値の質（ヒゲだけNG/即反転NG）</b><span>(yes/no)</span></div></div>
-              <div class="item" tabindex="0" role="button" data-rel="#ja-s3-3"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>環境: 拡張時出来高（平均以上/直前より強）</b><span>(yes/no)</span></div></div>
-              <div class="item" tabindex="0" role="button" data-rel="#ja-s3-4"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>環境: ボックス外維持（深く戻らない）</b><span>(yes/no)</span></div></div>
-
-              <div class="item" tabindex="0" role="button" data-rel="#ja-s4"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>押し: 35–60%VOL/外側/出来高減少</b><span>(yes/no)</span></div></div>
-
-              <div class="item" tabindex="0" role="button" data-rel="#ja-s5"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>実行: 再開≥25%VOL＋出来高が強い</b><span>(yes/no)</span></div></div>
-
-              <div class="item" tabindex="0" role="button" data-rel="#ja-s7"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>行き過ぎではない（押しなし110%VOL以上NG）</b><span>(yes/no)</span></div></div>
-
-              <div class="item" tabindex="0" role="button" data-rel="#ja-s8"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>ストップ≤60%VOL（+10%バッファ）</b><span>(yes/no)</span></div></div>
+            <div class="section-title" id="ja-sec1">
+              <b>SECTION 1 — 時間と資金のルール</b>
+              <span>時間ルール＋デイリーストップ（資金優先）</span>
             </div>
 
-            <div class="note" style="margin-top:12px;">
-              <b>ルール</b><br/>
-              ✅ 全部YES → OK<br/>
-              ❌ どれかNO → 取引しない
+            <div class="step" id="ja-s1-time">
+              <div class="kicker">
+                <h3>1) 時間ルール</h3>
+                <span class="tag">時間</span>
+              </div>
+              <ul class="bul">
+                <li><b>9:00–9:10 → 取引禁止</b></li>
+                <li><b>9:45以降 → 新規エントリー禁止</b></li>
+              </ul>
+              <p>取るのは「構造のある朝の拡張」だけ。</p>
             </div>
 
-            <p class="footer">クリックで該当ステップをハイライト。</p>
+            <div class="step" id="ja-s1-stop">
+              <div class="kicker">
+                <h3>2) デイリーストップルール</h3>
+                <span class="tag">資金</span>
+              </div>
+              <ul class="bul">
+                <li><b>2連敗 → その日は終了</b></li>
+              </ul>
+              <div class="deny">
+                <strong>例外なし。</strong>
+                <p class="mini">資金と冷静さを最優先。</p>
+              </div>
+            </div>
+
+            <div class="section-title" id="ja-sec2">
+              <b>SECTION 2 — 構造の準備</b>
+              <span>ボックス＋VOL＋基本フィルター</span>
+            </div>
+
+            <div class="step" id="ja-s2-box">
+              <div class="kicker">
+                <h3>1) オープニングボックス（9:10時点）</h3>
+                <span class="tag">ボックス</span>
+              </div>
+              <p><b>次を記録する：</b></p>
+              <ul class="bul">
+                <li>9:00–9:10の高値</li>
+                <li>9:00–9:10の安値</li>
+              </ul>
+              <p>これが本日の基準構造。</p>
+              <p>すべての判断はこのボックスを基準に行う。</p>
+            </div>
+
+            <div class="step" id="ja-s2-vol">
+              <div class="kicker">
+                <h3>2) ボラティリティ基準（VOL）</h3>
+                <span class="tag">VOL</span>
+              </div>
+              <p><b>オープニングボックスの値幅 ÷ 5 ＝ VOL</b></p>
+              <p>VOLが定義するもの：</p>
+              <ul class="bul">
+                <li>ブレイクアウトの強さ</li>
+                <li>押し戻しの深さ</li>
+                <li>ストップ幅</li>
+                <li>利益目標</li>
+                <li>行き過ぎ判定</li>
+              </ul>
+              <p><b>すべてのルールはVOLで測定する。</b></p>
+            </div>
+
+            <div class="step" id="ja-s2-filter">
+              <div class="kicker">
+                <h3>3) 基本ノートレードフィルター</h3>
+                <span class="tag">フィルター</span>
+              </div>
+              <div class="deny">
+                <strong>取引しない</strong>
+                <p class="mini">オープニングボックス &lt; <b>140</b> の場合 → 本日は取引しない。</p>
+                <p class="mini">ボックスが小さい＝拡張エネルギーが弱い。</p>
+              </div>
+            </div>
+
+            <div class="section-title" id="ja-sec3">
+              <b>SECTION 3 — 環境フィルター</b>
+              <span>（環境ブレイクアウト＝資格判定のみ。エントリーではない）</span>
+            </div>
+
+            <div class="step" id="ja-s3-intro">
+              <div class="kicker">
+                <h3>環境ブレイクアウト（資格判定のみ）</h3>
+                <span class="tag">判定</span>
+              </div>
+              <p>これはエントリーではない。</p>
+              <p>ただ確認する：<b>「今日は伸び続ける可能性があるか？」</b></p>
+              <p><b>以下すべて満たす必要がある。</b></p>
+            </div>
+
+            <div class="step" id="ja-s3-1">
+              <div class="kicker">
+                <h3>1️⃣ 拡張テスト</h3>
+                <span class="tag">≥ 50% VOL</span>
+              </div>
+              <p>価格がオープニングボックスの外へ：</p>
+              <p><b>≥ VOLの50%</b>以上動く必要がある。</p>
+              <div class="deny">
+                <strong>取引禁止</strong>
+                <p class="mini">それ未満の場合 → ブレイクアウト取引は禁止。</p>
+              </div>
+              <div class="note">
+                <b>出来高追加条件</b><br/>
+                拡張時の出来高は安定または増加していること。<br/>
+                急激に出来高が減少しながらの拡張は → 環境不合格。
+              </div>
+            </div>
+
+            <div class="step" id="ja-s3-2">
+              <div class="kicker">
+                <h3>2️⃣ ブレイクアウト終値の質</h3>
+                <span class="tag">終値</span>
+              </div>
+              <p>ブレイクアウトは：</p>
+              <ul class="bul">
+                <li>明確にボックス外で終わる</li>
+                <li>ヒゲのみではない</li>
+                <li>即反転しない</li>
+              </ul>
+              <p><b>弱い終値は無視。</b></p>
+              <div class="note">
+                <b>出来高追加条件</b><br/>
+                終値ローソクは低出来高であってはならない。<br/>
+                強い終値＋強い出来高が理想。
+              </div>
+            </div>
+
+            <div class="step" id="ja-s3-3">
+              <div class="kicker">
+                <h3>3️⃣ 拡張時の出来高</h3>
+                <span class="tag">参加</span>
+              </div>
+              <p>ブレイクアウト足の出来高は：</p>
+              <ul class="bul">
+                <li>直近平均より上 <b>または</b></li>
+                <li>直前足より明確に強い</li>
+              </ul>
+              <div class="deny">
+                <strong>スキップ</strong>
+                <p class="mini">低出来高ブレイクアウトはスキップ。強い価格＝参加者の存在が必要。</p>
+              </div>
+              <div class="note">
+                <b>追加ルール</b><br/>
+                極端な出来高急増（平均を大きく超える）の場合、消耗の可能性に注意。<br/>
+                きれいな押し戻しが出るまで待つ。
+              </div>
+            </div>
+
+            <div class="step" id="ja-s3-4">
+              <div class="kicker">
+                <h3>4️⃣ ボックス外維持テスト</h3>
+                <span class="tag">維持</span>
+              </div>
+              <p>ブレイク後：価格はボックス外に留まること。</p>
+              <div class="allow">
+                <strong>許容</strong>
+                <ul class="bul">
+                  <li>少なくとももう一度外側への押し</li>
+                  <li>ボックス内部へ完全復帰しないこと</li>
+                </ul>
+              </div>
+              <div class="deny">
+                <strong>取引禁止</strong>
+                <p class="mini">すぐ深く戻る場合 → 環境不安定。</p>
+              </div>
+              <div class="note">
+                <b>出来高追加条件</b><br/>
+                外で維持しているのに出来高が急減している場合、出来高が安定するまで押し戻し段階へ進まない。
+              </div>
+              <p style="margin-top:10px;"><b>4項目すべて合格 → 環境認定。次は押し戻しを待つ。</b></p>
+            </div>
+
+            <div class="section-title" id="ja-sec4">
+              <b>SECTION 4 — 押し戻しフェーズ</b>
+              <span>（まだエントリーしない）押し戻しは必須</span>
+            </div>
+
+            <div class="step" id="ja-s4-rules">
+              <div class="kicker">
+                <h3>押し戻し条件</h3>
+                <span class="tag">35–60%</span>
+              </div>
+              <p><b>まだエントリーしない。</b> 必ず押し戻しを見る。</p>
+              <ul class="bul">
+                <li>VOLの<b>35%～60%</b>戻す</li>
+                <li>オープニングボックス外に留まる</li>
+                <li>ブレイクアウトより遅く動く</li>
+              </ul>
+
+              <div class="note">
+                <b>押し中の出来高（良い）</b><br/>
+                ブレイクアウト時より少ない／徐々に減少している
+              </div>
+
+              <div class="deny">
+                <strong>不可</strong>
+                <ul class="bul">
+                  <li>ブレイクアウトと同等以上の出来高</li>
+                  <li>強い逆方向ローソク＋高出来高</li>
+                </ul>
+              </div>
+
+              <div class="note">
+                <b>追加ルール</b><br/>
+                逆方向に動く間に出来高が複数足連続で増加する場合、確認エントリーをより厳しくする。<br/>
+                非常に軽い出来高で浅い戻しなら、継続確率は上がる。
+              </div>
+
+              <div class="deny">
+                <strong>リセット</strong>
+                <p class="mini">60% VOLを超える、またはボックス深く侵入 → 構造無効 → リセット。</p>
+              </div>
+            </div>
+
+            <div class="section-title" id="ja-sec5">
+              <b>SECTION 5 — 実行ブレイクアウト</b>
+              <span>（エントリートリガー）環境ブレイクとは別</span>
+            </div>
+
+            <div class="step" id="ja-s5-entry">
+              <div class="kicker">
+                <h3>実行ブレイクアウト＝継続の確認</h3>
+                <span class="tag">Entry</span>
+              </div>
+
+              <p><b>環境ブレイクアウト</b>＝拡張証明</p>
+              <p><b>実行ブレイクアウト</b>＝継続確認</p>
+
+              <p style="margin-top:10px;"><b>エントリー条件：</b></p>
+              <ul class="bul">
+                <li>ブレイク方向へ <b>≥ VOLの25%</b>動く</li>
+                <li>小さな押し戻し構造を破る</li>
+              </ul>
+
+              <div class="note">
+                <b>出来高条件</b><br/>
+                再開足の出来高は押し戻し足より高い（低出来高は禁止）。<br/>
+                再開足は前足より出来高が縮小して終わらないこと（安定または増加が必要）。
+              </div>
+
+              <div class="deny">
+                <strong>スキップ</strong>
+                <p class="mini">弱い参加ならスキップ。</p>
+              </div>
+
+              <div class="note">
+                <b>芯</b><br/>
+                端では入らない。<br/>
+                確認で入る。
+              </div>
+            </div>
+
+            <div class="section-title" id="ja-sec6">
+              <b>SECTION 6 — 失敗とリセット</b>
+              <span>クールダウン＋2回失敗ルール</span>
+            </div>
+
+            <div class="step" id="ja-s6-fail">
+              <div class="kicker">
+                <h3>失敗ブレイクアウト</h3>
+                <span class="tag">Fail</span>
+              </div>
+              <p>価格がボックス内部へ戻ったら：<b>失敗。</b></p>
+              <p><b>対応：</b></p>
+              <ul class="bul">
+                <li><b>12分間</b>ブレイクアウト禁止</li>
+              </ul>
+              <div class="note">
+                <b>出来高追加</b><br/>
+                失敗足が高出来高なら次の試みはより厳しく。<br/>
+                低出来高失敗でもクールダウンは必ず守る（ただし綺麗な次セットアップは許容）。
+              </div>
+            </div>
+
+            <div class="step" id="ja-s6-twofail">
+              <div class="kicker">
+                <h3>2回失敗ルール（改良）</h3>
+                <span class="tag">15分</span>
+              </div>
+              <p>2回連続で明確な失敗：</p>
+              <ul class="bul">
+                <li><b>15分停止</b></li>
+              </ul>
+              <div class="note">
+                <b>追加条件</b><br/>
+                両方とも強い逆出来高なら、早期終了も検討。市場不安定。
+              </div>
+            </div>
+
+            <div class="section-title" id="ja-sec7">
+              <b>SECTION 7 — 行き過ぎルール</b>
+              <span>（≥110% VOL、押し戻しなし）追わない</span>
+            </div>
+
+            <div class="step" id="ja-s7-over">
+              <div class="kicker">
+                <h3>行き過ぎ</h3>
+                <span class="tag">≥ 110%</span>
+              </div>
+              <p>押し戻しなしで：</p>
+              <p><b>VOLの110%以上</b>進行 → 取引禁止。</p>
+              <div class="deny">
+                <strong>追わない</strong>
+                <p class="mini">エネルギーは既に放出済み。追いかけない。</p>
+              </div>
+              <div class="note">
+                <b>出来高注意</b><br/>
+                非常に高い出来高スパイクでの行き過ぎは、まもなく押し戻しが来る可能性。<br/>
+                リセットなしで継続を前提にしない。
+              </div>
+            </div>
+
+            <div class="section-title" id="ja-sec8">
+              <b>SECTION 8 — ストップルール</b>
+              <span>構造＋VOLバッファ</span>
+            </div>
+
+            <div class="step" id="ja-s8-stop">
+              <div class="kicker">
+                <h3>ストップ位置</h3>
+                <span class="tag">Risk</span>
+              </div>
+              <ul class="bul">
+                <li>ロング → 押し安値下</li>
+                <li>ショート → 押し高値上</li>
+              </ul>
+              <p>＋ VOLの約<b>10%</b>バッファ</p>
+              <div class="deny">
+                <strong>見送り</strong>
+                <p class="mini">必要ストップがVOLの<b>60%以上</b>なら → 構造過大 → 取引しない。</p>
+              </div>
+              <p style="margin-top:10px;"><b>構造明確崩壊：即撤退。</b></p>
+              <div class="note">
+                <b>出来高補足</b><br/>
+                強い逆出来高で崩れたら即座に撤退。<br/>
+                低出来高でも撤退（価格優先）。
+              </div>
+            </div>
+
+            <div class="section-title" id="ja-sec9">
+              <b>SECTION 9 — 利益管理</b>
+              <span>部分利確＋管理＋全決済条件</span>
+            </div>
+
+            <div class="step" id="ja-s9-partial">
+              <div class="kicker">
+                <h3>第一利確</h3>
+                <span class="tag">≈ 50%</span>
+              </div>
+              <p>利益が <b>約VOLの50%</b> で一部利確。</p>
+              <p>勢いを固定。</p>
+              <div class="note">
+                <b>出来高補足</b><br/>
+                上昇出来高で到達 → 緩め管理可能<br/>
+                減少出来高で到達 → 管理をタイトに
+              </div>
+            </div>
+
+            <div class="step" id="ja-s9-after">
+              <div class="kicker">
+                <h3>部分利確後</h3>
+                <span class="tag">Reduce</span>
+              </div>
+              <ul class="bul">
+                <li>リスク縮小</li>
+                <li>構造裏へストップ移動</li>
+              </ul>
+            </div>
+
+            <div class="step" id="ja-s9-exit">
+              <div class="kicker">
+                <h3>全決済</h3>
+                <span class="tag">Exit</span>
+              </div>
+              <p>以下の場合：</p>
+              <ul class="bul">
+                <li>ボックス内部へ戻る</li>
+                <li><b>3分間</b>停滞</li>
+                <li>明確な逆拡張出現</li>
+              </ul>
+              <div class="note">
+                <b>出来高補足</b><br/>
+                強い逆方向足＋強い出来高 → 残りポジション即保護。
+              </div>
+            </div>
+
+            <div class="section-title" id="ja-sec10">
+              <b>SECTION 10 — ピラミッドルール</b>
+              <span>最大3回（強さ＋出来高支持が必須）</span>
+            </div>
+
+            <div class="step" id="ja-s10-pyr">
+              <div class="kicker">
+                <h3>追加（最大3）</h3>
+                <span class="tag">Max 3</span>
+              </div>
+
+              <p><b>エントリー1：</b> 標準セットアップ</p>
+
+              <p style="margin-top:10px;"><b>エントリー2：</b></p>
+              <ul class="bul">
+                <li>利益方向へVOLの<b>40%</b>進行</li>
+                <li>構造維持</li>
+                <li>出来高が継続を支持</li>
+              </ul>
+
+              <p style="margin-top:10px;"><b>エントリー3：</b></p>
+              <ul class="bul">
+                <li>さらに<b>40% VOL</b>進行</li>
+                <li>モメンタム強維持</li>
+              </ul>
+
+              <div class="note">
+                <b>追加条件（出来高）</b><br/>
+                各追加は前回押し以上または同等の出来高であること。<br/>
+                低参加では追加禁止。
+              </div>
+
+              <div class="deny">
+                <strong>絶対禁止</strong>
+                <ul class="bul">
+                  <li>負けポジへの追加</li>
+                  <li>押し戻し60%超え</li>
+                  <li>9:45近辺</li>
+                  <li>クールダウン中</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- SECTION 11 (JP UPDATED) -->
+            <div class="section-title" id="ja-sec11">
+              <b>SECTION 11 — エグゾースト（消耗）リバーサル・モジュール</b>
+              <span>（別のトレードタイプ — 任意）更新版</span>
+            </div>
+
+            <div class="step" id="ja-s11-intro">
+              <div class="kicker">
+                <h3>別トレード（ブレイクアウト・フローの一部ではない）</h3>
+                <span class="tag">任意</span>
+              </div>
+              <p>継続ルールが正しくエントリーを防いでいる状況でも、明確な「消耗（エグゾースト）」が見える場面があるため。</p>
+              <p><b>これはブレイクアウト・フローの一部ではない。</b> 完全に別のトレードタイプである。</p>
+            </div>
+
+            <div class="step" id="ja-s11-a">
+              <div class="kicker">
+                <h3>A）エグゾースト取引が許可される条件</h3>
+                <span class="tag">Gate</span>
+              </div>
+              <ul class="bul">
+                <li>9:45頃より前であること</li>
+                <li>2連敗による強制クールダウン中ではないこと（デイリーストップは有効）</li>
+                <li>価格がすでにオーバーエクステンション条件を満たしていること（早当てではない。“放出されたエネルギー”を逆張りする）</li>
+              </ul>
+            </div>
+
+            <div class="step" id="ja-s11-b">
+              <div class="kicker">
+                <h3>B）エグゾースト資格条件（すべて必須）</h3>
+                <span class="tag">All 4</span>
+              </div>
+              <ul class="bul">
+                <li><b>1️⃣ オーバーエクステンション確認：</b> ブレイクアウト基準から <b>≥ VOLの110%</b> 到達、かつ適切な押し戻しが未形成。</li>
+                <li><b>2️⃣ クライマックス参加：</b> 出来高が直近平均に対して極端なスパイク。</li>
+                <li><b>3️⃣ 継続失敗：</b> スパイク後、ブレイク方向へ有意な更新ができない。</li>
+                <li><b>4️⃣ 構造側への明確な拒否：</b> 逆方向の強い足が出て、反対側に明確にクローズし、動きから <b>VOLの25%以上</b> を取り戻す。</li>
+              </ul>
+              <div class="allow">
+                <strong>4条件すべて成立 → エグゾースト資格成立。</strong>
+              </div>
+            </div>
+
+            <div class="step" id="ja-s11-c">
+              <div class="kicker">
+                <h3>C）モード切替ルール（明確性のため）</h3>
+                <span class="tag">No mixing</span>
+              </div>
+              <div class="deny">
+                <strong>ルール</strong>
+                <p class="mini">エグゾーストが資格成立したら、そのトレードが決着（利確または損切）するまで継続ブレイクアウトは取らない。</p>
+              </div>
+              <p>エッジの混在を防ぐため。</p>
+            </div>
+
+            <div class="step" id="ja-s11-d">
+              <div class="kicker">
+                <h3>D）エグゾースト・エントリートリガー</h3>
+                <span class="tag">Confirm</span>
+              </div>
+              <p>予測では入らない。<b>確認でのみ入る。</b></p>
+
+              <div class="step" style="margin-top:12px;" id="ja-s11-d-short">
+                <div class="kicker">
+                  <h3>🔻 上方向オーバーエクステンション後のショート</h3>
+                  <span class="tag">Short</span>
+                </div>
+                <p>価格が上方向へ <b>≥ VOLの110%</b> 拡張し、エグゾースト資格成立後：</p>
+                <ul class="bul">
+                  <li>明確な陰線リジェクション足が形成（高値圏からはっきり下でクローズ）。</li>
+                </ul>
+                <p><b>エントリー条件：</b></p>
+                <ul class="bul">
+                  <li>リジェクション足の安値を下抜け、または</li>
+                  <li>小さなLower-High形成後、その構造を下抜け</li>
+                </ul>
+                <div class="note">
+                  <b>要するに</b><br/>
+                  天井で売らない。<br/>
+                  市場が下へ動き出したと証明してから売る。
+                </div>
+              </div>
+
+              <div class="step" id="ja-s11-d-long">
+                <div class="kicker">
+                  <h3>🔺 下方向オーバーエクステンション後のロング</h3>
+                  <span class="tag">Long</span>
+                </div>
+                <p>価格が下方向へ <b>≥ VOLの110%</b> 拡張し、エグゾースト資格成立後：</p>
+                <ul class="bul">
+                  <li>明確な陽線リジェクション足が形成（安値圏からはっきり上でクローズ）。</li>
+                </ul>
+                <p><b>エントリー条件：</b></p>
+                <ul class="bul">
+                  <li>リジェクション足の高値を上抜け、または</li>
+                  <li>小さなHigher-Low形成後、その構造を上抜け</li>
+                </ul>
+                <div class="note">
+                  <b>要するに</b><br/>
+                  底で買わない。<br/>
+                  市場が上へ動き出したと証明してから買う。
+                </div>
+              </div>
+
+              <div class="note">
+                <b>出来高確認（エントリー時）</b><br/>
+                エントリートリガー足が出来高崩壊状態で発生してはならない。<br/>
+                安定した参加が望ましい。
+              </div>
+            </div>
+
+            <div class="step" id="ja-s11-e">
+              <div class="kicker">
+                <h3>E）エグゾーストのストップルール</h3>
+                <span class="tag">Stop</span>
+              </div>
+              <ul class="bul">
+                <li>ショート → エグゾースト極値の上</li>
+                <li>ロング → エグゾースト極値の下</li>
+              </ul>
+              <p>必要なら VOLの約<b>10%</b>バッファを追加。</p>
+              <div class="deny">
+                <strong>見送る</strong>
+                <p class="mini">必要ストップが過度に大きい、または構造が不明確なら → 見送る。</p>
+              </div>
+            </div>
+
+            <div class="step" id="ja-s11-f">
+              <div class="kicker">
+                <h3>F）エグゾースト目標（シンプル＆保守的）</h3>
+                <span class="tag">Targets</span>
+              </div>
+              <p>部分利確：利益が <b>≈ VOLの50%</b></p>
+              <p><b>主要目標：</b></p>
+              <ul class="bul">
+                <li>オープニングボックス端への回帰、または</li>
+                <li>反転後、大きな失速が発生</li>
+              </ul>
+            </div>
+
+            <div class="step" id="ja-s11-g">
+              <div class="kicker">
+                <h3>G）エグゾースト失敗ルール（1回のみ）</h3>
+                <span class="tag">One try</span>
+              </div>
+              <p>エグゾーストが失敗（ストップ到達または力強い再ブレイク）した場合：</p>
+              <div class="deny">
+                <strong>ルール</strong>
+                <p class="mini">すぐに再エグゾーストを試さない。</p>
+                <p class="mini">「まだ継続優勢の可能性がある」という警告。</p>
+              </div>
+            </div>
+
+            <div class="step" id="ja-s11-resume">
+              <div class="kicker">
+                <h3>🔄 通常システムへの復帰</h3>
+                <span class="tag">Reset</span>
+              </div>
+              <p>エグゾーストが終了（勝ち／負け）した後：</p>
+              <div class="deny">
+                <strong>即反転モード切替は禁止</strong>
+                <p class="mini">すぐにブレイクアウトへ戻らない。</p>
+              </div>
+              <p>通常ブレイクアウトへ戻る条件：</p>
+              <ul class="bul">
+                <li>価格構造が明確に安定する</li>
+                <li>環境ルール（Section 3）が最初から再度資格成立する</li>
+              </ul>
+              <p>感情的スイッチ禁止。市場が再び構造を作り直すまで待つ。</p>
+            </div>
+
+            <!-- SECTION 12 (JP UPDATED) -->
+            <div class="section-title" id="ja-sec12">
+              <b>SECTION 12 — 全体フローまとめ</b>
+              <span>（任意：エグゾースト含む）</span>
+            </div>
+
+            <div class="step" id="ja-s12-flow">
+              <div class="kicker">
+                <h3>フロー</h3>
+                <span class="tag">Checklist</span>
+              </div>
+              <ol class="bul" style="list-style:decimal; padding-left:18px;">
+                <li style="margin:6px 0;">ボックス定義</li>
+                <li style="margin:6px 0;">VOL算出</li>
+                <li style="margin:6px 0;">環境ブレイクアウト待機</li>
+                <li style="margin:6px 0;">拡張＋終値＋出来高＋維持確認</li>
+                <li style="margin:6px 0;">制御された押し戻し待機</li>
+                <li style="margin:6px 0;">押し中出来高減少確認</li>
+                <li style="margin:6px 0;">実行ブレイクアウト＋出来高上昇でエントリー</li>
+                <li style="margin:6px 0;">VOLと出来高で管理</li>
+                <li style="margin:6px 0;">追いかけない</li>
+                <li style="margin:6px 0;">2敗で終了</li>
+                <li style="margin:6px 0;"><b>任意：</b> 行き過ぎ＋クライマックス＋失敗＋拒否成立時 → エグゾースト発動（別モード）</li>
+              </ol>
+            </div>
+
+            <div class="step" id="ja-id">
+              <div class="kicker">
+                <h3>システムの本質</h3>
+                <span class="tag">規律</span>
+              </div>
+              <p>このシステムは：</p>
+              <ul class="bul">
+                <li>拡張を証明してから入る</li>
+                <li>出来高で参加を確認する</li>
+                <li>制御された押し戻しを要求する</li>
+                <li>強い再開を必要とする</li>
+                <li>VOLで規律を保つ</li>
+                <li>資金を守る</li>
+                <li>追いかけない</li>
+                <li>不安定環境では停止する</li>
+              </ul>
+              <p style="margin-top:10px;">原則として継続のみを取る。<br/>
+                ただし、<b>エグゾースト・リバーサル・モジュール</b>が明確に資格成立し発動した場合のみ例外。</p>
+              <p style="margin-top:10px;"><b>規律こそエッジである。</b></p>
+            </div>
+
+            <div class="btnrow">
+              <button class="ui" type="button" data-jump="#ja-sec3">ジャンプ: セクション3</button>
+              <button class="ui" type="button" data-jump="#ja-sec11">ジャンプ: セクション11（エグゾースト）</button>
+              <button class="ui" type="button" data-jump="#ja-sec12">ジャンプ: セクション12（フロー）</button>
+              <button class="ui" type="button" id="ja-clear">ハイライト解除</button>
+            </div>
+
+            <div class="footer">ヒント：右のチェックをクリックすると該当セクションがハイライトされます。</div>
           </div>
         </section>
-      </aside>
-    </main>
+
+        <aside class="grid">
+          <section class="card">
+            <div class="hd">
+              <h2>即席チェック</h2>
+              <div class="pill"><span class="dot" style="background:var(--warn); box-shadow:0 0 0 4px rgba(251,191,36,.12)"></span>全部YESでOK</div>
+            </div>
+            <div class="body">
+              <p class="mini">判断ゲート（ざっくり）：</p>
+
+              <div class="checklist" id="ja-check">
+                <div class="item" data-rel="#ja-s1-time"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>9:10以降〜9:45前</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#ja-s2-filter"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>ボックス≥140</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#ja-sec3"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>環境認定（4項目）</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#ja-sec4"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>押し35–60%＆外側</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#ja-sec5"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>実行ブレイク確認（≥25%＋出来高）</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#ja-sec7"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>追ってない（行き過ぎ除外）</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#ja-sec6"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>クールダウン遵守</b><span>(yes/no)</span></div></div>
+                <div class="item" data-rel="#ja-sec11"><div class="box"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b>任意：エグゾースト資格（4条件）</b><span>(yes/no)</span></div></div>
+              </div>
+
+              <div class="note" style="margin-top:12px;">
+                <b>ルール</b><br/>
+                ✅ 全部YES → OK<br/>
+                ❌ どれかNO → 取引しない
+              </div>
+
+              <p class="footer">クリックで該当セクションをハイライト。</p>
+            </div>
+          </section>
+        </aside>
+      </main>
+    </div>
   </div>
 
   <script>
@@ -1467,13 +1720,14 @@
     function qsa(root, sel){ return Array.from((root || document).querySelectorAll(sel)); }
 
     // ---------- highlight + checklist ----------
-    function initChecklist(checklistId, clearBtnId){
-      const list = document.getElementById(checklistId);
-      if (!list) return;
+    function initChecklist(root, clearBtnId){
+      if (!root) return;
 
-      qsa(list, '.item').forEach(it => {
+      qsa(root, '.item').forEach(it => {
         const stepSel = it.getAttribute('data-rel');
         const box = qs(it, '.box');
+
+        it.setAttribute('tabindex', '0');
 
         it.addEventListener('click', () => {
           const el = qs(document, stepSel);
@@ -1495,6 +1749,14 @@
         });
       });
 
+      qsa(document, 'button[data-jump]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const sel = btn.getAttribute('data-jump');
+          const el = qs(document, sel);
+          if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+        });
+      });
+
       const clearBtn = document.getElementById(clearBtnId);
       if (clearBtn){
         clearBtn.addEventListener('click', () => {
@@ -1503,19 +1765,10 @@
       }
     }
 
-    initChecklist('en-check','en-clear');
-    initChecklist('ja-check','ja-clear');
+    initChecklist(document, 'clear');
+    initChecklist(document, 'ja-clear');
 
-    // ---------- jump buttons ----------
-    qsa(document, 'button[data-jump]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const sel = btn.getAttribute('data-jump');
-        const el = qs(document, sel);
-        if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
-      });
-    });
-
-    // ---------- language switcher ----------
+    // ---------- language switch ----------
     const langBtns = qsa(document, '.langbtn');
 
     function showLang(lang){
@@ -1530,7 +1783,7 @@
     langBtns.forEach(b => b.addEventListener('click', () => showLang(b.getAttribute('data-lang'))));
 
     // restore
-    const savedLang = localStorage.getItem('rules_lang');
+    const savedLang  = localStorage.getItem('rules_lang');
     if (savedLang === 'en' || savedLang === 'ja') showLang(savedLang);
     else showLang('en');
   </script>
