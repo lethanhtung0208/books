@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSVビューア (取引グループ対応)</title>
+  <style>
+    :root {
+      --even-row: #f0f0f0;
+      --odd-row: #ffffff;
+      --border: #d0d0d0;
+      --text: #222;
+      --muted: #666;
+      --bg: #fafafa;
+      --panel: #ffffff;
+      --accent: #2563eb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Meiryo, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+    }
+
+    .app {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: 24px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 16px;
+      align-items: center;
+    }
+
+    label {
+      font-weight: 600;
+    }
+
+    input[type="file"],
+    select,
+    button {
+      font: inherit;
+    }
+
+    select,
+    button {
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: white;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button.primary {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .status {
+      margin-top: 12px;
+      color: var(--muted);
+      white-space: pre-wrap;
+    }
+
+    .table-wrap {
+      overflow: auto;
+      max-height: 72vh;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: white;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1150px;
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #f7f7f7;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    tbody td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #ececec;
+      font-size: 14px;
+      vertical-align: top;
+    }
+
+    tbody tr.normal-even {
+      background: var(--even-row);
+    }
+
+    tbody tr.normal-odd {
+      background: var(--odd-row);
+    }
+
+    .empty {
+      padding: 24px;
+      color: var(--muted);
+    }
+
+    .summary {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .note {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    .error {
+      color: #b91c1c;
+    }
+
+    .remark-cell {
+      min-width: 340px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1>CSVビューア (取引グループ対応)</h1>
+
+    <div class="panel">
+      <div class="controls">
+        <div>
+          <label for="csvFiles">CSVファイル選択:</label><br />
+          <input id="csvFiles" type="file" accept=".csv" multiple />
+        </div>
+
+        <div>
+          <label for="dateFilter">日付で絞り込み:</label><br />
+          <select id="dateFilter" disabled>
+            <option>全ての日付</option>
+          </select>
+        </div>
+
+        <div>
+          <label>&nbsp;</label><br />
+          <button id="loadBtn" class="primary">読み込み</button>
+        </div>
+
+        <div>
+          <label>&nbsp;</label><br />
+          <button id="clearBtn">クリア</button>
+        </div>
+      </div>
+
+      <div class="note">
+        CSVを複数選択して読み込みます。<br />
+        同一銘柄・日計り前提で、最初の建玉から最後の返済までを1取引としてまとめ、
+        各行の右端にその取引の備考を表示します。<br />
+        日跨ぎの特殊ケースは無視します。
+      </div>
+
+      <div id="status" class="status">CSVを複数選択して「読み込み」を押してください。</div>
+      <div id="summary" class="summary"></div>
+    </div>
+
+    <div class="panel">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>注文日時</th>
+              <th>売買</th>
+              <th>約定数量[株/口]</th>
+              <th>約定単価[円]</th>
+              <th>備考</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <tr>
+              <td colspan="5" class="empty">まだデータはありません。</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const FILTER_COLUMN_VALUE = '約定代金[円]';
+    const FILTER_VALUE_THRESHOLD = 1;
+    const FILTER_COLUMN_DATE = '注文日時';
+
+    const REPO_OWNER = "lethanhtung0208";
+    const REPO_NAME = "books";
+    const REPO_BRANCH = "main";
+    const REPO_FOLDER = "stockorder";
+
+    let fullData = [];
+    let filteredData = [];
+    let groupedDisplayData = [];
+
+    const dateFilter = document.getElementById('dateFilter');
+    const tableBody = document.getElementById('tableBody');
+    const statusEl = document.getElementById('status');
+    const summaryEl = document.getElementById('summary');
+
+    function setStatus(message, isError = false) {
+      statusEl.textContent = message;
+      statusEl.className = isError ? 'status error' : 'status';
+    }
+
+    function extractYearFromFilename(filename) {
+      const match = filename.match(/(\d{4})/);
+      if (match) return match[1];
+      return String(new Date().getFullYear());
+    }
+
+    function parseNumber(value) {
+      if (value === null || value === undefined) return 0;
+      const cleaned = String(value).replace(/,/g, '').trim();
+      if (cleaned === '') return 0;
+      const num = Number(cleaned);
+      return Number.isFinite(num) ? num : 0;
+    }
+
+    function parseDateTimeWithYear(dateStr, year) {
+      if (!dateStr || !year || typeof dateStr !== 'string') return null;
+
+      const trimmed = dateStr.trim();
+
+      let m = trimmed.match(/^(\d{1,2})\/(\d{1,2})\s+(\d{1,2}):(\d{2}):(\d{2})$/);
+      if (m) {
+        const [, mm, dd, hh, mi, ss] = m;
+        return new Date(Number(year), Number(mm) - 1, Number(dd), Number(hh), Number(mi), Number(ss));
+      }
+
+      m = trimmed.match(/^(\d{1,2})\/(\d{1,2})\s+(\d{1,2}):(\d{2})$/);
+      if (m) {
+        const [, mm, dd, hh, mi] = m;
+        return new Date(Number(year), Number(mm) - 1, Number(dd), Number(hh), Number(mi), 0);
+      }
+
+      return null;
+    }
+
+    function formatDateTime(dt) {
+      if (!(dt instanceof Date) || Number.isNaN(dt.getTime())) return '日付情報なし';
+      const yyyy = dt.getFullYear();
+      const mm = String(dt.getMonth() + 1).padStart(2, '0');
+      const dd = String(dt.getDate()).padStart(2, '0');
+      const hh = String(dt.getHours()).padStart(2, '0');
+      const mi = String(dt.getMinutes()).padStart(2, '0');
+      const ss = String(dt.getSeconds()).padStart(2, '0');
+      return `${yyyy}/${mm}/${dd} ${hh}:${mi}:${ss}`;
+    }
+
+    function formatDateOnly(dt) {
+      if (!(dt instanceof Date) || Number.isNaN(dt.getTime())) return '';
+      const yyyy = dt.getFullYear();
+      const mm = String(dt.getMonth() + 1).padStart(2, '0');
+      const dd = String(dt.getDate()).padStart(2, '0');
+      return `${yyyy}/${mm}/${dd}`;
+    }
+
+    function splitCsvLine(line) {
+      const result = [];
+      let current = '';
+      let inQuotes = false;
+
+      for (let i = 0; i < line.length; i++) {
+        const ch = line[i];
+        const next = line[i + 1];
+
+        if (ch === '"') {
+          if (inQuotes && next === '"') {
+            current += '"';
+            i++;
+          } else {
+            inQuotes = !inQuotes;
+          }
+        } else if (ch === ',' && !inQuotes) {
+          result.push(current);
+          current = '';
+        } else {
+          current += ch;
+        }
+      }
+
+      result.push(current);
+      return result;
+    }
+
+    function parseCsv(text) {
+      const normalized = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+      const lines = normalized.split('\n').filter(line => line.trim() !== '');
+      if (lines.length === 0) return [];
+
+      const headers = splitCsvLine(lines[0]).map(h => h.trim());
+      const rows = [];
+
+      for (let i = 1; i < lines.length; i++) {
+        const values = splitCsvLine(lines[i]);
+        const row = {};
+        headers.forEach((header, idx) => {
+          row[header] = (values[idx] ?? '').trim();
+        });
+        rows.push(row);
+      }
+
+      return rows;
+    }
+
+    async function readResponseAsJapaneseText(response) {
+      const buffer = await response.arrayBuffer();
+      try {
+        return new TextDecoder('shift_jis').decode(buffer);
+      } catch {
+        return new TextDecoder('utf-8').decode(buffer);
+      }
+    }
+
+    function cleanAndProcessData(rows) {
+      if (!rows || rows.length === 0) return [];
+
+      const processed = rows.map(row => {
+        const newRow = { ...row };
+
+        if ('注文番号' in newRow) {
+          newRow['注文番号'] = String(newRow['注文番号']);
+        }
+
+        newRow[FILTER_COLUMN_VALUE] = parseNumber(newRow[FILTER_COLUMN_VALUE]);
+
+        if (FILTER_COLUMN_DATE in newRow && 'SourceYear' in newRow) {
+          newRow.__parsedDate = parseDateTimeWithYear(newRow[FILTER_COLUMN_DATE], newRow['SourceYear']);
+        } else {
+          newRow.__parsedDate = null;
+        }
+
+        return newRow;
+      });
+
+      const seen = new Set();
+      const deduped = [];
+      for (const row of processed) {
+        const key = JSON.stringify(row, (k, v) => v instanceof Date ? v.toISOString() : v);
+        if (!seen.has(key)) {
+          seen.add(key);
+          deduped.push(row);
+        }
+      }
+
+      const filtered = deduped.filter(
+        row => Number(row[FILTER_COLUMN_VALUE]) > FILTER_VALUE_THRESHOLD
+      );
+
+      filtered.sort((a, b) => {
+        const ad = a.__parsedDate instanceof Date ? a.__parsedDate.getTime() : -Infinity;
+        const bd = b.__parsedDate instanceof Date ? b.__parsedDate.getTime() : -Infinity;
+        if (ad !== bd) return ad - bd;
+
+        const ao = String(a['注文番号'] ?? '');
+        const bo = String(b['注文番号'] ?? '');
+        return ao.localeCompare(bo, 'ja');
+      });
+
+      return filtered;
+    }
+
+    function updateDateOptions(data) {
+      const uniqueDates = [...new Set(
+        data
+          .filter(row => row.__parsedDate instanceof Date && !Number.isNaN(row.__parsedDate.getTime()))
+          .map(row => formatDateOnly(row.__parsedDate))
+          .filter(Boolean)
+      )].sort((a, b) => b.localeCompare(a, 'ja'));
+
+      dateFilter.innerHTML = '<option value="全ての日付">全ての日付</option>';
+      for (const d of uniqueDates) {
+        const option = document.createElement('option');
+        option.value = d;
+        option.textContent = d;
+        dateFilter.appendChild(option);
+      }
+
+      dateFilter.disabled = false;
+      dateFilter.value = '全ての日付';
+    }
+
+    function isOpenSide(side) {
+      return side === '買建' || side === '売建';
+    }
+
+    function sameDay(dateA, dateB) {
+      return formatDateOnly(dateA) === formatDateOnly(dateB);
+    }
+
+    function buildTradeGroups(rows) {
+      const displayRows = rows.map(row => ({
+        row,
+        remark: '',
+        groupId: null
+      }));
+
+      let i = 0;
+      let groupId = 1;
+
+      while (i < rows.length) {
+        const startRow = rows[i];
+        const startSide = String(startRow['売買'] ?? '').trim();
+
+        if (!isOpenSide(startSide)) {
+          i++;
+          continue;
+        }
+
+        const startDate = startRow.__parsedDate;
+        if (!(startDate instanceof Date) || Number.isNaN(startDate.getTime())) {
+          i++;
+          continue;
+        }
+
+        const groupSide = startSide;
+        const groupDay = formatDateOnly(startDate);
+
+        let openQty = 0;
+        let closeQty = 0;
+        let openAmount = 0;
+        let closeAmount = 0;
+
+        const groupIndexes = [];
+        let j = i;
+
+        while (j < rows.length) {
+          const r = rows[j];
+          const side = String(r['売買'] ?? '').trim();
+          const dt = r.__parsedDate;
+
+          if (!(dt instanceof Date) || Number.isNaN(dt.getTime())) break;
+          if (!sameDay(startDate, dt)) break;
+
+          const qty = parseNumber(r['約定数量[株/口]']);
+          const price = parseNumber(r['約定単価[円]']);
+
+          if (groupSide === '買建') {
+            if (side === '買建') {
+              groupIndexes.push(j);
+              openQty += qty;
+              openAmount += qty * price;
+            } else if (side === '売埋') {
+              groupIndexes.push(j);
+              closeQty += qty;
+              closeAmount += qty * price;
+              if (closeQty === openQty) break;
+              if (closeQty > openQty) break;
+            } else if (side === '売建') {
+              break;
+            }
+          } else {
+            if (side === '売建') {
+              groupIndexes.push(j);
+              openQty += qty;
+              openAmount += qty * price;
+            } else if (side === '買埋') {
+              groupIndexes.push(j);
+              closeQty += qty;
+              closeAmount += qty * price;
+              if (closeQty === openQty) break;
+              if (closeQty > openQty) break;
+            } else if (side === '買建') {
+              break;
+            }
+          }
+
+          j++;
+        }
+
+        if (groupIndexes.length >= 2 && openQty > 0 && closeQty === openQty) {
+          const pnl = groupSide === '買建'
+            ? (closeAmount - openAmount)
+            : (openAmount - closeAmount);
+
+          const remark =
+            `取引${groupId} | ${groupSide}→${groupSide === '買建' ? '売埋' : '買埋'} | ` +
+            `日付: ${groupDay} | 建玉数量: ${openQty.toLocaleString()} | ` +
+            `返済数量: ${closeQty.toLocaleString()} | 損益(概算): ${Math.round(pnl).toLocaleString()} 円`;
+
+          for (const idx of groupIndexes) {
+            displayRows[idx].remark = remark;
+            displayRows[idx].groupId = groupId;
+          }
+
+          groupId++;
+          i = groupIndexes[groupIndexes.length - 1] + 1;
+        } else {
+          i++;
+        }
+      }
+
+      return displayRows;
+    }
+
+    function renderTable(displayRows) {
+      tableBody.innerHTML = '';
+
+      if (!displayRows || displayRows.length === 0) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="5" class="empty">--- 該当するレコードはありません ---</td>
+          </tr>
+        `;
+        return;
+      }
+
+      let rowCounter = 0;
+
+      for (const item of displayRows) {
+        const tr = document.createElement('tr');
+        tr.className = rowCounter % 2 === 0 ? 'normal-even' : 'normal-odd';
+        rowCounter++;
+
+        const row = item.row;
+        const values = [
+          formatDateTime(row.__parsedDate),
+          row['売買'] ?? '',
+          row['約定数量[株/口]'] ?? '',
+          row['約定単価[円]'] ?? '',
+          item.remark ?? ''
+        ];
+
+        values.forEach((value, idx) => {
+          const td = document.createElement('td');
+          td.textContent = String(value);
+          if (idx === 4) td.className = 'remark-cell';
+          tr.appendChild(td);
+        });
+
+        tableBody.appendChild(tr);
+      }
+    }
+
+    function applyDateFilter() {
+      const selected = dateFilter.value;
+
+      if (selected === '全ての日付') {
+        filteredData = [...fullData];
+      } else {
+        filteredData = fullData.filter(row => (
+          row.__parsedDate instanceof Date &&
+          !Number.isNaN(row.__parsedDate.getTime()) &&
+          formatDateOnly(row.__parsedDate) === selected
+        ));
+      }
+
+      groupedDisplayData = buildTradeGroups(filteredData);
+      renderTable(groupedDisplayData);
+
+      const tradeIds = new Set(groupedDisplayData.map(x => x.groupId).filter(Boolean));
+      summaryEl.textContent =
+        `表示行数: ${groupedDisplayData.length} 件 / 取引グループ数: ${tradeIds.size} 件 / 元データ件数: ${filteredData.length} 件`;
+    }
+
+    async function listCsvFilesInRepoFolder() {
+      const apiUrl =
+        `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${REPO_FOLDER}?ref=${REPO_BRANCH}`;
+
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error(`CSV一覧取得失敗: ${response.status}`);
+      }
+
+      const items = await response.json();
+      return items
+        .filter(item => item.type === 'file' && item.name.toLowerCase().endsWith('.csv'))
+        .sort((a, b) => a.name.localeCompare(b.name, 'ja'));
+    }
+
+    async function loadAllCsvFromRepoFolder() {
+      setStatus('CSV一覧を取得中...');
+
+      const csvFiles = await listCsvFilesInRepoFolder();
+      if (csvFiles.length === 0) {
+        throw new Error('stockorder フォルダに CSV が見つかりません。');
+      }
+
+      const allRows = [];
+      const errors = [];
+
+      for (const file of csvFiles) {
+        try {
+          setStatus(`読込中: ${file.name}`);
+          const response = await fetch(file.download_url);
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+
+          const text = await readResponseAsJapaneseText(response);
+          const rows = parseCsv(text);
+          const year = extractYearFromFilename(file.name);
+
+          for (const row of rows) {
+            row.SourceYear = year;
+            allRows.push(row);
+          }
+        } catch (err) {
+          errors.push(`${file.name}: ${err.message}`);
+        }
+      }
+
+      fullData = cleanAndProcessData(allRows);
+      updateDateOptions(fullData);
+      applyDateFilter();
+
+      let msg = `${csvFiles.length} 個のCSVを自動読込しました。`;
+      if (errors.length) {
+        msg += ` 一部失敗: ${errors.join(' | ')}`;
+      }
+      setStatus(msg, errors.length > 0 && fullData.length === 0);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadAllCsvFromRepoFolder().catch(err => {
+        setStatus(err.message, true);
+      });
+    });
+  </script>
+</body>
+</html>
