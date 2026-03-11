@@ -156,15 +156,8 @@
 </head>
 <body>
   <div class="app">
-    <h1>CSVビューア (取引グループ対応)</h1>
-
     <div class="panel">
       <div class="controls">
-        <div>
-          <label for="csvFiles">CSVファイル選択:</label><br />
-          <input id="csvFiles" type="file" accept=".csv" multiple />
-        </div>
-
         <div>
           <label for="dateFilter">日付で絞り込み:</label><br />
           <select id="dateFilter" disabled>
@@ -182,16 +175,6 @@
           <button id="clearBtn">クリア</button>
         </div>
       </div>
-
-      <div class="note">
-        CSVを複数選択して読み込みます。<br />
-        同一銘柄・日計り前提で、最初の建玉から最後の返済までを1取引としてまとめ、
-        各行の右端にその取引の備考を表示します。<br />
-        日跨ぎの特殊ケースは無視します。
-      </div>
-
-      <div id="status" class="status">CSVを複数選択して「読み込み」を押してください。</div>
-      <div id="summary" class="summary"></div>
     </div>
 
     <div class="panel">
@@ -234,11 +217,6 @@
     const tableBody = document.getElementById('tableBody');
     const statusEl = document.getElementById('status');
     const summaryEl = document.getElementById('summary');
-
-    function setStatus(message, isError = false) {
-      statusEl.textContent = message;
-      statusEl.className = isError ? 'status error' : 'status';
-    }
 
     function extractYearFromFilename(filename) {
       const match = filename.match(/(\d{4})/);
@@ -641,19 +619,7 @@
       fullData = cleanAndProcessData(allRows);
       updateDateOptions(fullData);
       applyDateFilter();
-
-      let msg = `${csvFiles.length} 個のCSVを自動読込しました。`;
-      if (errors.length) {
-        msg += ` 一部失敗: ${errors.join(' | ')}`;
-      }
-      setStatus(msg, errors.length > 0 && fullData.length === 0);
     }
-
-    window.addEventListener('DOMContentLoaded', () => {
-      loadAllCsvFromRepoFolder().catch(err => {
-        setStatus(err.message, true);
-      });
-    });
   </script>
 </body>
 </html>
