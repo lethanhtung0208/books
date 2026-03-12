@@ -291,22 +291,6 @@
               </div>
             </div>
 
-            <div class="step" id="s1-mode">
-              <div class="kicker">
-                <h3>Trade Mode Rule</h3>
-                <span class="tag">Mode</span>
-              </div>
-              <p>This system contains two trade types:</p>
-              <ul class="bul">
-                <li><b>Breakout Continuation</b> (primary)</li>
-                <li><b>Exhaustion Reversal</b> (optional)</li>
-              </ul>
-              <p>These represent opposite market conditions, so they should never be traded at the same time.</p>
-              <p>The day always starts in <b>Breakout Mode</b>.</p>
-              <p>Only after strong overextension and failure should you consider <b>Exhaustion Mode</b>.</p>
-              <p>Most trades should come from breakout continuation.</p>
-            </div>
-
             <div class="section-title" id="sec2">
               <b>SECTION 2 — STRUCTURE SETUP</b>
               <span>Opening Box + VOL + basic no-trade filter</span>
@@ -637,8 +621,7 @@
               </div>
               <div class="note">
                 <b>Explanation</b><br/>
-                Most of the energy may already be released.<br/><br/>
-                Instead, watch for possible exhaustion conditions.
+                Most of the energy may already be released.
               </div>
             </div>
 
@@ -744,114 +727,11 @@
             </div>
 
             <div class="section-title" id="sec11">
-              <b>SECTION 11 — EXHAUSTION REVERSAL MODULE</b>
-              <span>Optional trade type</span>
-            </div>
-
-            <div class="step" id="s11-intro">
-              <div class="kicker">
-                <h3>Exhaustion Reversal Module</h3>
-                <span class="tag">Optional</span>
-              </div>
-              <p>Optional trade type.</p>
-              <p>Used only when clear overextension and failure appear.</p>
-            </div>
-
-            <div class="step" id="s11-allow">
-              <div class="kicker">
-                <h3>When Exhaustion Trades Are Allowed</h3>
-                <span class="tag">Allowed</span>
-              </div>
-              <p>Only when:</p>
-              <ul class="bul">
-                <li>before ~9:45</li>
-                <li>daily stop rule not active</li>
-                <li>price has moved ≥110% of VOL</li>
-              </ul>
-              <div class="note">
-                <b>Explanation</b><br/>
-                You are fading released energy, not strong ongoing momentum.
-              </div>
-            </div>
-
-            <div class="step" id="s11-qualify">
-              <div class="kicker">
-                <h3>Exhaustion Qualification</h3>
-                <span class="tag">All true</span>
-              </div>
-              <p>All conditions must be true.</p>
-              <p><b>1️⃣ Overextension</b><br/>Price reaches ≥110% VOL without pullback.</p>
-              <p><b>2️⃣ Volume Climax</b><br/>Volume spikes clearly above recent activity.</p>
-              <p><b>3️⃣ Failure to Continue</b><br/>Price cannot move further in the same direction.</p>
-              <p><b>4️⃣ Rejection</b><br/>A strong move in the opposite direction appears.</p>
-            </div>
-
-            <div class="step" id="s11-climax-filter">
-              <div class="kicker">
-                <h3>Climax Quality Filter</h3>
-                <span class="tag">Filter</span>
-              </div>
-              <p>The climax move must not finish extremely close to its highest or lowest point.</p>
-              <div class="note">
-                <b>Explanation</b><br/>
-                If the move finishes at the extreme, momentum may still be strong.
-              </div>
-            </div>
-
-            <div class="step" id="s11-entry">
-              <div class="kicker">
-                <h3>Exhaustion Entry</h3>
-                <span class="tag">Entry</span>
-              </div>
-              <p>Enter only when price moves back through the rejection area and confirms the reversal direction.</p>
-              <div class="note">
-                <b>Explanation</b><br/>
-                You do not try to catch the exact top or bottom.<br/>
-                You wait until the market proves the move is turning.
-              </div>
-            </div>
-
-            <div class="step" id="s11-invalid">
-              <div class="kicker">
-                <h3>Invalidation</h3>
-                <span class="tag">Cancel</span>
-              </div>
-              <p>If price makes a new extreme beyond the exhaustion point before entry:</p>
-              <div class="deny">
-                <strong>The exhaustion setup is cancelled.</strong>
-              </div>
-            </div>
-
-            <div class="step" id="s11-stop">
-              <div class="kicker">
-                <h3>Stop Rule</h3>
-                <span class="tag">Stop</span>
-              </div>
-              <p>Stop goes:</p>
-              <ul class="bul">
-                <li>above the exhaustion high (short trade)</li>
-                <li>below the exhaustion low (long trade)</li>
-              </ul>
-              <p>Optional buffer: <b>~10% VOL</b></p>
-            </div>
-
-            <div class="step" id="s11-targets">
-              <div class="kicker">
-                <h3>Targets</h3>
-                <span class="tag">Targets</span>
-              </div>
-              <p>Take partial profit at <b>~50% VOL</b>.</p>
-              <p><b>Main objective:</b></p>
-              <p>Return toward the Opening Box.</p>
-              <p>Exit if reversal momentum stalls.</p>
-            </div>
-
-            <div class="section-title" id="sec12">
-              <b>SECTION 12 — COMPLETE FLOW SUMMARY</b>
+              <b>SECTION 11 — COMPLETE FLOW SUMMARY</b>
               <span>Full sequence</span>
             </div>
 
-            <div class="step" id="s12-flow">
+            <div class="step" id="s11-flow">
               <div class="kicker">
                 <h3>Complete Flow Summary</h3>
                 <span class="tag">Flow</span>
@@ -866,7 +746,6 @@
                 <li style="margin:6px 0;">Manage risk using VOL</li>
                 <li style="margin:6px 0;">Add positions only after small pullbacks</li>
                 <li style="margin:6px 0;">Stop after two losses</li>
-                <li style="margin:6px 0;">Trade exhaustion only after clear overextension and failure</li>
               </ol>
             </div>
 
@@ -885,15 +764,7 @@
                 <li>Protects capital</li>
                 <li>Stops in unstable environments</li>
               </ul>
-              <p style="margin-top:10px;"><b>Continuation is the main strategy.</b></p>
-              <p><b>Exhaustion is rare.</b></p>
               <p style="margin-top:10px;"><b>Discipline is the edge.</b></p>
-            </div>
-
-            <div class="btnrow">
-              <button class="ui" type="button" data-jump="#sec3">Jump: Section 3</button>
-              <button class="ui" type="button" data-jump="#sec11">Jump: Section 11</button>
-              <button class="ui" type="button" data-jump="#sec12">Jump: Section 12</button>
             </div>
           </div>
         </section>
@@ -959,22 +830,6 @@
                 損失が2回続く場合、市場環境が不利であることが多い。<br/><br/>
                 無理に売買するより、資金を守ることの方が重要である。
               </div>
-            </div>
-
-            <div class="step" id="ja-s1-mode">
-              <div class="kicker">
-                <h3>売買形式の規律</h3>
-                <span class="tag">形式</span>
-              </div>
-              <p>この体系には二つの売買形式が存在する。</p>
-              <ul class="bul">
-                <li><b>突破継続</b>（主な戦略）</li>
-                <li><b>行き過ぎ反転</b>（任意）</li>
-              </ul>
-              <p>これらは正反対の市場状況を前提とするため、同時に行ってはならない。</p>
-              <p>その日の売買は常に突破継続形式から始める。</p>
-              <p>価格が大きく行き過ぎ、さらに継続失敗が確認された場合にのみ、反転形式を検討する。</p>
-              <p>ほとんどの売買は突破継続から生じるべきである。</p>
             </div>
 
             <div class="section-title" id="ja-sec2">
@@ -1310,8 +1165,7 @@
               </div>
               <div class="note">
                 <b>説明</b><br/>
-                勢いの大部分はすでに使われている可能性が高い。<br/><br/>
-                その代わり、行き過ぎ条件を観察する。
+                勢いの大部分はすでに使われている可能性が高い。
               </div>
             </div>
 
@@ -1415,115 +1269,13 @@
                 <li>押し戻しが深すぎる状態で追加する</li>
               </ul>
             </div>
-
+			
             <div class="section-title" id="ja-sec11">
-              <b>第11章 ― 行き過ぎ反転部</b>
-              <span>任意の売買形式</span>
-            </div>
-
-            <div class="step" id="ja-s11-intro">
-              <div class="kicker">
-                <h3>行き過ぎ反転部</h3>
-                <span class="tag">任意</span>
-              </div>
-              <p>任意の売買形式。</p>
-              <p>明確な行き過ぎと継続失敗が見えた場合のみ使用する。</p>
-            </div>
-
-            <div class="step" id="ja-s11-allow">
-              <div class="kicker">
-                <h3>行き過ぎ売買が許可される条件</h3>
-                <span class="tag">許可</span>
-              </div>
-              <p>次の場合のみ：</p>
-              <ul class="bul">
-                <li>9:45頃より前</li>
-                <li>日次停止規律が発動していない</li>
-                <li>価格がVOLの110％以上進んでいる</li>
-              </ul>
-              <div class="note">
-                <b>説明</b><br/>
-                ここで狙うのは、すでに放出された勢いであり、まだ続いている強い流れではない。
-              </div>
-            </div>
-
-            <div class="step" id="ja-s11-qualify">
-              <div class="kicker">
-                <h3>行き過ぎ適格条件</h3>
-                <span class="tag">全条件</span>
-              </div>
-              <p>すべて満たす必要がある。</p>
-              <p><b>① 行き過ぎ</b><br/>価格がVOLの110％以上進み、押し戻しを作っていない。</p>
-              <p><b>② 売買高極点</b><br/>売買高が直近の動きより明確に急増する。</p>
-              <p><b>③ 継続失敗</b><br/>価格が同じ方向へそれ以上進めない。</p>
-              <p><b>④ 拒絶</b><br/>反対方向への強い動きが現れる。</p>
-            </div>
-
-            <div class="step" id="ja-s11-climax-filter">
-              <div class="kicker">
-                <h3>極点品質判定</h3>
-                <span class="tag">品質</span>
-              </div>
-              <p>極点の動きが最高値や最安値のすぐ近くで終わってはいけない。</p>
-              <div class="note">
-                <b>説明</b><br/>
-                極端値で終わる場合、勢いがまだ残っている可能性がある。
-              </div>
-            </div>
-
-            <div class="step" id="ja-s11-entry">
-              <div class="kicker">
-                <h3>行き過ぎ建て</h3>
-                <span class="tag">建て</span>
-              </div>
-              <p>建ては、拒絶範囲を再び通過し、反転方向を確認したときのみ。</p>
-              <div class="note">
-                <b>説明</b><br/>
-                正確な天井や底を狙わない。<br/>
-                市場が方向転換を示すのを待つ。
-              </div>
-            </div>
-
-            <div class="step" id="ja-s11-invalid">
-              <div class="kicker">
-                <h3>無効条件</h3>
-                <span class="tag">無効</span>
-              </div>
-              <p>建て前に価格が行き過ぎ点よりさらに新しい極端値を作った場合：</p>
-              <div class="deny">
-                <strong>その行き過ぎ設定は無効。</strong>
-              </div>
-            </div>
-
-            <div class="step" id="ja-s11-stop">
-              <div class="kicker">
-                <h3>損切り規律</h3>
-                <span class="tag">損切り</span>
-              </div>
-              <p><b>損切り位置：</b></p>
-              <p>売りの場合 → 行き過ぎ高値の上</p>
-              <p>買いの場合 → 行き過ぎ安値の下</p>
-              <p>任意余裕：VOLの約<b>10％</b></p>
-            </div>
-
-            <div class="step" id="ja-s11-targets">
-              <div class="kicker">
-                <h3>目標</h3>
-                <span class="tag">目標</span>
-              </div>
-              <p><b>第一利確：</b></p>
-              <p>VOLの約<b>50％</b></p>
-              <p><b>主な目標：</b></p>
-              <p>始値枠方向への戻り</p>
-              <p>または反転の勢いが止まった場合退出。</p>
-            </div>
-
-            <div class="section-title" id="ja-sec12">
-              <b>第12章 ― 完全な流れ要約</b>
+              <b>第11章 ― 完全な流れ要約</b>
               <span>全体の流れ</span>
             </div>
 
-            <div class="step" id="ja-s12-flow">
+            <div class="step" id="ja-s11-flow">
               <div class="kicker">
                 <h3>完全な流れ要約</h3>
                 <span class="tag">流れ</span>
@@ -1538,7 +1290,6 @@
                 <li style="margin:6px 0;">VOLで危険管理</li>
                 <li style="margin:6px 0;">小さな押し戻し後のみ追加</li>
                 <li style="margin:6px 0;">損失2回で終了</li>
-                <li style="margin:6px 0;">明確な行き過ぎと失敗後のみ反転売買</li>
               </ol>
             </div>
 
@@ -1557,15 +1308,7 @@
                 <li>資金を守る</li>
                 <li>不安定な環境では停止する</li>
               </ul>
-              <p style="margin-top:10px;"><b>主な戦略は継続売買</b></p>
-              <p><b>行き過ぎ反転はまれな補助的売買</b></p>
               <p style="margin-top:10px;"><b>規律こそが優位性である。</b></p>
-            </div>
-
-            <div class="btnrow">
-              <button class="ui" type="button" data-jump="#ja-sec3">ジャンプ: 第3章</button>
-              <button class="ui" type="button" data-jump="#ja-sec11">ジャンプ: 第11章</button>
-              <button class="ui" type="button" data-jump="#ja-sec12">ジャンプ: 第12章</button>
             </div>
           </div>
         </section>
