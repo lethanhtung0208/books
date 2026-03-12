@@ -189,16 +189,12 @@
           <button id="reloadBtn">再読込</button>
         </div>
 
-        <div>
-          <button id="saveNotesBtn" class="primary">備考を保存</button>
-        </div>
+        <div id="status" class="status"></div>
+        <div id="summary" class="summary"></div>
       </div>
 
       <div id="status" class="status"></div>
       <div id="summary" class="summary"></div>
-      <div class="muted">
-        GitHub Pages 上の画面から Apps Script 経由で Google Drive / Google Sheets を読み書きします。
-      </div>
     </div>
 
     <div class="panel">
@@ -245,17 +241,11 @@
     const statusEl = document.getElementById('status');
     const summaryEl = document.getElementById('summary');
     const reloadBtn = document.getElementById('reloadBtn');
-    const saveNotesBtn = document.getElementById('saveNotesBtn');
 
     dateFilter.addEventListener('change', applyDateFilter);
     reloadBtn.addEventListener('click', () => {
       loadAllData().catch(err => {
         setStatus(err.message || '再読込に失敗しました。', 'error');
-      });
-    });
-    saveNotesBtn.addEventListener('click', () => {
-      saveNotesToServer(true).catch(err => {
-        setStatus(err.message || '保存に失敗しました。', 'error');
       });
     });
 
@@ -542,7 +532,6 @@
 
           const autoInfo = document.createElement('div');
           autoInfo.className = 'auto-info';
-          autoInfo.textContent = '入力後、自動保存されます。';
 
           const textarea = document.createElement('textarea');
           textarea.className = 'remark-textarea';
