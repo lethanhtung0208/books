@@ -31,11 +31,6 @@
       padding: 20px;
     }
 
-    h1 {
-      margin: 0 0 16px;
-      font-size: 24px;
-    }
-
     .panel {
       background: var(--panel);
       border: 1px solid var(--border);
@@ -51,13 +46,9 @@
       align-items: center;
     }
 
-    label {
-      font-weight: 600;
-    }
-
-    input[type="file"],
     select,
-    button {
+    button,
+    input[type="file"] {
       font: inherit;
     }
 
@@ -73,16 +64,20 @@
       cursor: pointer;
     }
 
-    button.primary {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
-    }
-
     .status {
       margin-top: 12px;
       color: var(--muted);
       white-space: pre-wrap;
+    }
+
+    .summary {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .error {
+      color: #b91c1c;
     }
 
     .table-wrap {
@@ -126,31 +121,41 @@
       background: var(--odd-row);
     }
 
+    tbody tr.group-start td {
+      border-top: 2px solid #bdbdbd;
+    }
+
     .empty {
       padding: 24px;
       color: var(--muted);
     }
 
-    .summary {
-      margin-top: 10px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .note {
-      font-size: 13px;
-      color: var(--muted);
-      margin-top: 8px;
-      line-height: 1.6;
-    }
-
-    .error {
-      color: #b91c1c;
-    }
-
     .remark-cell {
       min-width: 340px;
       color: #333;
+      vertical-align: top;
+      white-space: normal;
+      line-height: 1.5;
+      background: #fff8dc;
+      border-left: 3px solid #eab308;
+    }
+
+    .remark-textarea {
+      width: 100%;
+      min-height: 90px;
+      resize: vertical;
+      font: inherit;
+      font-size: 13px;
+      padding: 8px;
+      border: 1px solid #d0d0d0;
+      border-radius: 6px;
+      background: #fffdf5;
+    }
+
+    .auto-info {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 6px;
     }
   </style>
 </head>
@@ -159,22 +164,19 @@
     <div class="panel">
       <div class="controls">
         <div>
-          <label for="dateFilter">日付で絞り込み:</label><br />
           <select id="dateFilter" disabled>
-            <option>全ての日付</option>
+            <option value="全ての日付">全ての日付</option>
           </select>
         </div>
 
         <div>
-          <label>&nbsp;</label><br />
-          <button id="loadBtn" class="primary">読み込み</button>
+          <button id="exportNotesBtn">note CSVを保存</button>
         </div>
-
-        <div>
-          <label>&nbsp;</label><br />
-          <button id="clearBtn">クリア</button>
-        </div>
+		
+		<div id="status" class="status"></div>
+        <div id="summary" class="summary"></div>
       </div>
+	  
     </div>
 
     <div class="panel">
@@ -208,15 +210,27 @@
     const REPO_NAME = "books";
     const REPO_BRANCH = "main";
     const REPO_FOLDER = "stockorder";
+    const NOTES_FILE_NAME = "stockorder_notes.csv";
 
     let fullData = [];
     let filteredData = [];
     let groupedDisplayData = [];
+    let notesMap = {};
 
     const dateFilter = document.getElementById('dateFilter');
     const tableBody = document.getElementById('tableBody');
     const statusEl = document.getElementById('status');
     const summaryEl = document.getElementById('summary');
+    const exportNotesBtn = document.getElementById('exportNotesBtn');
+
+    dateFilter.addEventListener('change', applyDateFilter);
+    exportNotesBtn.addEventListener('click', exportNotesCsv);
+
+    function setStatus(message = '', isError = false) {
+      if (!statusEl) return;
+      statusEl.textContent = message;
+      statusEl.className = isError ? 'status error' : 'status';
+    }
 
     function extractYearFromFilename(filename) {
       const match = filename.match(/(\d{4})/);
@@ -299,34 +313,52 @@
       return result;
     }
 
-    function parseCsv(text) {
-      const normalized = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-      const lines = normalized.split('\n').filter(line => line.trim() !== '');
-      if (lines.length === 0) return [];
+	function parseCsv(text) {
+	  const normalized = text
+		.replace(/^\uFEFF/, '')
+		.replace(/\r\n/g, '\n')
+		.replace(/\r/g, '\n');
 
-      const headers = splitCsvLine(lines[0]).map(h => h.trim());
-      const rows = [];
+	  const lines = normalized.split('\n').filter(line => line.trim() !== '');
+	  if (lines.length === 0) return [];
 
-      for (let i = 1; i < lines.length; i++) {
-        const values = splitCsvLine(lines[i]);
-        const row = {};
-        headers.forEach((header, idx) => {
-          row[header] = (values[idx] ?? '').trim();
-        });
-        rows.push(row);
-      }
+	  const headers = splitCsvLine(lines[0]).map(h =>
+		h.replace(/^\uFEFF/, '').trim()
+	  );
 
-      return rows;
-    }
+	  const rows = [];
 
-    async function readResponseAsJapaneseText(response) {
-      const buffer = await response.arrayBuffer();
-      try {
-        return new TextDecoder('shift_jis').decode(buffer);
-      } catch {
-        return new TextDecoder('utf-8').decode(buffer);
-      }
-    }
+	  for (let i = 1; i < lines.length; i++) {
+		const values = splitCsvLine(lines[i]);
+		const row = {};
+		headers.forEach((header, idx) => {
+		  row[header] = (values[idx] ?? '').trim();
+		});
+		rows.push(row);
+	  }
+
+	  return rows;
+	}
+
+	async function readStockCsvText(response) {
+	  const buffer = await response.arrayBuffer();
+	  try {
+		return new TextDecoder('shift_jis').decode(buffer);
+	  } catch {
+		return new TextDecoder('utf-8').decode(buffer);
+	  }
+	}
+
+	async function readNotesCsvText(response) {
+	  const buffer = await response.arrayBuffer();
+
+	  // notes は UTF-8 BOM 前提で読む
+	  try {
+		return new TextDecoder('utf-8').decode(buffer);
+	  } catch {
+		return new TextDecoder('utf-8').decode(buffer);
+	  }
+	}
 
     function cleanAndProcessData(rows) {
       if (!rows || rows.length === 0) return [];
@@ -385,6 +417,7 @@
       )].sort((a, b) => b.localeCompare(a, 'ja'));
 
       dateFilter.innerHTML = '<option value="全ての日付">全ての日付</option>';
+
       for (const d of uniqueDates) {
         const option = document.createElement('option');
         option.value = d;
@@ -404,11 +437,17 @@
       return formatDateOnly(dateA) === formatDateOnly(dateB);
     }
 
+    function makeTradeKey(row) {
+      return `${formatDateTime(row.__parsedDate)}|${String(row['売買'] ?? '').trim()}`;
+    }
+
     function buildTradeGroups(rows) {
       const displayRows = rows.map(row => ({
         row,
-        remark: '',
-        groupId: null
+        groupId: null,
+        remarkStart: false,
+        remarkRowSpan: 1,
+        tradeKey: ''
       }));
 
       let i = 0;
@@ -489,15 +528,17 @@
             ? (closeAmount - openAmount)
             : (openAmount - closeAmount);
 
-          const remark =
-            `取引${groupId} | ${groupSide}→${groupSide === '買建' ? '売埋' : '買埋'} | ` +
-            `日付: ${groupDay} | 建玉数量: ${openQty.toLocaleString()} | ` +
-            `返済数量: ${closeQty.toLocaleString()} | 損益(概算): ${Math.round(pnl).toLocaleString()} 円`;
-
+          const tradeKey = makeTradeKey(rows[groupIndexes[0]]);
+		  
           for (const idx of groupIndexes) {
-            displayRows[idx].remark = remark;
             displayRows[idx].groupId = groupId;
+            displayRows[idx].remarkStart = false;
+            displayRows[idx].remarkRowSpan = 1;
+            displayRows[idx].tradeKey = tradeKey;
           }
+
+          displayRows[groupIndexes[0]].remarkStart = true;
+          displayRows[groupIndexes[0]].remarkRowSpan = groupIndexes.length;
 
           groupId++;
           i = groupIndexes[groupIndexes.length - 1] + 1;
@@ -528,21 +569,52 @@
         tr.className = rowCounter % 2 === 0 ? 'normal-even' : 'normal-odd';
         rowCounter++;
 
+        if (item.remarkStart) {
+          tr.classList.add('group-start');
+        }
+
         const row = item.row;
-        const values = [
+        const normalValues = [
           formatDateTime(row.__parsedDate),
           row['売買'] ?? '',
           row['約定数量[株/口]'] ?? '',
-          row['約定単価[円]'] ?? '',
-          item.remark ?? ''
+          row['約定単価[円]'] ?? ''
         ];
 
-        values.forEach((value, idx) => {
+        normalValues.forEach(value => {
           const td = document.createElement('td');
           td.textContent = String(value);
-          if (idx === 4) td.className = 'remark-cell';
           tr.appendChild(td);
         });
+
+        if (item.remarkStart) {
+          const td = document.createElement('td');
+          td.className = 'remark-cell';
+          td.rowSpan = item.remarkRowSpan;
+
+          const autoInfo = document.createElement('div');
+          autoInfo.className = 'auto-info';
+
+          const textarea = document.createElement('textarea');
+          textarea.className = 'remark-textarea';
+
+          const key = item.tradeKey;
+		  console.log('tradeKey used in UI:', key, 'note=', notesMap[key]);
+          textarea.value = notesMap[key] || '';
+
+          textarea.addEventListener('input', () => {
+            notesMap[key] = textarea.value;
+          });
+
+          td.appendChild(autoInfo);
+          td.appendChild(textarea);
+          tr.appendChild(td);
+        } else if (!item.groupId) {
+          const td = document.createElement('td');
+          td.textContent = '';
+          td.className = 'remark-cell';
+          tr.appendChild(td);
+        }
 
         tableBody.appendChild(tr);
       }
@@ -569,7 +641,41 @@
         `表示行数: ${groupedDisplayData.length} 件 / 取引グループ数: ${tradeIds.size} 件 / 元データ件数: ${filteredData.length} 件`;
     }
 
-    async function listCsvFilesInRepoFolder() {
+    function csvEscape(value) {
+      const s = String(value ?? '');
+      if (s.includes('"') || s.includes(',') || s.includes('\n') || s.includes('\r')) {
+        return '"' + s.replace(/"/g, '""') + '"';
+      }
+      return s;
+    }
+
+    function exportNotesCsv() {
+      const entries = Object.entries(notesMap)
+        .filter(([_, note]) => String(note).trim() !== '');
+
+      const headers = ['tradeKey', 'note'];
+      const lines = [headers.map(csvEscape).join(',')];
+
+      for (const [tradeKey, note] of entries) {
+        lines.push([tradeKey, note].map(csvEscape).join(','));
+      }
+
+      const csvText = '\uFEFF' + lines.join('\r\n');
+      const blob = new Blob([csvText], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = NOTES_FILE_NAME;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      setStatus(`${NOTES_FILE_NAME} を保存しました。`, false);
+    }
+
+    async function listRepoFolderItems() {
       const apiUrl =
         `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${REPO_FOLDER}?ref=${REPO_BRANCH}`;
 
@@ -578,18 +684,71 @@
         throw new Error(`CSV一覧取得失敗: ${response.status}`);
       }
 
-      const items = await response.json();
+      return await response.json();
+    }
+
+    async function listCsvFilesInRepoFolder() {
+      const items = await listRepoFolderItems();
+
       return items
-        .filter(item => item.type === 'file' && item.name.toLowerCase().endsWith('.csv'))
+        .filter(item =>
+          item.type === 'file' &&
+          item.name.toLowerCase().endsWith('.csv') &&
+          item.name !== NOTES_FILE_NAME
+        )
         .sort((a, b) => a.name.localeCompare(b.name, 'ja'));
     }
+
+    async function findNotesFileInRepoFolder() {
+      const items = await listRepoFolderItems();
+
+      return items.find(item =>
+        item.type === 'file' &&
+        item.name === NOTES_FILE_NAME
+      ) || null;
+    }
+
+	async function loadNotesFromRepoFolder() {
+	  try {
+		const notesFile = await findNotesFileInRepoFolder();
+		if (!notesFile) {
+		  notesMap = {};
+		  setStatus(`${NOTES_FILE_NAME} が見つかりません。notesなしで表示します。`, false);
+		  return;
+		}
+
+		const response = await fetch(notesFile.download_url);
+		if (!response.ok) {
+		  throw new Error(`notes読込失敗: HTTP ${response.status}`);
+		}
+
+		const text = await readNotesCsvText(response);
+		const rows = parseCsv(text);
+
+		const nextMap = {};
+		for (const row of rows) {
+		  const tradeKey = String(row.tradeKey ?? '').trim();
+		  const note = String(row.note ?? '');
+
+		  if (tradeKey) {
+			nextMap[tradeKey] = note;
+		  }
+		}
+
+		notesMap = nextMap;
+		console.log('notes loaded:', notesMap);
+	  } catch (err) {
+		console.error(err);
+		notesMap = {};
+	  }
+	}
 
     async function loadAllCsvFromRepoFolder() {
       setStatus('CSV一覧を取得中...');
 
       const csvFiles = await listCsvFilesInRepoFolder();
       if (csvFiles.length === 0) {
-        throw new Error('stockorder フォルダに CSV が見つかりません。');
+        throw new Error('stockorder フォルダに stockorder CSV が見つかりません。');
       }
 
       const allRows = [];
@@ -603,7 +762,7 @@
             throw new Error(`HTTP ${response.status}`);
           }
 
-          const text = await readResponseAsJapaneseText(response);
+          const text = await readStockCsvText(response);
           const rows = parseCsv(text);
           const year = extractYearFromFilename(file.name);
 
@@ -617,9 +776,24 @@
       }
 
       fullData = cleanAndProcessData(allRows);
+
+      await loadNotesFromRepoFolder();
+
       updateDateOptions(fullData);
       applyDateFilter();
+
+      if (errors.length > 0) {
+        setStatus(`読込完了（一部失敗あり）: ${errors.join(' | ')}`, false);
+      } else {
+        setStatus(`${csvFiles.length} 個のstockorder CSV と notes を読み込みました。`, false);
+      }
     }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadAllCsvFromRepoFolder().catch(err => {
+        setStatus(err.message || '読込に失敗しました。', true);
+      });
+    });
   </script>
 </body>
 </html>
