@@ -205,13 +205,6 @@
     }
     button.ui:hover{background: rgba(255,255,255,.04)}
     button.ui:active{transform: translateY(1px)}
-
-    .footer{color: var(--muted); font-size:12px; margin-top:10px;}
-
-    .hl{
-      outline: 2px solid rgba(45,212,191,.35);
-      box-shadow: 0 0 0 6px rgba(45,212,191,.08);
-    }
   </style>
 </head>
 
@@ -256,7 +249,7 @@
 
             <div class="section-title" id="sec1">
               <b>SECTION 1 — TIME &amp; CAPITAL RULES</b>
-              <span>Time discipline + capital protection + trade mode clarity</span>
+              <span>Time discipline and capital protection</span>
             </div>
 
             <div class="step" id="s1-time">
@@ -306,7 +299,7 @@
                 <li>Highest price between 9:00–9:10</li>
                 <li>Lowest price between 9:00–9:10</li>
               </ul>
-              <p>This range becomes the <b>Opening Box</b>.</p>
+              <p>This range becomes the Opening Box.</p>
               <p>All decisions reference this structure.</p>
               <div class="note">
                 <b>Explanation</b><br/>
@@ -466,7 +459,7 @@
                 <span class="tag">Follow-through</span>
               </div>
               <p>After the breakout:</p>
-              <p>Within the next <b>3 price pushes</b>, price should continue further in the breakout direction.</p>
+              <p>Within the next 3 price pushes, price should continue further in the breakout direction.</p>
               <div class="deny">
                 <strong>If price stalls sideways without progress → Breakout momentum is weak.</strong>
               </div>
@@ -487,12 +480,20 @@
               </div>
               <div class="note">
                 <b>Explanation</b><br/>
-                Strong momentum days usually expand early.<br/>
+                Strong momentum days usually expand early.<br/><br/>
                 If the market stays inside the range too long, it often becomes a range day.
               </div>
               <p style="margin-top:10px;"><b>If all conditions pass:</b></p>
               <p><b>The environment is qualified.</b></p>
               <p>Now wait for a pullback.</p>
+            </div>
+
+            <div class="step" id="s3-reacc-note">
+              <div class="kicker">
+                <h3>Re-Accumulation Note</h3>
+                <span class="tag">Note</span>
+              </div>
+              <p>If a Re-Accumulation Box forms, the same environment rules apply to its breakout.</p>
             </div>
 
             <div class="section-title" id="sec4">
@@ -512,7 +513,8 @@
                 <li>Stay outside the Opening Box</li>
                 <li>Move slower than the breakout</li>
               </ul>
-              <p><b>Volume behavior</b></p>
+
+              <p><b>Volume behavior:</b></p>
               <div class="allow">
                 <strong>Good</strong>
                 <ul class="bul">
@@ -520,16 +522,19 @@
                   <li>gradually decreasing volume</li>
                 </ul>
               </div>
+
               <div class="deny">
                 <strong>Bad</strong>
                 <ul class="bul">
                   <li>strong volume against the breakout direction</li>
                 </ul>
               </div>
+
               <div class="note">
                 <b>Explanation</b><br/>
                 Healthy trends show lighter volume during pullbacks.
               </div>
+
               <div class="deny">
                 <strong>If pullback exceeds 60% VOL or returns inside the box:</strong>
                 <p class="mini">Structure is invalid.</p>
@@ -568,9 +573,9 @@
                 <h3>Entry Location Rule (Avoid Chasing)</h3>
                 <span class="tag">Location</span>
               </div>
-              <p>The entry should occur from the <b>lower half</b> of the pullback range for long trades.</p>
+              <p>The entry should occur from the lower half of the pullback range for long trades.</p>
               <p>For short trades:</p>
-              <p>Entry should occur from the <b>upper half</b> of the pullback range.</p>
+              <p>Entry should occur from the upper half of the pullback range.</p>
               <div class="note">
                 <b>Explanation</b><br/>
                 If price already moved too far before the entry trigger, the trade becomes chasing.
@@ -591,12 +596,10 @@
               <p><b>The breakout has failed.</b></p>
               <p><b>Action:</b></p>
               <ul class="bul">
-                <li>Do not trade breakouts for <b>12 minutes</b>.</li>
+                <li>Do not trade breakouts for 12 minutes.</li>
               </ul>
               <p>If two breakout attempts fail:</p>
-              <ul class="bul">
-                <li>Pause trading for <b>15 minutes</b>.</li>
-              </ul>
+              <p>Pause trading for 15 minutes.</p>
               <div class="note">
                 <b>Explanation</b><br/>
                 Repeated failures often signal unstable market conditions.
@@ -604,11 +607,138 @@
             </div>
 
             <div class="section-title" id="sec7">
-              <b>SECTION 7 — OVEREXTENSION RULE</b>
+              <b>SECTION 7 — RE-ACCUMULATION SETUP</b>
+              <span>After breakout failure</span>
+            </div>
+
+            <div class="step" id="s7-core">
+              <div class="kicker">
+                <h3>Core Idea</h3>
+                <span class="tag">Core</span>
+              </div>
+              <p>After a breakout fails, the market may rebuild structure before the next move.</p>
+              <p>You trade again only if a new, tight and controlled range forms.</p>
+            </div>
+
+            <div class="step" id="s7-when">
+              <div class="kicker">
+                <h3>When This Applies</h3>
+                <span class="tag">When</span>
+              </div>
+              <p>Only after:</p>
+              <ul class="bul">
+                <li>A breakout failure (Section 6)</li>
+                <li>The 12-minute pause is completed</li>
+              </ul>
+            </div>
+
+            <div class="step" id="s7-box">
+              <div class="kicker">
+                <h3>Re-Accumulation Box</h3>
+                <span class="tag">Strict</span>
+              </div>
+              <p>A new box is valid <b>ONLY IF</b> all conditions are met:</p>
+
+              <p><b>1️⃣ Compression</b></p>
+              <ul class="bul">
+                <li>Price forms a tight range</li>
+                <li>Box size ≤ 40% of VOL</li>
+              </ul>
+
+              <p><b>2️⃣ Both Sides Rejected</b></p>
+              <ul class="bul">
+                <li>Price pushes up and gets rejected</li>
+                <li>Price pushes down and gets rejected</li>
+              </ul>
+
+              <p><b>3️⃣ Controlled Movement</b></p>
+              <ul class="bul">
+                <li>Price moves slower than before</li>
+                <li>No sharp or chaotic swings</li>
+              </ul>
+
+              <p><b>4️⃣ Stability</b></p>
+              <ul class="bul">
+                <li>The range holds for a short period</li>
+                <li>Not formed by 1–2 quick moves</li>
+              </ul>
+            </div>
+
+            <div class="step" id="s7-mark">
+              <div class="kicker">
+                <h3>If ALL conditions are met</h3>
+                <span class="tag">Mark</span>
+              </div>
+              <p>Mark:</p>
+              <ul class="bul">
+                <li>Highest price of the range</li>
+                <li>Lowest price of the range</li>
+              </ul>
+              <p><b>→ This becomes the Re-Accumulation Box</b></p>
+            </div>
+
+            <div class="step" id="s7-missing">
+              <div class="kicker">
+                <h3>If ANY condition is missing</h3>
+                <span class="tag">No trade</span>
+              </div>
+              <div class="deny">
+                <strong>→ Do not define a new box</strong>
+                <p class="mini">→ Do not trade</p>
+              </div>
+            </div>
+
+            <div class="step" id="s7-breakout">
+              <div class="kicker">
+                <h3>Breakout Rule</h3>
+                <span class="tag">Breakout</span>
+              </div>
+              <p>You may trade <b>ONLY IF</b>:</p>
+              <ul class="bul">
+                <li>Price breaks out of the Re-Accumulation Box</li>
+                <li>AND the breakout meets ALL environment rules (Section 3)</li>
+              </ul>
+            </div>
+
+            <div class="step" id="s7-time">
+              <div class="kicker">
+                <h3>Time Validity Rule</h3>
+                <span class="tag">9:35</span>
+              </div>
+              <p>Re-Accumulation is allowed only if:</p>
+              <p><b>👉 The box forms before ~9:35</b></p>
+              <div class="deny">
+                <strong>If later → Do not trade</strong>
+              </div>
+            </div>
+
+            <div class="step" id="s7-hard">
+              <div class="kicker">
+                <h3>Hard Limits (Anti-Overtrading)</h3>
+                <span class="tag">Limits</span>
+              </div>
+              <ul class="bul">
+                <li>Maximum ONE Re-Accumulation trade attempt</li>
+                <li>If this breakout fails → Stop trading for the day</li>
+              </ul>
+            </div>
+
+            <div class="step" id="s7-one-line">
+              <div class="kicker">
+                <h3>One-Line Rule</h3>
+                <span class="tag">Rule</span>
+              </div>
+              <div class="deny">
+                <strong>👉 No tight box = no second trade</strong>
+              </div>
+            </div>
+
+            <div class="section-title" id="sec8">
+              <b>SECTION 8 — OVEREXTENSION RULE</b>
               <span>No chasing after released energy</span>
             </div>
 
-            <div class="step" id="s7-over">
+            <div class="step" id="s8-over">
               <div class="kicker">
                 <h3>Overextension Rule</h3>
                 <span class="tag">≥ 110%</span>
@@ -625,12 +755,12 @@
               </div>
             </div>
 
-            <div class="section-title" id="sec8">
-              <b>SECTION 8 — STOP RULE</b>
+            <div class="section-title" id="sec9">
+              <b>SECTION 9 — STOP RULE</b>
               <span>Structure-based stop placement</span>
             </div>
 
-            <div class="step" id="s8-stop">
+            <div class="step" id="s9-stop">
               <div class="kicker">
                 <h3>Stop Rule</h3>
                 <span class="tag">Risk</span>
@@ -640,7 +770,7 @@
                 <li>below the pullback low for long trades</li>
                 <li>above the pullback high for short trades</li>
               </ul>
-              <p>Add about <b>10% of VOL</b> as buffer.</p>
+              <p>Add about 10% of VOL as buffer.</p>
               <div class="deny">
                 <strong>If required stop &gt; 60% of VOL → Skip the trade.</strong>
               </div>
@@ -650,12 +780,12 @@
               </div>
             </div>
 
-            <div class="section-title" id="sec9">
-              <b>SECTION 9 — PROFIT MANAGEMENT</b>
+            <div class="section-title" id="sec10">
+              <b>SECTION 10 — PROFIT MANAGEMENT</b>
               <span>Partial + risk reduction + exit conditions</span>
             </div>
 
-            <div class="step" id="s9-partial">
+            <div class="step" id="s10-profit">
               <div class="kicker">
                 <h3>Profit Management</h3>
                 <span class="tag">Manage</span>
@@ -679,12 +809,12 @@
               </ul>
             </div>
 
-            <div class="section-title" id="sec10">
-              <b>SECTION 10 — PYRAMID RULE</b>
+            <div class="section-title" id="sec11">
+              <b>SECTION 11 — PYRAMID RULE</b>
               <span>Add only during new momentum cycles</span>
             </div>
 
-            <div class="step" id="s10-pyr">
+            <div class="step" id="s11-pyr">
               <div class="kicker">
                 <h3>Pyramid Rule</h3>
                 <span class="tag">Max 3</span>
@@ -698,7 +828,7 @@
               <p>Allowed after another <b>~40% VOL</b> move.</p>
             </div>
 
-            <div class="step" id="s10-micro">
+            <div class="step" id="s11-micro">
               <div class="kicker">
                 <h3>Micro Pullback Requirement</h3>
                 <span class="tag">10–20%</span>
@@ -714,7 +844,7 @@
               </div>
             </div>
 
-            <div class="step" id="s10-never">
+            <div class="step" id="s11-never">
               <div class="kicker">
                 <h3>Never</h3>
                 <span class="tag">Never</span>
@@ -726,12 +856,12 @@
               </ul>
             </div>
 
-            <div class="section-title" id="sec11">
-              <b>SECTION 11 — COMPLETE FLOW SUMMARY</b>
+            <div class="section-title" id="sec12">
+              <b>SECTION 12 — COMPLETE FLOW SUMMARY</b>
               <span>Full sequence</span>
             </div>
 
-            <div class="step" id="s11-flow">
+            <div class="step" id="s12-flow">
               <div class="kicker">
                 <h3>Complete Flow Summary</h3>
                 <span class="tag">Flow</span>
@@ -746,6 +876,7 @@
                 <li style="margin:6px 0;">Manage risk using VOL</li>
                 <li style="margin:6px 0;">Add positions only after small pullbacks</li>
                 <li style="margin:6px 0;">Stop after two losses</li>
+                <li style="margin:6px 0;">If breakout fails → wait → define Re-Accumulation Box → trade ONE clean breakout only</li>
               </ol>
             </div>
 
@@ -765,6 +896,12 @@
                 <li>Stops in unstable environments</li>
               </ul>
               <p style="margin-top:10px;"><b>Discipline is the edge.</b></p>
+            </div>
+
+            <div class="btnrow">
+              <button class="ui" type="button" data-jump="#sec3">Jump: Section 3</button>
+              <button class="ui" type="button" data-jump="#sec7">Jump: Section 7</button>
+              <button class="ui" type="button" data-jump="#sec12">Jump: Section 12</button>
             </div>
           </div>
         </section>
@@ -797,7 +934,7 @@
 
             <div class="section-title" id="ja-sec1">
               <b>第1章 ― 時間と資金の規律</b>
-              <span>時間規律 + 日次停止 + 売買形式の明確化</span>
+              <span>時間規律と資金保全</span>
             </div>
 
             <div class="step" id="ja-s1-time">
@@ -967,7 +1104,7 @@
               <p>突破時の売買高は</p>
               <ul class="bul">
                 <li>直近平均より多い</li>
-                <li>または直近の動きより明確に強い</li>
+                <li>または、直近の動きより明確に強い</li>
               </ul>
               <p>必要がある。</p>
               <div class="note">
@@ -1029,12 +1166,20 @@
               </div>
               <div class="note">
                 <b>説明</b><br/>
-                強い日ほど早く拡大する。<br/>
+                強い日ほど早く拡大する。<br/><br/>
                 長く範囲内に留まる日は往復相場になることが多い。
               </div>
               <p style="margin-top:10px;"><b>すべての条件を満たした場合：</b></p>
               <p><b>環境は適格。</b></p>
               <p>ここで初めて押し戻しを待つ。</p>
+            </div>
+
+            <div class="step" id="ja-s3-reacc-note">
+              <div class="kicker">
+                <h3>再蓄積に関する補足</h3>
+                <span class="tag">補足</span>
+              </div>
+              <p>再蓄積枠が形成された場合、その枠からの突破にも第3章の環境規律をそのまま適用する。</p>
             </div>
 
             <div class="section-title" id="ja-sec4">
@@ -1054,6 +1199,7 @@
                 <li>始値枠の外に留まる</li>
                 <li>突破より遅い動き</li>
               </ul>
+
               <p><b>売買高の状態</b></p>
               <div class="allow">
                 <strong>良い状態：</strong>
@@ -1062,16 +1208,19 @@
                   <li>徐々に減少する売買高</li>
                 </ul>
               </div>
+
               <div class="deny">
                 <strong>悪い状態：</strong>
                 <ul class="bul">
                   <li>突破方向と反対に強い売買高</li>
                 </ul>
               </div>
+
               <div class="note">
                 <b>説明</b><br/>
                 健全な流れでは押し戻し時の売買高は軽くなる。
               </div>
+
               <div class="deny">
                 <strong>押し戻しが</strong>
                 <p class="mini">VOLの60％を超える、または始値枠へ戻る場合：</p>
@@ -1112,9 +1261,9 @@
                 <span class="tag">位置</span>
               </div>
               <p>買いの場合：</p>
-              <p>押し戻し範囲の<b>下半分</b>から建てる。</p>
+              <p>押し戻し範囲の下半分から建てる。</p>
               <p>売りの場合：</p>
-              <p>押し戻し範囲の<b>上半分</b>から建てる。</p>
+              <p>押し戻し範囲の上半分から建てる。</p>
               <div class="note">
                 <b>説明</b><br/>
                 建て前に価格が進みすぎている場合、それは追いかけ売買になる。
@@ -1148,11 +1297,138 @@
             </div>
 
             <div class="section-title" id="ja-sec7">
-              <b>第7章 ― 行き過ぎ規律</b>
+              <b>第7章 ― 再蓄積の形</b>
+              <span>突破失敗後</span>
+            </div>
+
+            <div class="step" id="ja-s7-core">
+              <div class="kicker">
+                <h3>基本思想</h3>
+                <span class="tag">基本</span>
+              </div>
+              <p>突破が失敗した後、市場は次の動きの前に再び構造を作り直すことがある。</p>
+              <p>新しく、引き締まった統制された範囲が形成された場合にのみ、再び売買を行う。</p>
+            </div>
+
+            <div class="step" id="ja-s7-when">
+              <div class="kicker">
+                <h3>適用される条件</h3>
+                <span class="tag">適用</span>
+              </div>
+              <p>次の後にのみ適用する：</p>
+              <ul class="bul">
+                <li>突破失敗（第6章）</li>
+                <li>12分間の停止が終了していること</li>
+              </ul>
+            </div>
+
+            <div class="step" id="ja-s7-box">
+              <div class="kicker">
+                <h3>再蓄積枠</h3>
+                <span class="tag">厳格</span>
+              </div>
+              <p>新しい枠は、以下すべての条件を満たした場合にのみ有効とする。</p>
+
+              <p><b>① 圧縮</b></p>
+              <ul class="bul">
+                <li>価格が狭い範囲を形成している</li>
+                <li>枠の大きさがVOLの40％以下</li>
+              </ul>
+
+              <p><b>② 両方向の拒絶</b></p>
+              <ul class="bul">
+                <li>価格が上へ進み、押し戻される</li>
+                <li>価格が下へ進み、押し戻される</li>
+              </ul>
+
+              <p><b>③ 統制された動き</b></p>
+              <ul class="bul">
+                <li>価格の動きがそれまでより遅い</li>
+                <li>急激で乱れた動きがない</li>
+              </ul>
+
+              <p><b>④ 安定性</b></p>
+              <ul class="bul">
+                <li>その範囲が一定時間維持される</li>
+                <li>1〜2回の素早い動きだけで形成されていない</li>
+              </ul>
+            </div>
+
+            <div class="step" id="ja-s7-mark">
+              <div class="kicker">
+                <h3>すべての条件を満たした場合</h3>
+                <span class="tag">記録</span>
+              </div>
+              <p>次を記録する：</p>
+              <ul class="bul">
+                <li>その範囲の最高値</li>
+                <li>その範囲の最安値</li>
+              </ul>
+              <p><b>→ これが再蓄積枠となる</b></p>
+            </div>
+
+            <div class="step" id="ja-s7-missing">
+              <div class="kicker">
+                <h3>いずれか一つでも条件を満たさない場合</h3>
+                <span class="tag">禁止</span>
+              </div>
+              <div class="deny">
+                <strong>→ 新しい枠を定義してはならない</strong>
+                <p class="mini">→ 売買してはならない</p>
+              </div>
+            </div>
+
+            <div class="step" id="ja-s7-breakout">
+              <div class="kicker">
+                <h3>突破規律</h3>
+                <span class="tag">突破</span>
+              </div>
+              <p>次の場合にのみ売買が許可される：</p>
+              <ul class="bul">
+                <li>価格が再蓄積枠を抜ける</li>
+                <li>かつ、その突破が第3章のすべての環境規律を満たす</li>
+              </ul>
+            </div>
+
+            <div class="step" id="ja-s7-time">
+              <div class="kicker">
+                <h3>時間有効規律</h3>
+                <span class="tag">9:35</span>
+              </div>
+              <p>再蓄積は次の場合のみ許可される：</p>
+              <p><b>👉 枠が9:35頃までに形成されていること</b></p>
+              <div class="deny">
+                <strong>それ以降の場合 → 売買しない</strong>
+              </div>
+            </div>
+
+            <div class="step" id="ja-s7-hard">
+              <div class="kicker">
+                <h3>厳格制限（過剰売買防止）</h3>
+                <span class="tag">制限</span>
+              </div>
+              <ul class="bul">
+                <li>再蓄積売買は最大1回まで</li>
+                <li>この突破が失敗した場合 → その日は終了</li>
+              </ul>
+            </div>
+
+            <div class="step" id="ja-s7-one-line">
+              <div class="kicker">
+                <h3>一行規律</h3>
+                <span class="tag">規律</span>
+              </div>
+              <div class="deny">
+                <strong>👉 引き締まった枠がなければ、二度目の売買はない</strong>
+              </div>
+            </div>
+
+            <div class="section-title" id="ja-sec8">
+              <b>第8章 ― 行き過ぎ規律</b>
               <span>放出済みの勢いを追わない</span>
             </div>
 
-            <div class="step" id="ja-s7-over">
+            <div class="step" id="ja-s8-over">
               <div class="kicker">
                 <h3>行き過ぎ規律</h3>
                 <span class="tag">≥ 110%</span>
@@ -1169,12 +1445,12 @@
               </div>
             </div>
 
-            <div class="section-title" id="ja-sec8">
-              <b>第8章 ― 損切り規律</b>
+            <div class="section-title" id="ja-sec9">
+              <b>第9章 ― 損切り規律</b>
               <span>構造基準の損切り</span>
             </div>
 
-            <div class="step" id="ja-s8-stop">
+            <div class="step" id="ja-s9-stop">
               <div class="kicker">
                 <h3>損切り規律</h3>
                 <span class="tag">危険</span>
@@ -1182,7 +1458,7 @@
               <p><b>損切り位置：</b></p>
               <p>買い → 押し戻し安値の下</p>
               <p>売り → 押し戻し高値の上</p>
-              <p>余裕：VOLの約<b>10％</b></p>
+              <p>余裕：VOLの約10％</p>
               <div class="deny">
                 <strong>必要損切り &gt; VOLの60％ → 売買しない</strong>
               </div>
@@ -1192,18 +1468,18 @@
               </div>
             </div>
 
-            <div class="section-title" id="ja-sec9">
-              <b>第9章 ― 利益管理</b>
+            <div class="section-title" id="ja-sec10">
+              <b>第10章 ― 利益管理</b>
               <span>一部利確 + 危険削減 + 退出条件</span>
             </div>
 
-            <div class="step" id="ja-s9-partial">
+            <div class="step" id="ja-s10-profit">
               <div class="kicker">
                 <h3>利益管理</h3>
                 <span class="tag">管理</span>
               </div>
               <p><b>第一利確：</b></p>
-              <p>VOLの約<b>50％</b>で一部利益確定</p>
+              <p>VOLの約50％で一部利益確定</p>
               <div class="note">
                 <b>説明</b><br/>
                 一部利益を確定することで売買を守ることができる。
@@ -1221,12 +1497,12 @@
               </ul>
             </div>
 
-            <div class="section-title" id="ja-sec10">
-              <b>第10章 ― 段階的増し建て規律</b>
+            <div class="section-title" id="ja-sec11">
+              <b>第11章 ― 段階的増し建て規律</b>
               <span>新しい勢いの循環でのみ追加</span>
             </div>
 
-            <div class="step" id="ja-s10-pyr">
+            <div class="step" id="ja-s11-pyr">
               <div class="kicker">
                 <h3>段階的増し建て規律</h3>
                 <span class="tag">最大3</span>
@@ -1235,18 +1511,20 @@
               <p><b>建て①</b></p>
               <p>通常の条件を満たした基本の建て。</p>
               <p><b>建て②</b></p>
-              <p>価格が自分に有利な方向へ <b>VOLの約40％</b>進んでいる場合に許可。</p>
+              <p>次の条件を満たす場合に許可：</p>
+              <p>・価格が自分に有利な方向へ<br>　VOLの約40％進んでいる</p>
               <p><b>建て③</b></p>
-              <p>さらに <b>VOLの約40％</b>進んでいる場合に許可。</p>
+              <p>さらに次の条件を満たす場合に許可：</p>
+              <p>・さらにVOLの約40％進んでいる</p>
             </div>
 
-            <div class="step" id="ja-s10-micro">
+            <div class="step" id="ja-s11-micro">
               <div class="kicker">
                 <h3>小さな押し戻し条件</h3>
                 <span class="tag">10–20%</span>
               </div>
               <p>新しい建てを追加する前に、</p>
-              <p>価格はVOLの約<b>10〜20％</b>程度の小さな押し戻しを作る必要がある。</p>
+              <p>価格はVOLの約10〜20％程度の小さな押し戻しを作る必要がある。</p>
               <p>その後、再び流れの方向へ進む必要がある。</p>
               <div class="deny">
                 <strong>価格が休みなく一直線に進んでいる場合 → 追加してはならない。</strong>
@@ -1258,24 +1536,25 @@
               </div>
             </div>
 
-            <div class="step" id="ja-s10-never">
+            <div class="step" id="ja-s11-never">
               <div class="kicker">
                 <h3>絶対にしてはならないこと</h3>
                 <span class="tag">禁止</span>
               </div>
+              <p>次の行動は禁止：</p>
               <ul class="bul">
                 <li>損失の建玉に追加する</li>
                 <li>9:45に近い時間帯で追加する</li>
                 <li>押し戻しが深すぎる状態で追加する</li>
               </ul>
             </div>
-			
-            <div class="section-title" id="ja-sec11">
-              <b>第11章 ― 完全な流れ要約</b>
+
+            <div class="section-title" id="ja-sec12">
+              <b>第12章 ― 完全な流れ要約</b>
               <span>全体の流れ</span>
             </div>
 
-            <div class="step" id="ja-s11-flow">
+            <div class="step" id="ja-s12-flow">
               <div class="kicker">
                 <h3>完全な流れ要約</h3>
                 <span class="tag">流れ</span>
@@ -1290,6 +1569,7 @@
                 <li style="margin:6px 0;">VOLで危険管理</li>
                 <li style="margin:6px 0;">小さな押し戻し後のみ追加</li>
                 <li style="margin:6px 0;">損失2回で終了</li>
+                <li style="margin:6px 0;">突破が失敗した場合 → 待機する → 再蓄積枠を定義する → 一度だけ、明確な突破を売買する</li>
               </ol>
             </div>
 
@@ -1309,6 +1589,12 @@
                 <li>不安定な環境では停止する</li>
               </ul>
               <p style="margin-top:10px;"><b>規律こそが優位性である。</b></p>
+            </div>
+
+            <div class="btnrow">
+              <button class="ui" type="button" data-jump="#ja-sec3">ジャンプ: 第3章</button>
+              <button class="ui" type="button" data-jump="#ja-sec7">ジャンプ: 第7章</button>
+              <button class="ui" type="button" data-jump="#ja-sec12">ジャンプ: 第12章</button>
             </div>
           </div>
         </section>
