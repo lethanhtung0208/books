@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>MASTER EXHAUSTION REVERSAL SYSTEM — Short Version</title>
+
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --card:#111826;
+      --text:#e8eef6;
+      --muted:#a9b6c7;
+      --line:#223044;
+      --pill:#172235;
+      --good:#2dd4bf;
+      --warn:#fbbf24;
+      --bad:#fb7185;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 15% 10%, rgba(45,212,191,.14), transparent 60%),
+        radial-gradient(900px 700px at 85% 20%, rgba(251,113,133,.12), transparent 55%),
+        radial-gradient(900px 650px at 80% 80%, rgba(251,191,36,.10), transparent 55%),
+        var(--bg);
+      line-height:1.65;
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(11,15,20,.72);
+      border-bottom: 1px solid rgba(34,48,68,.8);
+    }
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding: 10px 16px;
+      display:flex;
+      justify-content:flex-end;
+    }
+    .jumpbar{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .jumpbtn{
+      appearance:none;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.02);
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 999px;
+      cursor:pointer;
+      font-size: 13px;
+      white-space:nowrap;
+    }
+    .jumpbtn:hover{ background: rgba(255,255,255,.04); }
+
+    header{
+      max-width:1100px;
+      margin: 26px auto 10px;
+      padding: 0 16px;
+    }
+    h1{margin:0 0 6px; font-size:22px; letter-spacing:.2px;}
+    .sub{margin:0; color:var(--muted); font-size:14px;}
+
+    .wrap{
+      max-width:1100px;
+      margin: 16px auto 60px;
+      padding: 0 16px;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.03), transparent 40%), var(--card);
+      border:1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .hd{
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      background: rgba(255,255,255,.02);
+    }
+    .hd h2{margin:0; font-size:15px; letter-spacing:.2px;}
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 6px 10px;
+      border-radius:999px;
+      background: var(--pill);
+      border:1px solid var(--line);
+      color: var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .dot{
+      width:8px;height:8px;border-radius:50%;
+      background: var(--warn);
+      box-shadow: 0 0 0 4px rgba(251,191,36,.12);
+      flex:0 0 auto;
+    }
+
+    .body{padding:14px 16px 16px;}
+
+    .section-title{
+      margin: 2px 0 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.02);
+    }
+    .section-title b{display:block; font-size:13px; letter-spacing:.18px;}
+    .section-title span{display:block; font-size:13px; color:var(--muted); margin-top:2px;}
+
+    .step{
+      padding: 12px 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255,255,255,.02);
+      margin: 10px 0;
+    }
+    .kicker{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 6px;
+    }
+    .tag{
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius:999px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.2);
+      color: var(--muted);
+      white-space:nowrap;
+    }
+    .step h3{margin:0; font-size:14px;}
+    .step p{margin:8px 0 0; color: var(--muted); font-size:14px;}
+    .bul{margin:8px 0 0 0; padding:0; color: var(--muted); font-size:14px; list-style:none;}
+    .bul li{margin:6px 0;}
+    .bul li::before{content:"•"; color: rgba(255,255,255,.78); margin-right:6px;}
+
+    .allow,.deny,.note{
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border:1px solid var(--line);
+      background: rgba(0,0,0,.18);
+    }
+    .allow{border-left:4px solid rgba(45,212,191,.8)}
+    .deny{border-left:4px solid rgba(251,113,133,.85)}
+    .allow strong{color:var(--good)}
+    .deny strong{color:var(--bad)}
+    .note{
+      border:1px dashed rgba(255,255,255,.18);
+      background: rgba(251,191,36,.08);
+      color: var(--text);
+    }
+    .note b{color: var(--warn)}
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="jumpbar">
+        <button class="jumpbtn" type="button" data-jump="#sec3">Jump: Qualification</button>
+        <button class="jumpbtn" type="button" data-jump="#sec4">Jump: Entry</button>
+        <button class="jumpbtn" type="button" data-jump="#sec11">Jump: Flow</button>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <h1>MASTER EXHAUSTION REVERSAL SYSTEM (SHORT VERSION)</h1>
+    <p class="sub">Structure → Overextension → Failure → Reversal — Mean Reversion System (Price + Volume)</p>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <div class="hd">
+        <h2>Rules (Step-by-Step)</h2>
+        <div class="pill"><span class="dot"></span>Overextension → Failure → Reversal</div>
+      </div>
+
+      <div class="body">
+        <div class="step">
+          <div class="kicker">
+            <h3>Core Idea</h3>
+            <span class="tag">Core</span>
+          </div>
+          <p><b>Wait for extreme expansion, confirm trapped participants, then enter the unwind.</b></p>
+          <p>You are not fading price.</p>
+          <p>You are trading failure after excess.</p>
+        </div>
+
+        <div class="section-title" id="sec1">
+          <b>SECTION 1 — TIME, CAPITAL &amp; DAY FILTERS</b>
+          <span>Time rule + daily stop + day type filter</span>
+        </div>
+
+        <div class="step" id="s1-time">
+          <div class="kicker">
+            <h3>Time Rule</h3>
+            <span class="tag">Time</span>
+          </div>
+          <ul class="bul">
+            <li><b>9:00–9:10 → No trades</b></li>
+            <li><b>9:10–9:35 → Best window</b></li>
+            <li><b>After 9:45 → No trades</b></li>
+          </ul>
+        </div>
+
+        <div class="step" id="s1-stop">
+          <div class="kicker">
+            <h3>Daily Stop Rule</h3>
+            <span class="tag">Capital</span>
+          </div>
+          <ul class="bul">
+            <li><b>1 loss → Stop trading</b></li>
+          </ul>
+        </div>
+
+        <div class="step" id="s1-daytype">
+          <div class="kicker">
+            <h3>Day Type Filter</h3>
+            <span class="tag">Day Type</span>
+          </div>
+
+          <p><b>A. Clean Trend Day</b></p>
+          <ul class="bul">
+            <li>smooth continuation</li>
+            <li>shallow pullbacks</li>
+            <li>stable volume</li>
+          </ul>
+          <div class="deny">
+            <strong>→ No exhaustion trades</strong>
+            <p>→ Use breakout system only</p>
+          </div>
+
+          <p style="margin-top:12px;"><b>B. Volatile Expansion Day</b></p>
+          <ul class="bul">
+            <li>fast moves</li>
+            <li>sharp spikes</li>
+            <li>emotional behavior</li>
+          </ul>
+          <div class="allow">
+            <strong>→ Exhaustion allowed</strong>
+          </div>
+        </div>
+
+        <div class="section-title" id="sec2">
+          <b>SECTION 2 — STRUCTURE &amp; VOL</b>
+          <span>Opening Box, VOL, and filters</span>
+        </div>
+
+        <div class="step" id="s2-box">
+          <div class="kicker">
+            <h3>Opening Box (9:00–9:10)</h3>
+            <span class="tag">Box</span>
+          </div>
+          <p>Mark the high and low.</p>
+        </div>
+
+        <div class="step" id="s2-vol">
+          <div class="kicker">
+            <h3>VOL</h3>
+            <span class="tag">VOL</span>
+          </div>
+          <p><b>VOL = Opening Box range ÷ 5</b></p>
+          <p>Use VOL for:</p>
+          <ul class="bul">
+            <li>extension</li>
+            <li>stop</li>
+            <li>target</li>
+            <li>validation</li>
+          </ul>
+        </div>
+
+        <div class="step" id="s2-filters">
+          <div class="kicker">
+            <h3>Filters</h3>
+            <span class="tag">Filters</span>
+          </div>
+          <ul class="bul">
+            <li>If Opening Box &lt; 140 → No trade</li>
+            <li>Exhaustion must form at least 80% of VOL away from the Opening Box</li>
+          </ul>
+        </div>
+
+        <div class="section-title" id="sec3">
+          <b>SECTION 3 — EXHAUSTION QUALIFICATION</b>
+          <span>Qualification only, not entry</span>
+        </div>
+
+        <div class="step" id="s3-intro">
+          <div class="kicker">
+            <h3>Qualification Only</h3>
+            <span class="tag">Qualify</span>
+          </div>
+          <p>This section is qualification only, not entry.</p>
+          <p><b>All conditions must be true.</b></p>
+        </div>
+
+        <div class="step" id="s3-required">
+          <div class="kicker">
+            <h3>Required Conditions</h3>
+            <span class="tag">All true</span>
+          </div>
+
+          <p><b>Overextension</b></p>
+          <ul class="bul">
+            <li>minimum: 110% VOL</li>
+            <li>ideal: 130% VOL</li>
+            <li>move must be fast and continuous</li>
+          </ul>
+
+          <p style="margin-top:10px;"><b>Extreme Quality</b></p>
+          <ul class="bul">
+            <li>move must look aggressive, stretched, emotional</li>
+            <li>no slow grind or controlled trend</li>
+          </ul>
+
+          <p style="margin-top:10px;"><b>Volume Sequence</b></p>
+          <ul class="bul">
+            <li>clear volume spike at the extreme</li>
+            <li>then weaker volume afterward</li>
+          </ul>
+
+          <p style="margin-top:10px;"><b>Failure to Continue</b></p>
+          <ul class="bul">
+            <li>price tries to continue</li>
+            <li>but cannot make meaningful progress</li>
+          </ul>
+
+          <p style="margin-top:10px;"><b>Exhaustion vs Trend Filter</b></p>
+          <ul class="bul">
+            <li>no trade if trend is smooth and controlled</li>
+          </ul>
+
+          <p style="margin-top:10px;"><b>Asymmetry</b></p>
+          <ul class="bul">
+            <li>move into the extreme must be stronger than the first move out</li>
+          </ul>
+
+          <p style="margin-top:10px;"><b>Rejection Move</b></p>
+          <ul class="bul">
+            <li>opposite move must be clear and decisive</li>
+            <li>minimum: 25% VOL</li>
+          </ul>
+
+          <p style="margin-top:10px;"><b>Structure Break</b></p>
+          <ul class="bul">
+            <li>nearest minor structure must break</li>
+          </ul>
+
+          <p style="margin-top:10px;"><b>Second Failure Confirmation</b></p>
+          <ul class="bul">
+            <li>price tries to return toward the extreme</li>
+            <li>fails again</li>
+          </ul>
+
+          <p style="margin-top:10px;"><b>Follow-Through</b></p>
+          <ul class="bul">
+            <li>reversal must continue 15–25% VOL after confirmation</li>
+          </ul>
+        </div>
+
+        <div class="step" id="s3-oneline">
+          <div class="kicker">
+            <h3>One-Line Rule</h3>
+            <span class="tag">Rule</span>
+          </div>
+          <div class="deny">
+            <strong>No trap = No trade</strong>
+          </div>
+          <p>A valid trap requires:</p>
+          <ul class="bul">
+            <li>overextension</li>
+            <li>volume climax</li>
+            <li>failure</li>
+            <li>rejection</li>
+            <li>structure break</li>
+            <li>second failure</li>
+          </ul>
+        </div>
+
+        <div class="section-title" id="sec4">
+          <b>SECTION 4 — ENTRY</b>
+          <span>Enter only when reversal is proving itself</span>
+        </div>
+
+        <div class="step" id="s4-noenter">
+          <div class="kicker">
+            <h3>You do not enter</h3>
+            <span class="tag">No guessing</span>
+          </div>
+          <ul class="bul">
+            <li>at the extreme</li>
+            <li>on the first rejection</li>
+            <li>on the break itself</li>
+          </ul>
+          <p>You enter only when reversal is proving itself.</p>
+        </div>
+
+        <div class="step" id="s4-logic">
+          <div class="kicker">
+            <h3>Entry Logic</h3>
+            <span class="tag">Logic</span>
+          </div>
+          <p><b>Break = signal</b></p>
+          <p><b>Continuation = entry</b></p>
+        </div>
+
+        <div class="step" id="s4-sequence">
+          <div class="kicker">
+            <h3>Entry Sequence</h3>
+            <span class="tag">Sequence</span>
+          </div>
+          <ul class="bul">
+            <li>Structure breaks</li>
+            <li>Price moves in reversal direction</li>
+            <li>Price pauses / compresses slightly</li>
+            <li>Price resumes</li>
+          </ul>
+          <div class="allow">
+            <strong>→ Enter on step 4</strong>
+          </div>
+        </div>
+
+        <div class="step" id="s4-rules">
+          <div class="kicker">
+            <h3>Entry Rules</h3>
+            <span class="tag">Rules</span>
+          </div>
+          <ul class="bul">
+            <li>Section 3 must be fully confirmed</li>
+            <li>Enter within the first 15–30% VOL after confirmation begins</li>
+            <li>No entry if price is already more than 50% VOL from the extreme</li>
+            <li>No chasing</li>
+            <li>Entry should feel slightly late, not early</li>
+          </ul>
+        </div>
+
+        <div class="step" id="s4-best">
+          <div class="kicker">
+            <h3>Best Entry</h3>
+            <span class="tag">Best</span>
+          </div>
+          <p>The strongest entry is:</p>
+          <ul class="bul">
+            <li>structure break</li>
+            <li>return attempt</li>
+            <li>failed return</li>
+            <li>continuation</li>
+          </ul>
+        </div>
+
+        <div class="section-title" id="sec5">
+          <b>SECTION 5 — STOP RULE</b>
+          <span>Logical stop beyond the extreme</span>
+        </div>
+
+        <div class="step" id="s5-stop">
+          <div class="kicker">
+            <h3>Stop Placement</h3>
+            <span class="tag">Stop</span>
+          </div>
+          <ul class="bul">
+            <li>Short → above exhaustion high</li>
+            <li>Long → below exhaustion low</li>
+          </ul>
+          <p>Add:</p>
+          <ul class="bul">
+            <li>10% VOL buffer</li>
+          </ul>
+        </div>
+
+        <div class="step" id="s5-filters">
+          <div class="kicker">
+            <h3>Stop Filters</h3>
+            <span class="tag">Filter</span>
+          </div>
+          <ul class="bul">
+            <li>stop must be logical and clean</li>
+            <li>if required stop &gt; 60% VOL → no trade</li>
+          </ul>
+        </div>
+
+        <div class="step" id="s5-early">
+          <div class="kicker">
+            <h3>Early Exit Rule</h3>
+            <span class="tag">Exit</span>
+          </div>
+          <p>If price quickly returns toward the extreme and erases the rejection:</p>
+          <div class="deny">
+            <strong>→ Exit early</strong>
+          </div>
+        </div>
+
+        <div class="step" id="s5-discipline">
+          <div class="kicker">
+            <h3>Stop Discipline</h3>
+            <span class="tag">Discipline</span>
+          </div>
+          <ul class="bul">
+            <li>never widen stop</li>
+            <li>only tighten after trade works</li>
+          </ul>
+        </div>
+
+        <div class="section-title" id="sec6">
+          <b>SECTION 6 — TARGET MANAGEMENT</b>
+          <span>Pressure release, not full trend reversal</span>
+        </div>
+
+        <div class="step" id="s6-intro">
+          <div class="kicker">
+            <h3>Target Philosophy</h3>
+            <span class="tag">Mean reversion</span>
+          </div>
+          <p>This is a mean reversion trade, not a trend reversal trade.</p>
+        </div>
+
+        <div class="step" id="s6-targets">
+          <div class="kicker">
+            <h3>Targets</h3>
+            <span class="tag">Targets</span>
+          </div>
+          <ul class="bul">
+            <li>Partial profit: 30–40% VOL</li>
+            <li>Main target: 50% VOL</li>
+            <li>Or exit on return toward the Opening Box</li>
+          </ul>
+        </div>
+
+        <div class="step" id="s6-management">
+          <div class="kicker">
+            <h3>Management</h3>
+            <span class="tag">Manage</span>
+          </div>
+          <p>After partial:</p>
+          <ul class="bul">
+            <li>reduce risk</li>
+            <li>tighten stop behind structure</li>
+          </ul>
+        </div>
+
+        <div class="step" id="s6-exit">
+          <div class="kicker">
+            <h3>Exit Early If</h3>
+            <span class="tag">Exit</span>
+          </div>
+          <ul class="bul">
+            <li>momentum slows</li>
+            <li>price compresses</li>
+            <li>opposite pressure appears</li>
+            <li>volume builds against you</li>
+          </ul>
+        </div>
+
+        <div class="step" id="s6-rule">
+          <div class="kicker">
+            <h3>Rule</h3>
+            <span class="tag">Rule</span>
+          </div>
+          <div class="deny">
+            <strong>Do not hold for a full reversal.</strong>
+          </div>
+          <p>Take the pressure release and leave.</p>
+        </div>
+
+        <div class="section-title" id="sec7">
+          <b>SECTION 7 — FAILURE MANAGEMENT</b>
+          <span>Failure gives information</span>
+        </div>
+
+        <div class="step" id="s7-intro">
+          <div class="kicker">
+            <h3>Failure gives information</h3>
+            <span class="tag">Info</span>
+          </div>
+          <p>A failed exhaustion trade means the market is still strong.</p>
+        </div>
+
+        <div class="step" id="s7-rules">
+          <div class="kicker">
+            <h3>Failure Rules</h3>
+            <span class="tag">Failure</span>
+          </div>
+
+          <p><b>Pre-entry failure</b></p>
+          <ul class="bul">
+            <li>If confirmation weakens before entry: cancel the trade</li>
+          </ul>
+
+          <p style="margin-top:10px;"><b>Early failure</b></p>
+          <ul class="bul">
+            <li>If price quickly erases the rejection after entry: exit immediately</li>
+          </ul>
+
+          <p style="margin-top:10px;"><b>Hard failure</b></p>
+          <ul class="bul">
+            <li>If stop is hit: exit without hesitation</li>
+          </ul>
+        </div>
+
+        <div class="step" id="s7-trend">
+          <div class="kicker">
+            <h3>Failed Exhaustion = Trend Confirmation</h3>
+            <span class="tag">Trend</span>
+          </div>
+          <p>If exhaustion fails cleanly and the original move resumes strongly:</p>
+          <div class="allow">
+            <strong>→ Stop looking for reversal</strong>
+            <p>→ Switch mentally to breakout continuation</p>
+          </div>
+        </div>
+
+        <div class="step" id="s7-after">
+          <div class="kicker">
+            <h3>After Failure</h3>
+            <span class="tag">After</span>
+          </div>
+          <ul class="bul">
+            <li>no re-entry</li>
+            <li>no revenge trading</li>
+            <li>no second exhaustion attempt</li>
+          </ul>
+        </div>
+
+        <div class="section-title" id="sec8">
+          <b>SECTION 8 — TRADE LIMITS</b>
+          <span>Low frequency, high selectivity</span>
+        </div>
+
+        <div class="step" id="s8-limits">
+          <div class="kicker">
+            <h3>Trade Limits</h3>
+            <span class="tag">Limits</span>
+          </div>
+          <ul class="bul">
+            <li>First valid exhaustion only</li>
+            <li>Maximum one trade per day</li>
+            <li>No scaling in</li>
+            <li>No adding</li>
+            <li>A+ setups only</li>
+            <li>No trade is a valid outcome</li>
+          </ul>
+          <div class="deny">
+            <strong>If the setup is not obvious:</strong>
+            <p>→ No trade</p>
+          </div>
+        </div>
+
+        <div class="section-title" id="sec9">
+          <b>SECTION 9 — NO TRADE CONDITIONS</b>
+          <span>Any violation cancels the trade</span>
+        </div>
+
+        <div class="step" id="s9-conditions">
+          <div class="kicker">
+            <h3>No Trade Conditions</h3>
+            <span class="tag">No trade</span>
+          </div>
+          <p>Do not trade if any of these are true:</p>
+          <ul class="bul">
+            <li>no true overextension</li>
+            <li>move is slow or controlled</li>
+            <li>no volume spike</li>
+            <li>no failure to continue</li>
+            <li>no clear rejection</li>
+            <li>no structure break</li>
+            <li>no second failure</li>
+            <li>no follow-through</li>
+            <li>too close to Opening Box</li>
+            <li>too far from extreme</li>
+            <li>trend dominance is present</li>
+            <li>structure is messy</li>
+            <li>stop &gt; 60% VOL</li>
+            <li>not the first exhaustion</li>
+            <li>setup is unclear</li>
+          </ul>
+        </div>
+
+        <div class="step" id="s9-final">
+          <div class="kicker">
+            <h3>Final Rule</h3>
+            <span class="tag">Final</span>
+          </div>
+          <div class="deny">
+            <strong>One violation = No trade</strong>
+          </div>
+        </div>
+
+        <div class="section-title" id="sec10">
+          <b>SECTION 10 — MENTAL EDGE</b>
+          <span>Trade confirmation, not prediction</span>
+        </div>
+
+        <div class="step" id="s10-rules">
+          <div class="kicker">
+            <h3>Mental Rules</h3>
+            <span class="tag">Mental</span>
+          </div>
+          <ul class="bul">
+            <li>Know who is trapped and why</li>
+            <li>Define entry, stop, and target before entry</li>
+            <li>Trade confirmation, not prediction</li>
+            <li>Slightly late is better than early</li>
+            <li>Missing a trade is fine</li>
+            <li>Bad trades are not fine</li>
+            <li>You are filtering the market, not forcing trades</li>
+            <li>Loss = information</li>
+          </ul>
+        </div>
+
+        <div class="step" id="s10-final">
+          <div class="kicker">
+            <h3>Final Mental Rule</h3>
+            <span class="tag">Mindset</span>
+          </div>
+          <div class="allow">
+            <strong>Clarity = Trade</strong>
+          </div>
+          <div class="deny">
+            <strong>Confusion = No Trade</strong>
+          </div>
+        </div>
+
+        <div class="section-title" id="sec11">
+          <b>SECTION 11 — COMPLETE FLOW</b>
+          <span>Full process from box to exit</span>
+        </div>
+
+        <div class="step" id="s11-flow">
+          <div class="kicker">
+            <h3>Complete Flow</h3>
+            <span class="tag">Flow</span>
+          </div>
+          <ol class="bul" style="padding-left:18px;">
+            <li style="margin:6px 0;">Mark Opening Box</li>
+            <li style="margin:6px 0;">Calculate VOL</li>
+            <li style="margin:6px 0;">Classify day type</li>
+            <li style="margin:6px 0;">Wait for strong expansion</li>
+            <li style="margin:6px 0;">Confirm overextension</li>
+            <li style="margin:6px 0;">Confirm volume spike then weakness</li>
+            <li style="margin:6px 0;">Confirm failure to continue</li>
+            <li style="margin:6px 0;">Confirm rejection</li>
+            <li style="margin:6px 0;">Confirm structure break</li>
+            <li style="margin:6px 0;">Confirm second failure</li>
+            <li style="margin:6px 0;">Confirm follow-through</li>
+            <li style="margin:6px 0;">Wait for micro compression</li>
+            <li style="margin:6px 0;">Enter on continuation</li>
+            <li style="margin:6px 0;">Place stop beyond extreme + buffer</li>
+            <li style="margin:6px 0;">Take partial at 30–40% VOL</li>
+            <li style="margin:6px 0;">Exit near 50% VOL or Opening Box</li>
+            <li style="margin:6px 0;">If failure occurs, exit and stop trading</li>
+          </ol>
+        </div>
+
+        <div class="step" id="s11-rule">
+          <div class="kicker">
+            <h3>Final Flow Rule</h3>
+            <span class="tag">Rule</span>
+          </div>
+          <div class="deny">
+            <strong>If any step fails:</strong>
+            <p>No trade</p>
+          </div>
+        </div>
+
+        <div class="step" id="s-id">
+          <div class="kicker">
+            <h3>FINAL SYSTEM IDENTITY</h3>
+            <span class="tag">Identity</span>
+          </div>
+          <p>This system is:</p>
+          <ul class="bul">
+            <li>a trap-based reversal system</li>
+            <li>low frequency</li>
+            <li>high precision</li>
+            <li>high selectivity</li>
+          </ul>
+
+          <p style="margin-top:10px;"><b>It does not:</b></p>
+          <ul class="bul">
+            <li>guess tops or bottoms</li>
+            <li>fade smooth trends</li>
+            <li>trade often</li>
+          </ul>
+
+          <p style="margin-top:10px;"><b>It does:</b></p>
+          <ul class="bul">
+            <li>wait for extreme imbalance</li>
+            <li>confirm trapped participants</li>
+            <li>enter only after control shifts</li>
+            <li>capture pressure release</li>
+            <li>exit when the edge is finished</li>
+          </ul>
+
+          <div class="deny">
+            <strong>Final Truth</strong>
+            <p>No trap. No pressure. No trade.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    function qsa(root, sel){ return Array.from((root || document).querySelectorAll(sel)); }
+
+    qsa(document, 'button[data-jump]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sel = btn.getAttribute('data-jump');
+        const el = document.querySelector(sel);
+        if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+  </script>
+</body>
+</html>
